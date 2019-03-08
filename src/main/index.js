@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron' // eslint-disable-line
+import { app, BrowserWindow, ipcMain } from 'electron';
+import { throttle, debounce } from 'lodash';
 
 /**
  * Set `__static` path to static files in production
@@ -13,14 +14,73 @@ const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080'
   : `file://${__dirname}/index.html`;
 
+function registerMainWindowEvent() {
+  if (!mainWindow) return;
+  // TODO: should be able to use window.outerWidth/outerHeight directly
+  mainWindow.on('move', throttle(() => {
+    mainWindow.webContents.send('mainCommit', 'windowPosition', mainWindow.getPosition());
+  }, 100));
+  mainWindow.on('enter-full-screen', () => {
+    mainWindow.webContents.send('mainCommit', 'isFullScreen', true);
+    mainWindow.webContents.send('mainCommit', 'isMaximized', mainWindow.isMaximized());
+  });
+  mainWindow.on('leave-full-screen', () => {
+    mainWindow.webContents.send('mainCommit', 'isFullScreen', false);
+    mainWindow.webContents.send('mainCommit', 'isMaximized', mainWindow.isMaximized());
+  });
+  mainWindow.on('maximize', () => {
+    mainWindow.webContents.send('mainCommit', 'isMaximized', true);
+  });
+  mainWindow.on('unmaximize', () => {
+    mainWindow.webContents.send('mainCommit', 'isMaximized', false);
+  });
+  mainWindow.on('minimize', () => {
+    mainWindow.webContents.send('mainCommit', 'isMinimized', true);
+  });
+  mainWindow.on('restore', () => {
+    mainWindow.webContents.send('mainCommit', 'isMinimized', false);
+  });
+  mainWindow.on('focus', () => {
+    mainWindow.webContents.send('mainCommit', 'isFocused', true);
+  });
+  mainWindow.on('blur', () => {
+    mainWindow.webContents.send('mainCommit', 'isFocused', false);
+  });
+
+  ipcMain.on('callMainWindowMethod', (evt, method, args = []) => {
+    try {
+      mainWindow[method](...args);
+    } catch (ex) {
+      console.error('callMainWindowMethod', ex, method, JSON.stringify(args));
+    }
+  });
+  /* eslint-disable no-unused-vars */
+  ipcMain.on('windowSizeChange', (event, args) => {
+    if (!mainWindow || event.sender.isDestroyed()) return;
+    mainWindow.setSize(...args);
+    event.sender.send('windowSizeChange-asyncReply', mainWindow.getSize());
+  });
+}
+
 function createWindow() {
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
     useContentSize: true,
-    width: 1000,
+    width: 1280,
+    height: 720,
+    titleBarStyle: 'none',
+    frame: false,
+    transparent: false, // set to false to solve the backdrop-filter bug
+    webPreferences: {
+      webSecurity: false,
+      experimentalFeatures: true,
+    },
+    // See https://github.com/electron/electron/blob/master/docs/api/browser-window.md#showing-window-gracefully
+    acceptFirstMouse: true,
+    show: false,
+    resizable: false,
   });
 
   mainWindow.loadURL(winURL);
@@ -28,6 +88,10 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
+  registerMainWindowEvent();
 }
 
 app.on('ready', createWindow);
