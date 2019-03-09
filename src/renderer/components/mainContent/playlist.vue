@@ -10,7 +10,7 @@ export default {
 
 <style scoped lang="scss">
   .container {
-    width: 980px;
+    width: 780px;
     height: 100%;
     background: rgba(0, 0, 0, 0.1);
   }

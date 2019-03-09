@@ -68,7 +68,7 @@ function createWindow() {
    */
   mainWindow = new BrowserWindow({
     useContentSize: true,
-    width: 1280,
+    width: 1080,
     height: 720,
     titleBarStyle: 'none',
     frame: false,
