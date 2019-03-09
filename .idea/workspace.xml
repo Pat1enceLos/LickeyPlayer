@@ -2,21 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d01459c-7834-4169-a08d-51477a0bf977" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/circle-default-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/random-default-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/volume-default-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/LandingPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/LandingPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/PlayControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/MainContent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/leftList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/playlist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/rightSettings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/playControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/topTitle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/TopTitle.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -40,25 +28,27 @@
         <counts>
           <entry key="js" value="348" />
           <entry key="json" value="4" />
-          <entry key="vue" value="2044" />
+          <entry key="vue" value="3361" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="4" />
           <entry key="JavaScript" value="348" />
-          <entry key="Vue.js" value="2044" />
+          <entry key="Vue.js" value="3361" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="9" />
+          <entry key="scss" value="1" />
           <entry key="vue" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JavaScript" value="9" />
+          <entry key="SCSS" value="1" />
           <entry key="Vue.js" value="20" />
         </counts>
       </usages-collector>
@@ -74,8 +64,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
+            <state relative-caret-position="375">
+              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
               <folding>
                 <element signature="e#158#212#0" expanded="true" />
               </folding>
@@ -84,10 +74,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/css/style.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="335">
+              <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+            <state relative-caret-position="418">
+              <caret line="44" column="76" selection-start-line="44" selection-start-column="76" selection-end-line="44" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -95,8 +94,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
+            <state relative-caret-position="225">
+              <caret line="95" selection-start-line="95" selection-end-line="95" />
             </state>
           </provider>
         </entry>
@@ -142,15 +141,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
               <caret line="2" column="11" lean-forward="true" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -207,9 +197,9 @@
         <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/TopTitle.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/MainContent.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" />
       </list>
     </option>
@@ -233,7 +223,7 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="830" />
+    <option name="height" value="831" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -286,6 +276,13 @@
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="PlayControl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LickeyPlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="renderer" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
@@ -348,12 +345,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1552034823553</updated>
-      <workItem from="1552034824730" duration="11319000" />
+      <workItem from="1552034824730" duration="15065000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11319000" />
+    <option name="totallyTimeSpent" value="15065000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="830" extended-state="6" />
@@ -519,20 +516,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
-          <folding>
-            <element signature="e#158#212#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="392">
+          <caret line="135" column="14" selection-start-line="135" selection-start-column="14" selection-end-line="135" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -543,17 +530,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/css/style.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="135" column="14" selection-start-line="135" selection-start-column="14" selection-end-line="135" selection-end-column="14" />
+        <state relative-caret-position="335">
+          <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+          <folding>
+            <element signature="e#158#212#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="44" column="76" selection-start-line="44" selection-start-column="76" selection-end-line="44" selection-end-column="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
+        <state relative-caret-position="225">
+          <caret line="95" selection-start-line="95" selection-end-line="95" />
         </state>
       </provider>
     </entry>

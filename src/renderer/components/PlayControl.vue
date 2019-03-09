@@ -23,6 +23,7 @@ export default {
 
 <style scoped lang="scss">
   .playlistControl {
+    -webkit-app-region: no-drag;
     width: 100%;
     height: 80px;
     background: rgba(0, 0, 0, 0.5);

@@ -7,7 +7,16 @@
       </div>
       <div class="volumeControl">
         <Icon type="volume"></Icon>
-        <div class="volumeIndicator"></div>
+        <div class="volume"
+          @mousedown="handleMousedown"
+          @mouseup="handleMouseup">
+          <div class="volumeIndicator">
+            <div class="nowVolume" :style="{
+              width: `${volumePercent}%`,
+            }"></div>
+            <div class="maxVolume"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -18,8 +27,35 @@ import Icon from '../BaseIconContainer.vue';
 
 export default {
   name: 'RightButtons',
+  data() {
+    return {
+      hoverdPageX: 0,
+      volumePercent: 0,
+      isMousedown: false,
+    };
+  },
+  mounted() {
+    window.addEventListener('mouseup', () => {
+      this.isMousedown = false;
+    });
+    window.addEventListener('mousemove', (event) => {
+      this.hoverdPageX = event.pageX;
+      if (this.isMousedown) {
+        this.volumePercent = this.hoverdPageX > 935 ? ((this.hoverdPageX - 935) / 120) * 100 : 0;
+      }
+    });
+  },
   components: {
     Icon,
+  },
+  methods: {
+    handleMousedown() {
+      this.isMousedown = true;
+      this.volumePercent = this.hoverdPageX > 935 ? ((this.hoverdPageX - 935) / 120) * 100 : 0;
+    },
+    handleMouseup() {
+      this.isMousedown = false;
+    },
   },
 };
 </script>
@@ -53,12 +89,27 @@ export default {
       display: flex;
       flex-direction: row;
       margin-left: 10px;
-      .volumeIndicator {
-        width: 120px;
-        height: 4px;
-        margin: auto 5px auto 5px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 2px;
+      .volume {
+        width: 130px;
+        height: 20px;
+        display: flex;
+        .volumeIndicator {
+          width: 120px;
+          height: 4px;
+          margin: auto;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 2px;
+          display: flex;
+          .nowVolume {
+            border-radius: 2px;
+            background: rgba(0, 0, 0, 0.8);
+          }
+          .maxVolume {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+          }
+        }
       }
     }
   }

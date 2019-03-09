@@ -2,7 +2,17 @@
   <div class="theProgressBar">
     <div class="content">
       <div class="playTime">{{ '01 : 11' }}</div>
-      <div class="progressBar"></div>
+      <div class="processControl"
+        @mousedown="handleMousedown"
+        @mouseup="handleMouseup">
+        <div class="progressBar">
+          <div class="played" :style="{
+            width: `${playedPercent}%`,
+          }"></div>
+          <div class="default" :style="{
+          }"></div>
+        </div>
+      </div>
       <div class="allTime">{{ '05 : 00' }}</div>
     </div>
   </div>
@@ -11,6 +21,33 @@
 <script>
 export default {
   name: 'TheProgressBar',
+  data() {
+    return {
+      hoverdPageX: 0,
+      playedPercent: 0,
+      isMousedown: false,
+    };
+  },
+  mounted() {
+    window.addEventListener('mouseup', () => {
+      this.isMousedown = false;
+    });
+    window.addEventListener('mousemove', (event) => {
+      this.hoverdPageX = event.pageX;
+      if (this.isMousedown) {
+        this.playedPercent = this.hoverdPageX > 265 ? ((this.hoverdPageX - 265) / 500) * 100 : 0;
+      }
+    });
+  },
+  methods: {
+    handleMousedown() {
+      this.isMousedown = true;
+      this.playedPercent = this.hoverdPageX > 265 ? ((this.hoverdPageX - 265) / 500) * 100 : 0;
+    },
+    handleMouseup() {
+      this.isMousedown = false;
+    },
+  },
 };
 </script>
 
@@ -27,21 +64,38 @@ export default {
       flex-direction: row;
       justify-content: space-around;
       .playTime {
-        width: auto;
+        width: 40px;
         color: white;
         font-size: 12px;
-        margin-right: 15px;
+        text-align: center;
+        margin-right: 10px;
       }
-      .progressBar {
-        width: 500px;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 5px;
-        margin-top: 6px;
-        margin-right: 15px;
+      .processControl {
+        width: 510px;
+        height: 20px;
+        display: flex;
+        margin-right: 10px;
+        .progressBar {
+          width: 500px;
+          height: 4px;
+          margin: auto;
+          border-radius: 2px;
+          display: flex;
+          flex-direction: row;
+          background: rgba(255, 255, 255, 0.8);
+          .played {
+            border-radius: 2px;
+            background: rgba(0, 0, 0, 0.8);
+          }
+          .default {
+            flex: 1;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.8);
+          }
+        }
       }
       .allTime {
-        width: auto;
+        width: 40px;
         color: white;
         font-size: 12px;
       }
