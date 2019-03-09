@@ -122,4 +122,14 @@ export default {
     }
   }
 }
+.play, .pause {
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+.pre, .next {
+  display: block;
+  width: 25px;
+  height: 25px;
+}
 </style>
