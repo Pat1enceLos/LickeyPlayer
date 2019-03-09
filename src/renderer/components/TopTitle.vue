@@ -1,5 +1,5 @@
 <template>
-  <div class="container"></div>
+  <div class="topTitle"></div>
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .container {
+  .topTitle {
     width: 100%;
     height: 80px;
     background: rgba(0, 0, 0, 0.5);

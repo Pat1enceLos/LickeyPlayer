@@ -2,18 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d01459c-7834-4169-a08d-51477a0bf977" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/next-default-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/pause-default-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/play-default-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/pre-default-icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/circle-default-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/random-default-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/volume-default-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/leftList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/leftList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/playlist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/playlist.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/rightSettings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/rightSettings.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/playControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/playControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/LandingPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/LandingPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/MainContent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/leftList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/playlist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/rightSettings.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/playControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/topTitle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/TopTitle.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -37,26 +40,26 @@
         <counts>
           <entry key="js" value="348" />
           <entry key="json" value="4" />
-          <entry key="vue" value="689" />
+          <entry key="vue" value="2044" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="4" />
           <entry key="JavaScript" value="348" />
-          <entry key="Vue.js" value="689" />
+          <entry key="Vue.js" value="2044" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="9" />
-          <entry key="vue" value="13" />
+          <entry key="vue" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JavaScript" value="9" />
-          <entry key="Vue.js" value="13" />
+          <entry key="Vue.js" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -69,33 +72,13 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/topTitle.vue">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/playControl.vue">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="121" column="5" lean-forward="true" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state>
+              <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
+              <folding>
+                <element signature="e#158#212#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,22 +86,53 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
+            <state relative-caret-position="391">
+              <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="347">
+              <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent.vue">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/Titlebar.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/playlist.vue">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+            <state relative-caret-position="392">
+              <caret line="135" column="14" selection-start-line="135" selection-start-column="14" selection-end-line="135" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/LandingPage.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -133,19 +147,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/rightSettings.vue">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+              <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/leftList.vue">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+            <state relative-caret-position="165">
+              <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -188,11 +202,15 @@
         <option value="$PROJECT_DIR$/src/renderer/components/BaseAudioPlayer.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/playControl.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/leftList.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/mainContent/rightSettings.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/playlist.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/mainContent/rightSettings.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/TopTitle.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/MainContent.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" />
       </list>
     </option>
   </component>
@@ -232,11 +250,6 @@
             <path>
               <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
               <item name="LickeyPlayer" type="462c0819:PsiDirectoryNode" />
-              <item name=".electron-vue" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LickeyPlayer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -250,21 +263,6 @@
               <item name="LickeyPlayer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LickeyPlayer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LickeyPlayer" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="renderer" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="icon" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
@@ -350,12 +348,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1552034823553</updated>
-      <workItem from="1552034824730" duration="8107000" />
+      <workItem from="1552034824730" duration="11319000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8107000" />
+    <option name="totallyTimeSpent" value="11319000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="830" extended-state="6" />
@@ -388,13 +386,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/LandingPage.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="70">
@@ -430,13 +421,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/store/modules/index.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/Titlebar.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="23" column="33" lean-forward="true" selection-start-line="23" selection-start-column="33" selection-end-line="23" selection-end-column="33" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/store/modules/Window.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -479,23 +463,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/topTitle.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/playControl.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
-          <caret line="23" column="24" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/leftList.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        <state relative-caret-position="165">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -506,38 +498,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/TopTitle.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/MainContent.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/LandingPage.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/TheProgressBar.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
+        <state relative-caret-position="391">
+          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/playlist.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+        <state>
+          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
+          <folding>
+            <element signature="e#158#212#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/rightSettings.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/Titlebar.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        <state relative-caret-position="186">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="121" column="5" lean-forward="true" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
+        <state relative-caret-position="392">
+          <caret line="135" column="14" selection-start-line="135" selection-start-column="14" selection-end-line="135" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="347">
+          <caret line="47" column="6" lean-forward="true" selection-start-line="47" selection-start-column="6" selection-end-line="47" selection-end-column="6" />
         </state>
       </provider>
     </entry>

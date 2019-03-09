@@ -1,17 +1,17 @@
 <template>
-  <div class="container"></div>
+  <div class="playlist"></div>
 </template>
 
 <script>
 export default {
-  name: 'leftList',
+  name: 'playlist',
 };
 </script>
 
 <style scoped lang="scss">
-  .container {
-    width: 210px;
+  .playlist {
+    width: 660px;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.1);
   }
 </style>

@@ -9,9 +9,9 @@
 
 <script>
 import Titlebar from './Titlebar';
-import playControl from './playControl';
-import topTitle from './topTitle';
-import mainContent from './mainContent';
+import playControl from './PlayControl';
+import topTitle from './TopTitle';
+import mainContent from './MainContent';
 
 export default {
   name: 'landing-page',

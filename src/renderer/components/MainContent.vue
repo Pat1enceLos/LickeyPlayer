@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContainer">
+  <div class="mainContent">
     <left-list></left-list>
     <play-list></play-list>
     <right-settings></right-settings>
@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import leftList from './mainContent/leftList';
-import rightSettings from './mainContent/rightSettings';
-import playlist from './mainContent/playlist';
+import leftList from './mainContent/LeftList';
+import rightSettings from './mainContent/RightSettings';
+import playlist from './mainContent/Playlist';
 
 export default {
   name: 'mainContent',
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .mainContainer {
+  .mainContent {
     width: 100%;
     height: 560px;
     display: flex;

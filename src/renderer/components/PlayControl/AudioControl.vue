@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="audioControl">
     <div class="playbutton">
       <Icon type="pre" class="pre"></Icon>
       <Icon type="play" class="play"></Icon>
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
+.audioControl {
   width: 210px;
   height: 80px;
   display: flex;

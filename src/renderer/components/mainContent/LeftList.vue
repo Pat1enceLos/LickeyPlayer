@@ -1,15 +1,15 @@
 <template>
-  <div class="container"></div>
+  <div class="leftList"></div>
 </template>
 
 <script>
 export default {
-  name: 'rightSettings',
+  name: 'leftList',
 };
 </script>
 
 <style scoped lang="scss">
-  .container {
+  .leftList {
     width: 210px;
     height: 100%;
     background: rgba(0, 0, 0, 0.3);
