@@ -7,15 +7,38 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'BaseAudioPlayer',
+  data() {
+    return {
+      requestAnimationFrameId: 0,
+    };
+  },
   props: {
+    updateCurrentTime: {
+      type: Boolean,
+      default: false,
+    },
+    currentTime: {
+      type: Array,
+      default: () => [0],
+      validator: value => value[0] >= 0,
+    },
   },
   computed: {
-    ...mapGetters(['currentTime', 'paused', 'volume']),
+    ...mapGetters(['paused', 'volume']),
   },
   mounted() {
-    this.$refs.audio.ontimeupdate = this.currentTimeUpdate;
+    if (this.updateCurrentTime) {
+      this.requestAnimationFrameId = requestAnimationFrame(this.currentTimeUpdate);
+    }
   },
   watch: {
+    updateCurrentTime(newVal) {
+      if (newVal) {
+        this.requestAnimationFrameId = requestAnimationFrame(this.currentTimeUpdate);
+      } else {
+        cancelAnimationFrame(this.requestAnimationFrameId);
+      }
+    },
     currentTime(val) {
       this.$refs.audio.currentTime = val;
     },
@@ -28,7 +51,9 @@ export default {
   },
   methods: {
     currentTimeUpdate() {
-      this.$store.dispatch('updateCurrentTime', this.$refs.audio.currentTime);
+      const { currentTime } = this.$refs.audio;
+      this.$emit('update:currentTime', currentTime);
+      this.requestAnimationFrameId = requestAnimationFrame(this.currentTimeUpdate);
     },
     onMetaLoaded(event) {
       this.$store.dispatch('updateDuration', event.target.duration);

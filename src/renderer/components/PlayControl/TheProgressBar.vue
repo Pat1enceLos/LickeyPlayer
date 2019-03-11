@@ -1,13 +1,15 @@
 <template>
-  <div class="theProgressBar">
+  <div class="theProgressBar" :data-component-name="$options.name">
     <div class="content">
       <div class="playTime">{{ timeFormatter(currentTime) }}</div>
       <div class="processControl"
-        @mousedown="handleMousedown"
-        @mouseup="handleMouseup">
-        <div class="circle" :style="{
-          left: `${260 + playedPercent * 5}px`,
-        }"></div>
+        @mousedown="handleMousedown">
+        <div class="circle" ref="circle"
+          @mousedown="handleCircleMousedown"
+          @mouseup="handleCircleMouseup"
+          :style="{
+            left: `${260 + playedPercent * 5}px`,
+          }"></div>
         <div class="progressBar">
           <div class="played" :style="{
             width: `${playedPercent}%`,
@@ -29,38 +31,48 @@ export default {
   data() {
     return {
       hoverdPageX: 0,
-      playedPercent: 0,
       isMousedown: false,
+      isMouseMove: false,
+      hoveredCurrentTime: 0,
     };
   },
   computed: {
     ...mapGetters(['duration', 'currentTime', 'volume']),
+    playedPercent() {
+      return (this.hoveredCurrentTime / this.duration) * 100;
+    },
   },
   watch: {
-    playedPercent(val) {
-      this.$store.dispatch('updateCurrentTime', (val / 100) * this.duration);
-    },
-    currentTime(val) {
-      this.playedPercent = (val / this.duration) * 100;
-    },
   },
   mounted() {
     window.addEventListener('mouseup', () => {
       this.isMousedown = false;
+      if (this.isMouseMove) {
+        this.isMouseMove = false;
+        this.$bus.$emit('seek', this.hoveredCurrentTime);
+      }
     });
     window.addEventListener('mousemove', (event) => {
       this.hoverdPageX = event.pageX;
       if (this.isMousedown) {
-        this.playedPercent = this.hoverdPageX > 265 ? ((this.hoverdPageX - 265) / 500) * 100 : 0;
+        this.isMouseMove = true;
+        this.hoveredCurrentTime = this.hoverdPageX > 265 ?
+          ((this.hoverdPageX - 265) / 500) * this.duration : 0;
       }
     });
   },
   methods: {
-    handleMousedown() {
+    handleCircleMousedown() {
       this.isMousedown = true;
-      this.playedPercent = this.hoverdPageX > 265 ? ((this.hoverdPageX - 265) / 500) * 100 : 0;
     },
-    handleMouseup() {
+    handleMousedown(e) {
+      if (e.target !== this.$refs.circle) {
+        this.hoveredCurrentTime = this.hoverdPageX > 265 ?
+          ((this.hoverdPageX - 265) / 500) * this.duration : 0;
+        this.$bus.$emit('seek', this.hoveredCurrentTime);
+      }
+    },
+    handleCircleMouseup() {
       this.isMousedown = false;
     },
   },
