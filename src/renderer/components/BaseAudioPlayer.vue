@@ -1,5 +1,5 @@
 <template>
-  <audio class="player" ref="audio" @loadedmetadata="onMetaLoaded" src="../../../test/assets/汪峰%20-%20像梦一样自由.mp3"></audio>
+  <audio class="player" ref="audio" @loadedmetadata="onMetaLoaded" src="../../../test/assets/test.mp3"></audio>
 </template>
 
 <script>
@@ -46,7 +46,13 @@ export default {
       this.$refs.audio[val ? 'pause' : 'play']();
     },
     volume(val) {
-      this.$refs.audio.volume = val / 100;
+      let validVolume = val;
+      if (val > 100) {
+        validVolume = 100;
+      } else if (val < 0) {
+        validVolume = 0;
+      }
+      this.$refs.audio.volume = validVolume / 100;
     },
   },
   methods: {
