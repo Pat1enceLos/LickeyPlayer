@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '../BaseIconContainer.vue';
 
 export default {
@@ -30,9 +31,22 @@ export default {
   data() {
     return {
       hoverdPageX: 0,
-      volumePercent: 0,
       isMousedown: false,
     };
+  },
+  computed: {
+    ...mapGetters(['volume']),
+    volumePercent() {
+      return this.volume;
+    },
+  },
+  watch: {
+    volumePercent(val) {
+      this.$store.dispatch('updateVolume', val);
+    },
+    volume(val) {
+      this.volumePercent = val;
+    },
   },
   mounted() {
     window.addEventListener('mouseup', () => {

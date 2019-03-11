@@ -1,7 +1,7 @@
 <template>
   <div class="theProgressBar">
     <div class="content">
-      <div class="playTime">{{ '01 : 11' }}</div>
+      <div class="playTime">{{ timeFormatter(currentTime) }}</div>
       <div class="processControl"
         @mousedown="handleMousedown"
         @mouseup="handleMouseup">
@@ -13,12 +13,14 @@
           }"></div>
         </div>
       </div>
-      <div class="allTime">{{ '05 : 00' }}</div>
+      <div class="allTime">{{ timeFormatter(duration) }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'TheProgressBar',
   data() {
@@ -27,6 +29,17 @@ export default {
       playedPercent: 0,
       isMousedown: false,
     };
+  },
+  computed: {
+    ...mapGetters(['duration', 'currentTime', 'volume']),
+  },
+  watch: {
+    playedPercent(val) {
+      this.$store.dispatch('updateCurrentTime', (val / 100) * this.duration);
+    },
+    currentTime(val) {
+      this.playedPercent = (val / this.duration) * 100;
+    },
   },
   mounted() {
     window.addEventListener('mouseup', () => {

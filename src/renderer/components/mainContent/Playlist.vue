@@ -1,10 +1,17 @@
 <template>
-  <div class="playlist"></div>
+  <div class="playlist">
+    <base-audio-player></base-audio-player>
+  </div>
 </template>
 
 <script>
+import BaseAudioPlayer from '../BaseAudioPlayer';
+
 export default {
   name: 'playlist',
+  components: {
+    'base-audio-player': BaseAudioPlayer,
+  },
 };
 </script>
 
