@@ -2,8 +2,8 @@
   <div class="audioControl">
     <div class="playbutton">
       <Icon type="pre" class="pre"></Icon>
-      <Icon type="play" class="play"></Icon>
-      <Icon type="pause" class="pause" v-show="false"></Icon>
+      <Icon type="play" class="play" @mouseup.native="handleMouseup" v-show="!play"></Icon>
+      <Icon type="pause" class="pause" @mouseup.native="handleMouseup" v-show="play"></Icon>
       <Icon type="next" class="next"></Icon>
     </div>
   </div>
@@ -14,8 +14,18 @@ import Icon from '../BaseIconContainer';
 
 export default {
   name: 'AudioControl',
+  data() {
+    return {
+      play: false,
+    };
+  },
   components: {
     Icon,
+  },
+  methods: {
+    handleMouseup() {
+      this.play = !this.play;
+    },
   },
 };
 </script>
