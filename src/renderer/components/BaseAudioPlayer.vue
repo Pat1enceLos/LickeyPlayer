@@ -1,5 +1,5 @@
 <template>
-  <audio class="player" ref="audio" @loadedmetadata="onMetaLoaded" src="../../../test/assets/test.mp3"></audio>
+  <audio class="player" ref="audio" @loadedmetadata="onMetaLoaded" src="../../../test/assets/汪峰%20-%20像梦一样自由.mp3"></audio>
 </template>
 
 <script>

@@ -5,6 +5,9 @@
       <div class="processControl"
         @mousedown="handleMousedown"
         @mouseup="handleMouseup">
+        <div class="circle" :style="{
+          left: `${260 + playedPercent * 5}px`,
+        }"></div>
         <div class="progressBar">
           <div class="played" :style="{
             width: `${playedPercent}%`,
@@ -88,6 +91,16 @@ export default {
         height: 20px;
         display: flex;
         margin-right: 10px;
+        .circle {
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          background: rgba(0, 0, 0, 1);
+          border-radius: 50%;
+          margin-top: 3px;
+          -webkit-transform: rotate(360deg);
+          animation: rotation 8s linear infinite;
+        }
         .progressBar {
           width: 500px;
           height: 4px;
@@ -114,4 +127,9 @@ export default {
       }
     }
   }
+@-webkit-keyframes rotation {
+  from {-webkit-transform: rotate(0deg);
+  }to {
+     -webkit-transform: rotate(360deg);
+   }}
 </style>

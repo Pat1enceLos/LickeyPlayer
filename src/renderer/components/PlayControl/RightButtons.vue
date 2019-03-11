@@ -12,7 +12,7 @@
           @mouseup="handleMouseup">
           <div class="volumeIndicator">
             <div class="nowVolume" :style="{
-              width: `${volumePercent}%`,
+              width: `${volume}%`,
             }"></div>
             <div class="maxVolume"></div>
           </div>
@@ -32,13 +32,11 @@ export default {
     return {
       hoverdPageX: 0,
       isMousedown: false,
+      volumePercent: 0,
     };
   },
   computed: {
     ...mapGetters(['volume']),
-    volumePercent() {
-      return this.volume;
-    },
   },
   watch: {
     volumePercent(val) {
