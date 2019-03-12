@@ -2,7 +2,7 @@ const state = {
   duration: 0,
   currentTime: 0,
   paused: true,
-  volume: 100,
+  volume: 75,
 };
 
 const getters = {

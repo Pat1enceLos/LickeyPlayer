@@ -8,7 +8,7 @@
           @mousedown="handleCircleMousedown"
           @mouseup="handleCircleMouseup"
           :style="{
-            left: `${260 + playedPercent * 5}px`,
+            left: `${258 + playedPercent * 5}px`,
           }"></div>
         <div class="progressBar">
           <div class="played" :style="{
@@ -56,8 +56,13 @@ export default {
       this.hoverdPageX = event.pageX;
       if (this.isMousedown) {
         this.isMouseMove = true;
-        this.hoveredCurrentTime = this.hoverdPageX > 265 ?
-          ((this.hoverdPageX - 265) / 500) * this.duration : 0;
+        if (this.hoverdPageX <= 265) {
+          this.hoveredCurrentTime = 0;
+        } else if (this.hoverdPageX > 265 && this.hoverdPageX < 765) {
+          this.hoveredCurrentTime = ((this.hoverdPageX - 265) / 500) * this.duration;
+        } else {
+          this.hoveredCurrentTime = this.duration;
+        }
       }
     });
   },
@@ -140,8 +145,10 @@ export default {
     }
   }
 @-webkit-keyframes rotation {
-  from {-webkit-transform: rotate(0deg);
+  from {
+    -webkit-transform: rotate(0deg);
   }to {
-     -webkit-transform: rotate(360deg);
-   }}
+    -webkit-transform: rotate(360deg);
+  }
+}
 </style>

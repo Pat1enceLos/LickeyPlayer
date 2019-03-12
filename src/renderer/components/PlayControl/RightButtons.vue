@@ -8,8 +8,13 @@
       <div class="volumeControl">
         <Icon type="volume"></Icon>
         <div class="volume"
-          @mousedown="handleMousedown"
-          @mouseup="handleMouseup">
+          @mousedown="handleMousedown">
+          <div class="volumeCircle" ref="volumeCircle"
+            @mousedown="handleCircleMousedown"
+            @mouseup="handleCircleMouseup"
+            :style="{
+              left: `${932 + volume * 1.2}px`,
+            }"></div>
           <div class="volumeIndicator">
             <div class="nowVolume" :style="{
               width: `${volume}%`,
@@ -32,28 +37,34 @@ export default {
     return {
       hoverdPageX: 0,
       isMousedown: false,
-      volumePercent: 0,
+      isMouseMove: false,
+      hoveredCurrentVolume: 0,
     };
   },
   computed: {
     ...mapGetters(['volume']),
   },
   watch: {
-    volumePercent(val) {
-      this.$store.dispatch('updateVolume', val);
-    },
-    volume(val) {
-      this.volumePercent = val;
-    },
   },
   mounted() {
     window.addEventListener('mouseup', () => {
       this.isMousedown = false;
+      if (this.isMouseMove) {
+        this.isMouseMove = false;
+        this.$store.dispatch('updateVolume', this.hoveredCurrentVolume);
+      }
     });
     window.addEventListener('mousemove', (event) => {
       this.hoverdPageX = event.pageX;
       if (this.isMousedown) {
-        this.volumePercent = this.hoverdPageX > 935 ? ((this.hoverdPageX - 935) / 120) * 100 : 0;
+        this.isMouseMove = true;
+        if (this.hoverdPageX <= 935) {
+          this.hoveredCurrentVolume = 0;
+        } else if (this.hoverdPageX > 935 && this.hoverdPageX < 1055) {
+          this.hoveredCurrentVolume = ((this.hoverdPageX - 935) / 120) * 100;
+        } else {
+          this.hoveredCurrentVolume = 100;
+        }
       }
     });
   },
@@ -61,11 +72,17 @@ export default {
     Icon,
   },
   methods: {
-    handleMousedown() {
+    handleCircleMousedown() {
       this.isMousedown = true;
-      this.volumePercent = this.hoverdPageX > 935 ? ((this.hoverdPageX - 935) / 120) * 100 : 0;
     },
-    handleMouseup() {
+    handleMousedown(e) {
+      if (e.target !== this.$refs.volumeCircle) {
+        this.hoveredCurrentVolume = this.hoverdPageX > 935 ?
+          ((this.hoverdPageX - 935) / 120) * 100 : 0;
+        this.$store.dispatch('updateVolume', this.hoveredCurrentVolume);
+      }
+    },
+    handleCircleMouseup() {
       this.isMousedown = false;
     },
   },
@@ -105,6 +122,16 @@ export default {
         width: 130px;
         height: 20px;
         display: flex;
+        .volumeCircle {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background: rgba(0, 0, 0, 1);
+          border-radius: 50%;
+          margin-top: 5px;
+          -webkit-transform: rotate(360deg);
+          animation: rotation 8s linear infinite;
+        }
         .volumeIndicator {
           width: 120px;
           height: 4px;
@@ -125,5 +152,12 @@ export default {
       }
     }
   }
+}
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }to {
+     -webkit-transform: rotate(360deg);
+   }
 }
 </style>
