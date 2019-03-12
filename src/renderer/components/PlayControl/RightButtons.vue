@@ -13,11 +13,11 @@
             @mousedown="handleCircleMousedown"
             @mouseup="handleCircleMouseup"
             :style="{
-              left: `${932 + volume * 1.2}px`,
+              left: manuControl ? `${932 + hoveredCurrentVolume * 1.2}px` : `${932 + volume * 1.2}px`,
             }"></div>
           <div class="volumeIndicator">
             <div class="nowVolume" :style="{
-              width: `${volume}%`,
+              width: manuControl ? `${hoveredCurrentVolume}%` : `${volume}%`,
             }"></div>
             <div class="maxVolume"></div>
           </div>
@@ -37,27 +37,24 @@ export default {
     return {
       hoverdPageX: 0,
       isMousedown: false,
-      isMouseMove: false,
       hoveredCurrentVolume: 0,
     };
   },
   computed: {
     ...mapGetters(['volume']),
+    manuControl() {
+      return this.hoveredCurrentVolume !== 0;
+    },
   },
   watch: {
   },
   mounted() {
     window.addEventListener('mouseup', () => {
       this.isMousedown = false;
-      if (this.isMouseMove) {
-        this.isMouseMove = false;
-        this.$store.dispatch('updateVolume', this.hoveredCurrentVolume);
-      }
     });
     window.addEventListener('mousemove', (event) => {
       this.hoverdPageX = event.pageX;
       if (this.isMousedown) {
-        this.isMouseMove = true;
         if (this.hoverdPageX <= 935) {
           this.hoveredCurrentVolume = 0;
         } else if (this.hoverdPageX > 935 && this.hoverdPageX < 1055) {
@@ -65,6 +62,8 @@ export default {
         } else {
           this.hoveredCurrentVolume = 100;
         }
+        this.$store.dispatch('updateVolume', this.hoveredCurrentVolume);
+        this.hoveredCurrentVolume = 0;
       }
     });
   },
@@ -80,6 +79,7 @@ export default {
         this.hoveredCurrentVolume = this.hoverdPageX > 935 ?
           ((this.hoverdPageX - 935) / 120) * 100 : 0;
         this.$store.dispatch('updateVolume', this.hoveredCurrentVolume);
+        this.hoveredCurrentVolume = 0;
       }
     },
     handleCircleMouseup() {

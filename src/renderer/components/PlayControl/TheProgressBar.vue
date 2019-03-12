@@ -8,11 +8,11 @@
           @mousedown="handleCircleMousedown"
           @mouseup="handleCircleMouseup"
           :style="{
-            left: `${258 + playedPercent * 5}px`,
+            left: manuControl ? `${258 + hoveredPercent * 5}px` : `${258 + playedPercent * 5}px`,
           }"></div>
         <div class="progressBar">
           <div class="played" :style="{
-            width: `${playedPercent}%`,
+            width: manuControl ? `${hoveredPercent}%` : `${playedPercent}%`,
           }"></div>
           <div class="default" :style="{
           }"></div>
@@ -39,7 +39,13 @@ export default {
   computed: {
     ...mapGetters(['duration', 'currentTime', 'volume']),
     playedPercent() {
+      return (this.currentTime / this.duration) * 100;
+    },
+    hoveredPercent() {
       return (this.hoveredCurrentTime / this.duration) * 100;
+    },
+    manuControl() {
+      return this.hoveredPercent !== 0;
     },
   },
   watch: {
@@ -50,6 +56,7 @@ export default {
       if (this.isMouseMove) {
         this.isMouseMove = false;
         this.$bus.$emit('seek', this.hoveredCurrentTime);
+        this.hoveredCurrentTime = 0;
       }
     });
     window.addEventListener('mousemove', (event) => {
@@ -75,6 +82,7 @@ export default {
         this.hoveredCurrentTime = this.hoverdPageX > 265 ?
           ((this.hoverdPageX - 265) / 500) * this.duration : 0;
         this.$bus.$emit('seek', this.hoveredCurrentTime);
+        this.hoveredCurrentTime = 0;
       }
     },
     handleCircleMouseup() {
