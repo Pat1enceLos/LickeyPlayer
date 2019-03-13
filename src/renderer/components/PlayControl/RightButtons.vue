@@ -126,7 +126,7 @@ export default {
           position: absolute;
           width: 10px;
           height: 10px;
-          background: rgba(0, 0, 0, 1);
+          background: #FFCF2E;
           border-radius: 50%;
           margin-top: 5px;
           -webkit-transform: rotate(360deg);
@@ -141,7 +141,7 @@ export default {
           display: flex;
           .nowVolume {
             border-radius: 2px;
-            background: rgba(0, 0, 0, 0.8);
+            background: #FFCF2E;
           }
           .maxVolume {
             flex: 1;

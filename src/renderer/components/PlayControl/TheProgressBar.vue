@@ -64,7 +64,7 @@ export default {
       if (this.isMousedown) {
         this.isMouseMove = true;
         if (this.hoverdPageX <= 265) {
-          this.hoveredCurrentTime = 0;
+          this.hoveredCurrentTime = 0.01;
         } else if (this.hoverdPageX > 265 && this.hoverdPageX < 765) {
           this.hoveredCurrentTime = ((this.hoverdPageX - 265) / 500) * this.duration;
         } else {
@@ -120,7 +120,7 @@ export default {
           position: absolute;
           width: 14px;
           height: 14px;
-          background: rgba(0, 0, 0, 1);
+          background: #FFCF2E;
           border-radius: 50%;
           margin-top: 3px;
           -webkit-transform: rotate(360deg);
@@ -136,7 +136,7 @@ export default {
           background: rgba(255, 255, 255, 0.8);
           .played {
             border-radius: 2px;
-            background: rgba(0, 0, 0, 0.8);
+            background: #FFCF2E;
           }
           .default {
             flex: 1;
