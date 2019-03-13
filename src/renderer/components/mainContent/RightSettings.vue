@@ -10,8 +10,9 @@ export default {
 
 <style scoped lang="scss">
   .rightSettings {
-    width: 210px;
+    width: 100%;
     height: 100%;
+    min-width: 150px;
     background: rgba(0, 0, 0, 0.3);
   }
 </style>

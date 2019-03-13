@@ -33,7 +33,8 @@ export default {
 
 <style scoped lang="scss">
   .playlist {
-    width: 660px;
+    flex: 1;
+    /*width: 660px;*/
     height: 100%;
     background: rgba(0, 0, 0, 0.1);
   }

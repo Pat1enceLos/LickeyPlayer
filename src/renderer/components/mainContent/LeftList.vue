@@ -10,8 +10,9 @@ export default {
 
 <style scoped lang="scss">
   .leftList {
-    width: 210px;
+    width: 100%;
     height: 100%;
+    min-width: 100px;
     background: rgba(0, 0, 0, 0.3);
   }
 </style>
