@@ -6,7 +6,8 @@
         <Icon type="random" class="random"></Icon>
       </div>
       <div class="volumeControl">
-        <Icon type="volume"></Icon>
+        <Icon type="volume" v-show="volume !== 0" @mouseup.native="handleMute"></Icon>
+        <Icon type="mute" v-show="volume === 0" @mouseup.native="handleVolumeRestore"></Icon>
         <div class="volume"
           @mousedown="handleMousedown">
           <div class="volumeCircle" ref="volumeCircle"
@@ -41,7 +42,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['volume']),
+    ...mapGetters(['volume', 'lastVolume']),
     manuControl() {
       return this.hoveredCurrentVolume !== 0;
     },
@@ -71,6 +72,12 @@ export default {
     Icon,
   },
   methods: {
+    handleMute() {
+      this.$store.dispatch('updateMute');
+    },
+    handleVolumeRestore() {
+      this.$store.dispatch('updateVolume', this.lastVolume);
+    },
     handleCircleMousedown() {
       this.isMousedown = true;
     },

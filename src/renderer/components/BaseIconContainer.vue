@@ -132,7 +132,7 @@ export default {
   width: 25px;
   height: 25px;
 }
-.circle, .random, .volume{
+.circle, .random, .volume, .mute{
   display: block;
   width: 20px;
   height: 20px;
