@@ -70,7 +70,7 @@ ipcMain.on('add-windows-login', () => {
     useContentSize: true,
     frame: false,
     width: 360,
-    height: 580,
+    height: 500,
     transparent: true,
     resizable: false,
     show: false,
