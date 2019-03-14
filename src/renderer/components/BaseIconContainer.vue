@@ -132,9 +132,28 @@ export default {
   width: 25px;
   height: 25px;
 }
-.circle, .random, .volume, .mute{
+.circle, .random, .volume, .mute {
   display: block;
   width: 20px;
   height: 20px;
+}
+.search {
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 305px;
+  top: 47px;
+  cursor: pointer;
+}
+.user {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+.rightArrow {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
 }
 </style>
