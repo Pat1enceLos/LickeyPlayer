@@ -9,10 +9,14 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\') // eslint-disable-line
 }
 
-let mainWindow;
+let mainWindow = null;
+let loginWindow = null;
 const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080'
   : `file://${__dirname}/index.html`;
+const aboutURL = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:9080/login.html'
+  : `file://${__dirname}/login.html`;
 
 function registerMainWindowEvent() {
   if (!mainWindow) return;
@@ -61,6 +65,37 @@ function registerMainWindowEvent() {
     event.sender.send('windowSizeChange-asyncReply', mainWindow.getSize());
   });
 }
+ipcMain.on('add-windows-login', () => {
+  const loginWindowOptions = {
+    useContentSize: true,
+    frame: false,
+    width: 360,
+    height: 580,
+    transparent: true,
+    resizable: false,
+    show: false,
+    webPreferences: {
+      webSecurity: false,
+      experimentalFeatures: true,
+    },
+    acceptFirstMouse: true,
+    fullscreenable: false,
+    maximizable: false,
+    minimizable: false,
+    parent: mainWindow,
+    modal: true,
+  };
+  if (!loginWindow) {
+    loginWindow = new BrowserWindow(loginWindowOptions);
+    loginWindow.loadURL(`${aboutURL}`);
+    loginWindow.on('closed', () => {
+      loginWindow = null;
+    });
+  }
+  loginWindow.once('ready-to-show', () => {
+    loginWindow.show();
+  });
+});
 
 function createWindow() {
   /**

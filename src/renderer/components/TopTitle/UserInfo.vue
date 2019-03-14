@@ -3,7 +3,7 @@
     <div class="imgContainer">
       <Icon type="user" class="defaultImg"></Icon>
       <img v-show="false" class="userImg">
-      <Icon type="rightArrow" class="rightArrow"></Icon>
+      <Icon type="rightArrow" class="rightArrow" @click.native="handleClick"></Icon>
     </div>
   </div>
 </template>
@@ -15,6 +15,11 @@ export default {
   name: 'UserInfo',
   components: {
     Icon,
+  },
+  methods: {
+    handleClick() {
+      this.$electron.ipcRenderer.send('add-windows-login');
+    },
   },
 };
 </script>
