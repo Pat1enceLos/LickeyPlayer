@@ -5,12 +5,20 @@
     <div class="loginButton">
       <div class="text">登陆</div>
     </div>
+    <div class="back" @mouseup="handleBack">
+      <div class="backText">返回注册</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'LoginDetails',
+  methods: {
+    handleBack() {
+      this.$bus.$emit('handleBack');
+    },
+  },
 };
 </script>
 
@@ -51,6 +59,20 @@ export default {
       width: auto;
       height: auto;
       margin: auto;
+    }
+  }
+  .back {
+    width: auto;
+    height: 20px;
+    margin: auto auto 15px auto;
+    cursor: pointer;
+    &:hover {
+      border-bottom: 1px solid #AA8B24;
+    }
+    .backText {
+      font-size: 15px;
+      margin: auto;
+      color: #AA8B24;
     }
   }
 }

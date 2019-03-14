@@ -49,6 +49,11 @@ export default {
       pageToShow: 'login',
     };
   },
+  mounted() {
+    this.$bus.$on('handleBack', () => {
+      this.pageToShow = 'login';
+    });
+  },
   computed: {
     isDarwin() {
       return process.platform === 'darwin';
