@@ -1,5 +1,5 @@
 <template>
-  <audio class="player" ref="audio" @loadedmetadata="onMetaLoaded" src="../../../test/assets/test.mp3"></audio>
+  <audio class="player" ref="audio" @loadedmetadata="onMetaLoaded"></audio>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['paused', 'volume']),
+    ...mapGetters(['paused', 'volume', 'src']),
   },
   mounted() {
     if (this.updateCurrentTime) {
@@ -32,6 +32,13 @@ export default {
     }
   },
   watch: {
+    src(val) {
+      if (val) {
+        console.log(this.filePathToUrl(val));
+        this.$refs.audio.src = this.filePathToUrl(val);
+      }
+      this.$store.dispatch('updatePaused', false);
+    },
     updateCurrentTime(newVal) {
       if (newVal) {
         this.requestAnimationFrameId = requestAnimationFrame(this.currentTimeUpdate);
@@ -43,6 +50,7 @@ export default {
       this.$refs.audio.currentTime = val;
     },
     paused(val) {
+      console.log(val);
       this.$refs.audio[val ? 'pause' : 'play']();
     },
     volume(val) {

@@ -1,8 +1,8 @@
 <template>
   <div class="loginContainer">
-    <input class="id" placeholder="请输入用户名"/>
-    <input class="password" placeholder="请输入密码"/>
-    <div class="loginButton">
+    <input class="id" id="loginId" placeholder="请输入用户名"/>
+    <input class="password" id="loginPassword" placeholder="请输入密码" type="password"/>
+    <div class="loginButton" @mouseup="handleLogin">
       <div class="text">登陆</div>
     </div>
     <div class="back" @mouseup="handleBack">
@@ -12,11 +12,40 @@
 </template>
 
 <script>
+import md5 from 'md5';
+import infoDB from '../../helpers/infoDB';
+
 export default {
   name: 'LoginDetails',
   methods: {
     handleBack() {
       this.$bus.$emit('handleBack');
+    },
+    async handleLogin() {
+      const inputId = document.querySelector('#loginId').value;
+      const inputPassword = document.querySelector('#loginPassword').value;
+      let isExisted = false;
+      const reg = /^\w{5,21}$/;
+      if (reg.test(inputId)) {
+        const existedUser = await infoDB.getAll('User');
+        existedUser.forEach(({ id, password }) => {
+          if (id === inputId) {
+            isExisted = true;
+            if (md5(inputPassword) === password) {
+              alert('登陆成功');
+              document.querySelector('#registerId').value = '';
+              document.querySelector('#registerPassword').value = '';
+            } else {
+              alert('密码错误');
+            }
+          }
+        });
+        if (!isExisted) {
+          alert('不存在该用户名');
+        }
+      } else {
+        alert('用户名格式不正确');
+      }
     },
   },
 };

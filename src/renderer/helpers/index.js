@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 export default {
   methods: {
     timeFormatter(s) {
@@ -19,6 +22,23 @@ export default {
         return `${hours}:${minutes}:${seconds}`;
       }
       return `${minutes}:${seconds}`;
+    },
+    openFiles(...files) {
+      const basename = path.basename(files[0]);
+      this.$store.dispatch('updateSrc', files[0]);
+      this.$store.dispatch('updateTitle', basename.slice(0, basename.lastIndexOf('.')));
+      console.log(files);
+    },
+    filePathToUrl(filePath) {
+      if (!filePath) return '';
+      let fileUrl = filePath.replace(/\\/g, '/');
+      if (!fileUrl.startsWith('/')) {
+        fileUrl = `/${fileUrl}`;
+      }
+      fileUrl = encodeURI(`file://${fileUrl}`)
+        .replace(/#/g, '%23')
+        .replace(/[?]/g, '%3F');
+      return fileUrl;
     },
   },
 };

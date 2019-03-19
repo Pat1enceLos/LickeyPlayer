@@ -1,8 +1,8 @@
 <template>
   <div class="registerContent">
-    <input class="id" placeholder="请输入用户名"/>
-    <input class="password" placeholder="请输入密码"/>
-    <div class="regButton">
+    <input class="id" id="registerId" placeholder="请输入用户名"/>
+    <input class="password" id="registerPassword" placeholder="请输入密码" type="password"/>
+    <div class="regButton" @mouseup="handleRegister">
       <div class="text">注册</div>
     </div>
     <div class="back" @mouseup="handleBack">
@@ -12,11 +12,49 @@
 </template>
 
 <script>
+import md5 from 'md5';
+import infoDB from '../../helpers/infoDB';
+
 export default {
   name: 'RegisterDetails',
   methods: {
     handleBack() {
       this.$bus.$emit('handleBack');
+    },
+    async handleRegister() {
+      const inputId = document.querySelector('#registerId').value;
+      const inputPassword = document.querySelector('#registerPassword').value;
+      let isExisted = false;
+      const reg = /^\w{5,21}$/;
+      if (reg.test(inputId)) {
+        if (inputPassword === '') {
+          alert('密码不能为空');
+        } else {
+          const existedUser = await infoDB.getAll('User');
+          existedUser.forEach(({ id }) => {
+            if (id === inputId) {
+              isExisted = true;
+            }
+          });
+          if (isExisted) {
+            alert('已存在该用户名');
+          } else {
+            const userInfo = {
+              id: inputId,
+              password: md5(inputPassword),
+            };
+            await infoDB.add('User', userInfo);
+            alert('注册成功');
+            document.querySelector('#registerId').value = '';
+            document.querySelector('#registerPassword').value = '';
+            this.$bus.$emit('handleBack');
+          }
+        }
+      } else if (inputId.length < 5) {
+        alert('用户名长度大于五个字符');
+      } else if (inputId > 20) {
+        alert('用户名长度小于十个字符');
+      }
     },
   },
 };

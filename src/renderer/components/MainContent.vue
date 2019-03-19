@@ -4,9 +4,7 @@
     <div class="leftResizer" @mousedown="handleMousedownLeft" @mouseup="handleMouseupLeft"
       :style="{ left: `${disXLeft}px` }"></div>
     <play-list></play-list>
-    <div class="rightResizer" @mousedown="handleMousedownRight" @mouseup="handleMouseupRight"
-      :style="{ left: `${disXRight}px` }"></div>
-    <right-settings :style="{ width: `${1080 - disXRight}px` }"></right-settings>
+    <right-settings></right-settings>
   </div>
 </template>
 
@@ -22,7 +20,6 @@ export default {
       isMousedownLeft: false,
       isMousedownRight: false,
       disXLeft: 210,
-      disXRight: 870,
     };
   },
   components: {
@@ -41,15 +38,6 @@ export default {
           this.disXLeft = 300;
         }
       }
-      if (this.isMousedownRight) {
-        if (e.clientX <= 780) {
-          this.disXRight = 780;
-        } else if (e.clientX > 780 && e.clientX < 930) {
-          this.disXRight = e.clientX;
-        } else if (e.clientX >= 930) {
-          this.disXRight = 930;
-        }
-      }
     });
     window.addEventListener('mouseup', () => {
       this.isMousedownLeft = false;
@@ -62,12 +50,6 @@ export default {
     },
     handleMouseupLeft() {
       this.isMousedownLeft = false;
-    },
-    handleMousedownRight() {
-      this.isMousedownRight = true;
-    },
-    handleMouseupRight() {
-      this.isMousedownRight = false;
     },
   },
 };

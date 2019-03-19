@@ -1,4 +1,7 @@
 const state = {
+  src: '',
+  title: '',
+  author: '',
   duration: 0,
   currentTime: 0,
   paused: true,
@@ -7,6 +10,9 @@ const state = {
 };
 
 const getters = {
+  src: state => state.src,
+  title: state => state.title,
+  author: state => state.author,
   duration: state => state.duration,
   currentTime: state => state.currentTime,
   paused: state => state.paused,
@@ -31,6 +37,16 @@ const mutations = {
     state.lastVolume = state.volume;
     state.volume = 0;
   },
+  srcUpdate(state, payload) {
+    state.src = payload;
+  },
+  titleUpdate(state, payload) {
+    console.log(payload);
+    state.title = payload;
+  },
+  authorUpdate(state, payload) {
+    state.author = payload;
+  },
 };
 
 const actions = {
@@ -48,6 +64,15 @@ const actions = {
   },
   updateMute({ commit }) {
     commit('muteUpdate');
+  },
+  updateSrc({ commit }, delta) {
+    commit('srcUpdate', delta);
+  },
+  updateTitle({ commit }, delta) {
+    commit('titleUpdate', delta);
+  },
+  updateAuthor({ commit }, delta) {
+    commit('authorUpdate', delta);
   },
 };
 
