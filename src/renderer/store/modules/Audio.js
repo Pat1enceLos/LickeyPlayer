@@ -1,7 +1,7 @@
 const state = {
   src: '',
   title: '',
-  author: '',
+  singer: '',
   duration: 0,
   currentTime: 0,
   paused: true,
@@ -12,7 +12,7 @@ const state = {
 const getters = {
   src: state => state.src,
   title: state => state.title,
-  author: state => state.author,
+  singer: state => state.singer,
   duration: state => state.duration,
   currentTime: state => state.currentTime,
   paused: state => state.paused,
@@ -44,8 +44,8 @@ const mutations = {
     console.log(payload);
     state.title = payload;
   },
-  authorUpdate(state, payload) {
-    state.author = payload;
+  singerUpdate(state, payload) {
+    state.singer = payload;
   },
 };
 
@@ -71,8 +71,8 @@ const actions = {
   updateTitle({ commit }, delta) {
     commit('titleUpdate', delta);
   },
-  updateAuthor({ commit }, delta) {
-    commit('authorUpdate', delta);
+  updatesinger({ commit }, delta) {
+    commit('singerUpdate', delta);
   },
 };
 
