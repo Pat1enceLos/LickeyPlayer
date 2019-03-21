@@ -156,4 +156,16 @@ export default {
   height: 25px;
   cursor: pointer;
 }
+.music, .queue, .switch, .import, .export {
+  display: block;
+  width: 13px;
+  height: 13px;
+  margin: auto;
+}
+.addPlaylist {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: auto auto auto 10px;
+}
 </style>

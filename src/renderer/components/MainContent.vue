@@ -19,7 +19,7 @@ export default {
     return {
       isMousedownLeft: false,
       isMousedownRight: false,
-      disXLeft: 210,
+      disXLeft: 165,
     };
   },
   components: {
@@ -30,9 +30,9 @@ export default {
   mounted() {
     window.addEventListener('mousemove', (e) => {
       if (this.isMousedownLeft) {
-        if (e.clientX <= 100) {
-          this.disXLeft = 100;
-        } else if (e.clientX > 100 && e.clientX < 300) {
+        if (e.clientX <= 165) {
+          this.disXLeft = 165;
+        } else if (e.clientX > 165 && e.clientX < 300) {
           this.disXLeft = e.clientX;
         } else if (e.clientX >= 300) {
           this.disXLeft = 300;
