@@ -15,6 +15,6 @@ export default {
   min-width: 680px;
   height: 100%;
   overflow: hidden;
-  background: black;
+  background: #434343;
 }
 </style>

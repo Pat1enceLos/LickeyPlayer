@@ -24,7 +24,15 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['paused', 'volume', 'src']),
+    ...mapGetters(['paused', 'volume', 'src', 'playlistQueue', 'duration', 'nextAudio']),
+  },
+  created() {
+    this.$bus.$on('next-audio', () => {
+      this.$store.dispatch('updateSrc', this.nextAudio);
+      setTimeout(() => {
+        this.$refs.audio.play();
+      }, 0);
+    });
   },
   mounted() {
     if (this.updateCurrentTime) {
@@ -34,7 +42,6 @@ export default {
   watch: {
     src(val) {
       if (val) {
-        console.log(this.filePathToUrl(val));
         this.$refs.audio.src = this.filePathToUrl(val);
       }
       this.$store.dispatch('updatePaused', false);
@@ -50,7 +57,6 @@ export default {
       this.$refs.audio.currentTime = val;
     },
     paused(val) {
-      console.log(val);
       this.$refs.audio[val ? 'pause' : 'play']();
     },
     volume(val) {

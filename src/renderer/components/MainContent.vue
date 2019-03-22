@@ -69,13 +69,5 @@ export default {
       -webkit-app-region: no-drag;
       cursor: e-resize;
     }
-    .rightResizer {
-      position: absolute;
-      width: 1px;
-      height: 560px;
-      background: black;
-      -webkit-app-region: no-drag;
-      cursor: w-resize;
-    }
   }
 </style>

@@ -167,5 +167,6 @@ export default {
   width: 30px;
   height: 30px;
   margin: auto auto auto 10px;
+  cursor: pointer;
 }
 </style>

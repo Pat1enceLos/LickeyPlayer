@@ -5,7 +5,7 @@
       {{ title ? title : '暂无歌曲信息' }}
     </div>
     <div class="songAuthor">
-      {{ author ? author : '暂无歌手信息' }}
+      {{ singer ? singer : '暂无歌手信息' }}
     </div>
     <div class="lyric">
     </div>
@@ -18,7 +18,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'LyricInfo',
   computed: {
-    ...mapGetters(['title', 'author']),
+    ...mapGetters(['title', 'singer']),
   },
 };
 </script>

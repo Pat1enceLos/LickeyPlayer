@@ -5,8 +5,10 @@ const state = {
   duration: 0,
   currentTime: 0,
   paused: true,
-  volume: 75,
+  volume: 25,
   lastVolume: 0,
+  playlistQueue: [],
+  singleCycle: false,
 };
 
 const getters = {
@@ -18,6 +20,20 @@ const getters = {
   paused: state => state.paused,
   volume: state => state.volume,
   lastVolume: state => state.lastVolume,
+  playlistQueue: state => state.playlistQueue,
+  singleCycle: state => state.singleCycle,
+  nextAudio: (state, getters) => {
+    const list = state.playlistQueue;
+    const index = list.findIndex(value => value === getters.src);
+    if (!getters.singleCycle) {
+      if (index !== -1 && index + 1 < list.length) {
+        return list[index + 1];
+      } else if (index + 1 >= list.length) {
+        return list[0];
+      }
+    }
+    return '';
+  },
 };
 
 const mutations = {
@@ -47,6 +63,9 @@ const mutations = {
   singerUpdate(state, payload) {
     state.singer = payload;
   },
+  playlistQueueUpdate(state, payload) {
+    state.playlistQueue = payload.concat(state.playlistQueue);
+  },
 };
 
 const actions = {
@@ -73,6 +92,9 @@ const actions = {
   },
   updatesinger({ commit }, delta) {
     commit('singerUpdate', delta);
+  },
+  updatePlaylistQueue({ commit }, delta) {
+    commit('playlistQueueUpdate', delta);
   },
 };
 

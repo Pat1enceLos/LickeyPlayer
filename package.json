@@ -46,10 +46,34 @@
       ]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "build/icons/icon.icns",
+      "fileAssociations": [
+        {
+          "name": "Audio",
+          "ext": [
+            "mp3",
+            "wav",
+            "m4a"
+          ],
+          "role": "Viewer",
+          "icon": "build/icons/others.ico"
+        }
+      ]
     },
     "win": {
-      "icon": "build/icons/icon.ico"
+      "icon": "build/icons/icon.ico",
+      "fileAssociations": [
+        {
+          "name": "Audio",
+          "ext": [
+            "mp3",
+            "wav",
+            "m4a"
+          ],
+          "role": "Viewer",
+          "icon": "build/icons/others.ico"
+        }
+      ]
     },
     "linux": {
       "icon": "build/icons"

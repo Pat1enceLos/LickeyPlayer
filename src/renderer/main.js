@@ -28,18 +28,16 @@ new Vue({
       e.preventDefault();
     });
     window.addEventListener('drop', (e) => {
-      console.log(123);
       e.preventDefault();
       const files = Array.prototype.map.call(e.dataTransfer.files, f => f.path);
       console.log(files);
       const onlyFolders = files.every(file => fs.statSync(file).isDirectory());
       files.forEach(file => this.$electron.remote.app.addRecentDocument(file));
-      this.openFiles(...files);
-      // if (onlyFolders) {
-      //   this.openFolder(...files);
-      // } else {
-      //   this.openFile(...files);
-      // }
+      if (onlyFolders) {
+        this.openFolders(...files);
+      } else {
+        this.openFiles(...files);
+      }
     });
   },
 }).$mount('#app');

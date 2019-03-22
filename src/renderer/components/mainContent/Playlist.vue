@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import BaseAudioPlayer from '../BaseAudioPlayer';
 import SongsTable from './SongsTable';
 
@@ -17,6 +17,9 @@ export default {
       seekTime: [0],
     };
   },
+  computed: {
+    ...mapGetters(['currentTime', 'duration']),
+  },
   components: {
     'base-audio-player': BaseAudioPlayer,
     'songs-table': SongsTable,
@@ -25,6 +28,13 @@ export default {
     this.$bus.$on('seek', (e) => {
       this.seekTime = [e];
     });
+  },
+  watch: {
+    currentTime(val) {
+      if (val + 1 >= this.duration) {
+        this.$bus.$emit('next-audio');
+      }
+    },
   },
   methods: {
     ...mapActions({
