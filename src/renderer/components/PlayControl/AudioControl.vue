@@ -1,7 +1,7 @@
 <template>
   <div class="audioControl">
     <div class="playbutton">
-      <Icon type="pre" class="pre"></Icon>
+      <Icon type="pre" class="pre" @mouseup.native="handlePreAudio"></Icon>
       <Icon type="play" class="play" @mouseup.native="handleMouseup" v-show="paused"></Icon>
       <Icon type="pause" class="pause" @mouseup.native="handleMouseup" v-show="!paused"></Icon>
       <Icon type="next" class="next" @mouseup.native="handleNextAudio"></Icon>
@@ -33,6 +33,9 @@ export default {
     },
     handleNextAudio() {
       this.$bus.$emit('next-audio');
+    },
+    handlePreAudio() {
+      this.$bus.$emit('pre-audio');
     },
   },
 };

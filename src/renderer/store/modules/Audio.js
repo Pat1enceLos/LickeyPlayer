@@ -35,6 +35,16 @@ const getters = {
     }
     return '';
   },
+  preAudio: (state, getters) => {
+    const list = state.playlistQueue;
+    const index = list.findIndex(value => value === getters.src);
+    if (index !== 0 && index - 1 < list.length) {
+      return list[index - 1];
+    } else if (index === 0) {
+      return list[0];
+    }
+    return '';
+  },
   playlistQueueToShow: state => state.playlistQueueToShow,
 };
 

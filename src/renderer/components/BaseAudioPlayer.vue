@@ -26,13 +26,25 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['paused', 'volume', 'src', 'playlistQueue', 'duration', 'nextAudio']),
+    ...mapGetters(['paused', 'volume', 'src', 'playlistQueue', 'duration', 'nextAudio', 'preAudio']),
   },
   created() {
     this.$bus.$on('next-audio', () => {
       if (fs.existsSync(this.nextAudio)) {
         const basename = path.basename(this.nextAudio);
         this.$store.dispatch('updateSrc', this.nextAudio);
+        this.$store.dispatch('updateTitle', basename.slice(0, basename.lastIndexOf('.')));
+        setTimeout(() => {
+          this.$refs.audio.play();
+        }, 0);
+      } else {
+        alert('音乐文件被移除');
+      }
+    });
+    this.$bus.$on('pre-audio', () => {
+      if (fs.existsSync(this.preAudio)) {
+        const basename = path.basename(this.preAudio);
+        this.$store.dispatch('updateSrc', this.preAudio);
         this.$store.dispatch('updateTitle', basename.slice(0, basename.lastIndexOf('.')));
         setTimeout(() => {
           this.$refs.audio.play();
