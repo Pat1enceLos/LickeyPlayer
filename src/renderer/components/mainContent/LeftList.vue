@@ -7,7 +7,7 @@
       </div>
       <div class="queue">
         <Icon type="queue" class="queLogo"></Icon>
-        <div class="queText">Playback Queue</div>
+        <div class="queText" @mouseup="showPlaylistQueue">Playback Queue</div>
       </div>
       <div class="switch">
         <Icon type="switch" class="switchLogo"></Icon>
@@ -15,7 +15,7 @@
       </div>
       <div class="import">
         <Icon type="import" class="importLogo"></Icon>
-        <div class="importText">Music Import</div>
+        <div class="importText" @mouseup="musicImport">Music Import</div>
       </div>
       <div class="export">
         <Icon type="export" class="exportLogo"></Icon>
@@ -36,6 +36,14 @@ export default {
   name: 'leftList',
   components: {
     Icon,
+  },
+  methods: {
+    musicImport() {
+      this.openFilesByDialog();
+    },
+    showPlaylistQueue() {
+      this.$store.dispatch('updatePlaylistQueueToShow', true);
+    },
   },
 };
 </script>

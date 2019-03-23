@@ -4,7 +4,7 @@
       <Icon type="pre" class="pre"></Icon>
       <Icon type="play" class="play" @mouseup.native="handleMouseup" v-show="paused"></Icon>
       <Icon type="pause" class="pause" @mouseup.native="handleMouseup" v-show="!paused"></Icon>
-      <Icon type="next" class="next"></Icon>
+      <Icon type="next" class="next" @mouseup.native="handleNextAudio"></Icon>
     </div>
   </div>
 </template>
@@ -30,6 +30,9 @@ export default {
   methods: {
     handleMouseup() {
       this.$store.dispatch('updatePaused', !this.paused);
+    },
+    handleNextAudio() {
+      this.$bus.$emit('next-audio');
     },
   },
 };

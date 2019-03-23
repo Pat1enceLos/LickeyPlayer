@@ -51,5 +51,6 @@ export default {
     overflow: hidden;
     height: 100%;
     background: rgba(0, 0, 0, 0.1);
+    display: flex;
   }
 </style>

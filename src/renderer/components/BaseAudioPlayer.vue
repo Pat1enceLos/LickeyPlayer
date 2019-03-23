@@ -4,6 +4,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import fs from 'fs';
+import path from 'path';
 
 export default {
   name: 'BaseAudioPlayer',
@@ -28,10 +30,16 @@ export default {
   },
   created() {
     this.$bus.$on('next-audio', () => {
-      this.$store.dispatch('updateSrc', this.nextAudio);
-      setTimeout(() => {
-        this.$refs.audio.play();
-      }, 0);
+      if (fs.existsSync(this.nextAudio)) {
+        const basename = path.basename(this.nextAudio);
+        this.$store.dispatch('updateSrc', this.nextAudio);
+        this.$store.dispatch('updateTitle', basename.slice(0, basename.lastIndexOf('.')));
+        setTimeout(() => {
+          this.$refs.audio.play();
+        }, 0);
+      } else {
+        alert('音乐文件被移除');
+      }
     });
   },
   mounted() {
