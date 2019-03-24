@@ -3,7 +3,7 @@
     <div class="playNow" @mouseup="handlePlayNow" :style="{ marginTop: '5px' }">
       <div class="handlerText">Play Now</div>
     </div>
-    <div class="addToQueue">
+    <div class="addToQueue" v-show="!playlistQueueToShow">
       <div class="handlerText">Add To Queue</div>
     </div>
     <div class="addToPlaylist">
