@@ -10,6 +10,7 @@ const state = {
   playlistQueue: [],
   singleCycle: false,
   playlistQueueToShow: false,
+  musicLibraryPlaylist: [],
 };
 
 const getters = {
@@ -46,6 +47,7 @@ const getters = {
     return '';
   },
   playlistQueueToShow: state => state.playlistQueueToShow,
+  musicLibraryPlaylist: state => state.musicLibraryPlaylist,
 };
 
 const mutations = {
@@ -81,6 +83,9 @@ const mutations = {
   playlistQueueToShowUpdate(state, payload) {
     state.playlistQueueToShow = payload;
   },
+  musicLibraryPlaylistUpdate(state, payload) {
+    console.log(payload);
+  },
 };
 
 const actions = {
@@ -113,6 +118,9 @@ const actions = {
   },
   updatePlaylistQueueToShow({ commit }, delta) {
     commit('playlistQueueToShowUpdate', delta);
+  },
+  updateMusicLibraryPlaylist({ commit }, delta) {
+    commit('musicLibraryPlaylistUpdate', delta);
   },
 };
 

@@ -5,7 +5,7 @@
         <Icon type="music" class="libLogo"></Icon>
         <div class="libText">Music Library</div>
       </div>
-      <div class="queue">
+      <div class="queue" :style="{ background: playlistQueueToShow ? 'rgba(67, 67, 67)' : ''}">
         <Icon type="queue" class="queLogo"></Icon>
         <div class="queText" @mouseup="showPlaylistQueue">Playback Queue</div>
       </div>
@@ -30,12 +30,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '../BaseIconContainer';
 
 export default {
   name: 'leftList',
   components: {
     Icon,
+  },
+  computed: {
+    ...mapGetters(['playlistQueueToShow']),
   },
   methods: {
     musicImport() {
@@ -57,20 +61,21 @@ export default {
     display: flex;
     flex-direction: column;
     .topContainer {
-      width: auto;
+      width: 100%;
       min-width: 150px;
-      height: 140px;
+      height: 160px;
       display: flex;
       flex-direction: column;
       font-size: 12px;
       color: rgba(255, 255, 255, 1);
       letter-spacing: 0.4px;
-      margin: 10px auto 10px 10px;
+      /*margin: 10px auto 10px 10px;*/
       overflow: hidden;
       white-space: nowrap;
       .library {
         flex: 1;
         display: flex;
+        margin-top: 10px;
         .libText {
           cursor: pointer;
           margin: auto auto auto 10px;
@@ -78,7 +83,7 @@ export default {
         .libLogo {
           width: 15px;
           height: 15px;
-          margin: auto 0 auto 10px;
+          margin: auto 0 auto 20px;
           display: flex;
         }
       }
@@ -92,7 +97,7 @@ export default {
         .queLogo {
           width: 15px;
           height: 15px;
-          margin: auto 0 auto 10px;
+          margin: auto 0 auto 20px;
           display: flex;
         }
       }
@@ -106,7 +111,7 @@ export default {
         .switchLogo {
           width: 15px;
           height: 15px;
-          margin: auto 0 auto 10px;
+          margin: auto 0 auto 20px;
           display: flex;
         }
       }
@@ -120,13 +125,14 @@ export default {
         .importLogo {
           width: 15px;
           height: 15px;
-          margin: auto 0 auto 10px;
+          margin: auto 0 auto 20px;
           display: flex;
         }
       }
       .export {
         flex: 1;
         display: flex;
+        margin-bottom: 10px;
         .exportText {
           cursor: pointer;
           margin: auto auto auto 10px;
@@ -134,7 +140,7 @@ export default {
         .exportLogo {
           width: 15px;
           height: 15px;
-          margin: auto 0 auto 10px;
+          margin: auto 0 auto 20px;
           display: flex;
         }
       }

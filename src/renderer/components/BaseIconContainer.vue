@@ -169,4 +169,10 @@ export default {
   margin: auto auto auto 10px;
   cursor: pointer;
 }
+.playing {
+  display: block;
+  width: 9px;
+  height: 9px;
+  margin: auto;
+}
 </style>

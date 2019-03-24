@@ -63,6 +63,7 @@ export default {
     src(val) {
       if (val) {
         this.$refs.audio.src = this.filePathToUrl(val);
+        this.$refs.audio.play();
       }
       this.$store.dispatch('updatePaused', false);
     },
