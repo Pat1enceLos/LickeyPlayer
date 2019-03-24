@@ -1,9 +1,9 @@
 <template>
   <div class="leftList">
     <div class="topContainer">
-      <div class="library">
+      <div class="library" :style="{ background: musicLibraryToShow ? 'rgba(67, 67, 67)' : '' }">
         <Icon type="music" class="libLogo"></Icon>
-        <div class="libText">Music Library</div>
+        <div class="libText" @mouseup="showMusicLibrary">Music Library</div>
       </div>
       <div class="queue" :style="{ background: playlistQueueToShow ? 'rgba(67, 67, 67)' : ''}">
         <Icon type="queue" class="queLogo"></Icon>
@@ -11,7 +11,7 @@
       </div>
       <div class="switch">
         <Icon type="switch" class="switchLogo"></Icon>
-        <div class="switchText">Switch Display</div>
+        <div class="switchText" @mouseup="handleDisplayType">Switch Display</div>
       </div>
       <div class="import">
         <Icon type="import" class="importLogo"></Icon>
@@ -39,7 +39,7 @@ export default {
     Icon,
   },
   computed: {
-    ...mapGetters(['playlistQueueToShow']),
+    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow']),
   },
   methods: {
     musicImport() {
@@ -47,6 +47,12 @@ export default {
     },
     showPlaylistQueue() {
       this.$store.dispatch('updatePlaylistQueueToShow', true);
+    },
+    showMusicLibrary() {
+      this.$store.dispatch('updateMusicLibraryToShow', true);
+    },
+    handleDisplayType() {
+      this.$store.dispatch('updateDisplayType');
     },
   },
 };

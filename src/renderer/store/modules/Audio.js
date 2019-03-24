@@ -10,7 +10,9 @@ const state = {
   playlistQueue: [],
   singleCycle: false,
   playlistQueueToShow: false,
+  musicLibraryToShow: false,
   musicLibraryPlaylist: [],
+  displayType: true,
 };
 
 const getters = {
@@ -48,6 +50,8 @@ const getters = {
   },
   playlistQueueToShow: state => state.playlistQueueToShow,
   musicLibraryPlaylist: state => state.musicLibraryPlaylist,
+  musicLibraryToShow: state => state.musicLibraryToShow,
+  displayType: state => state.displayType,
 };
 
 const mutations = {
@@ -82,9 +86,27 @@ const mutations = {
   },
   playlistQueueToShowUpdate(state, payload) {
     state.playlistQueueToShow = payload;
+    if (state.musicLibraryToShow) {
+      state.musicLibraryToShow = false;
+    }
   },
   musicLibraryPlaylistUpdate(state, payload) {
-    console.log(payload);
+    state.musicLibraryPlaylist = payload.concat(state.musicLibraryPlaylist);
+  },
+  musicLibraryToShowUpdate(state, payload) {
+    state.musicLibraryToShow = payload;
+    if (state.playlistQueueToShow) {
+      state.playlistQueueToShow = false;
+    }
+  },
+  musicFromQueueRemove(state, payload) {
+    state.playlistQueue.splice(state.playlistQueue.indexOf(payload), 1);
+  },
+  musicFromLibraryRemove(state, payload) {
+    state.musicLibraryPlaylist.splice(state.musicLibraryPlaylist.indexOf(payload), 1);
+  },
+  displayTypeUpdate(state) {
+    state.displayType = !state.displayType;
   },
 };
 
@@ -110,7 +132,7 @@ const actions = {
   updateTitle({ commit }, delta) {
     commit('titleUpdate', delta);
   },
-  updatesinger({ commit }, delta) {
+  updateSinger({ commit }, delta) {
     commit('singerUpdate', delta);
   },
   updatePlaylistQueue({ commit }, delta) {
@@ -121,6 +143,18 @@ const actions = {
   },
   updateMusicLibraryPlaylist({ commit }, delta) {
     commit('musicLibraryPlaylistUpdate', delta);
+  },
+  updateMusicLibraryToShow({ commit }, delta) {
+    commit('musicLibraryToShowUpdate', delta);
+  },
+  removeMusicFromQueue({ commit }, delta) {
+    commit('musicFromQueueRemove', delta);
+  },
+  removeMusicFromLibrary({ commit }, delta) {
+    commit('musicFromLibraryRemove', delta);
+  },
+  updateDisplayType({ commit }) {
+    commit('displayTypeUpdate');
   },
 };
 

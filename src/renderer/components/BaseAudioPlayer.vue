@@ -58,6 +58,9 @@ export default {
     if (this.updateCurrentTime) {
       this.requestAnimationFrameId = requestAnimationFrame(this.currentTimeUpdate);
     }
+    this.$bus.$on('audioToPlay', () => {
+      this.$refs.audio.play();
+    });
   },
   watch: {
     src(val) {

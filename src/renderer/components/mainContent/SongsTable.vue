@@ -11,7 +11,7 @@
     <div class="musicPlaylist">
       <div class="musicContainer"  v-for="(item, index) in displayPlaylist"
         @dblclick="dbClickToPlay(item)"
-        @mouseup="handleMusicSettings($event, index)"
+        @mouseup="handleMusicSettings($event, index, item)"
         :style="{
           background: index % 2 === 0 ? '#434343' : 'rgba(0, 0, 0, 0.1)',
         }">
@@ -24,7 +24,7 @@
         <div class="detailFileType">{{ getMusicFileType(item) }}</div>
       </div>
     </div>
-    <music-handler v-show="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="handler"></music-handler>
+    <music-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="handler" :musicSrc="handlerSrc"></music-handler>
   </div>
 </template>
 
@@ -42,15 +42,18 @@ export default {
       handlerPosX: 0,
       handlerPosY: 0,
       handlerIndex: -1,
+      handlerSrc: '',
+      handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove'],
     };
   },
   created() {
     window.addEventListener('mousedown', (e) => {
-      if (e.target !== this.$refs.handler) {
+      if (!this.handlerClassLists.includes(e.target.className)) {
         this.ifRightClick = false;
         this.handlerPosX = 0;
         this.handlerPosY = 0;
         this.handlerIndex = -1;
+        this.handlerSrc = '';
       }
     });
   },
@@ -59,23 +62,29 @@ export default {
     Icon,
   },
   computed: {
-    ...mapGetters(['playlistQueue', 'playlistQueueToShow', 'src']),
+    ...mapGetters(['playlistQueue', 'playlistQueueToShow', 'src', 'musicLibraryToShow', 'musicLibraryPlaylist']),
     displayPlaylist() {
-      return this.playlistQueueToShow ? this.playlistQueue : '';
+      if (this.playlistQueueToShow) {
+        return this.playlistQueue;
+      } else if (this.musicLibraryToShow) {
+        return this.musicLibraryPlaylist;
+      }
+      return '';
     },
   },
   methods: {
     dbClickToPlay(src) {
       this.$store.dispatch('updateSrc', src);
+      this.$store.dispatch('updatePaused', false);
     },
-    handleMusicSettings(e, index) {
+    handleMusicSettings(e, index, src) {
       if (e.button === 2) {
         this.handlerPosX = e.clientX;
         this.handlerPosY = e.clientY;
         this.handlerIndex = index;
         this.ifRightClick = true;
+        this.handlerSrc = src;
       }
-      console.log(e.clientX, e.clientY);
     },
     getMusicName(item) {
       const basename = path.basename(item);

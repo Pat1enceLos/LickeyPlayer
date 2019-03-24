@@ -64,7 +64,9 @@ export default {
         const basename = path.basename(validFiles[0]);
         this.$store.dispatch('updateSrc', validFiles[0]);
         this.$store.dispatch('updatePlaylistQueue', validFiles);
+        this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
         this.$store.dispatch('updateTitle', basename.slice(0, basename.lastIndexOf('.')));
+        this.$store.dispatch('updatePlaylistQueueToShow', true);
       } else {
         alert('暂不支持的音乐格式');
       }

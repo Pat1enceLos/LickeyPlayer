@@ -1,7 +1,8 @@
 <template>
   <div class="playlist">
     <base-audio-player :updateCurrentTime="true" :currentTime="seekTime" @update:currentTime="updateCurrentTime"></base-audio-player>
-    <songs-table></songs-table>
+    <songs-table v-show="displayType"></songs-table>
+    <songs-image v-show="!displayType"></songs-image>
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import BaseAudioPlayer from '../BaseAudioPlayer';
 import SongsTable from './SongsTable';
+import SongsImage from './SongsImage';
 
 export default {
   name: 'playlist',
@@ -18,11 +20,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentTime', 'duration']),
+    ...mapGetters(['currentTime', 'duration', 'displayType']),
   },
   components: {
     'base-audio-player': BaseAudioPlayer,
     'songs-table': SongsTable,
+    'songs-image': SongsImage,
   },
   mounted() {
     this.$bus.$on('seek', (e) => {
