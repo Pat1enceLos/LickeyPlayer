@@ -13,6 +13,7 @@ const state = {
   musicLibraryToShow: false,
   musicLibraryPlaylist: [],
   displayType: true,
+  createdPlaylist: [],
 };
 
 const getters = {
@@ -52,6 +53,7 @@ const getters = {
   musicLibraryPlaylist: state => state.musicLibraryPlaylist,
   musicLibraryToShow: state => state.musicLibraryToShow,
   displayType: state => state.displayType,
+  createdPlaylist: state => state.createdPlaylist,
 };
 
 const mutations = {
@@ -75,14 +77,17 @@ const mutations = {
     state.src = payload;
   },
   titleUpdate(state, payload) {
-    console.log(payload);
     state.title = payload;
   },
   singerUpdate(state, payload) {
     state.singer = payload;
   },
   playlistQueueUpdate(state, payload) {
-    state.playlistQueue = payload.concat(state.playlistQueue);
+    payload.forEach((item) => {
+      if (!state.playlistQueue.includes(item)) {
+        state.playlistQueue.unshift(item);
+      }
+    });
   },
   playlistQueueToShowUpdate(state, payload) {
     state.playlistQueueToShow = payload;
@@ -107,6 +112,9 @@ const mutations = {
   },
   displayTypeUpdate(state) {
     state.displayType = !state.displayType;
+  },
+  createdPlaylistUpdate(state) {
+    state.createdPlaylist.splice(0, 0, { name: '未命名歌单', src: [] });
   },
 };
 
@@ -155,6 +163,9 @@ const actions = {
   },
   updateDisplayType({ commit }) {
     commit('displayTypeUpdate');
+  },
+  updateCreatedPlaylist({ commit }) {
+    commit('createdPlaylistUpdate');
   },
 };
 

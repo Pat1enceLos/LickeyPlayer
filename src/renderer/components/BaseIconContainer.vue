@@ -175,4 +175,10 @@ export default {
   height: 9px;
   margin: auto;
 }
+.playlist {
+  display: flex;
+  width: 12px;
+  height: 12px;
+  margin: auto;
+}
 </style>

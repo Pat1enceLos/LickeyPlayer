@@ -9,8 +9,8 @@
     <div class="addToPlaylist">
       <div class="handlerText">Add To Playlist</div>
     </div>
-    <div class="playNow">
-      <div class="handlerText">Play Now</div>
+    <div class="reveal">
+      <div class="handlerText">Reveal In Finder</div>
     </div>
     <div class="remove" @mouseup="handleRemove" :style="{ marginBottom: '5px' }">
       <div class="handlerText">Remove</div>
@@ -61,7 +61,7 @@ export default {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  .playNow, .addToQueue, .addToPlaylist, .remove {
+  .playNow, .addToQueue, .addToPlaylist, .remove, .reveal {
     width: 100%;
     height: 30px;
     color: rgba(255, 255, 255, 1);

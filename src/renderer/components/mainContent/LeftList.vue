@@ -24,7 +24,15 @@
     </div>
     <div class="separate">
       <div class="seText">MY PLAYLIST</div>
-      <Icon type="addPlaylist" class="addLogo"></Icon>
+      <Icon type="addPlaylist" class="addLogo" @mouseup.native="addCreatedPlaylist"></Icon>
+    </div>
+    <div class="createdPlaylist">
+      <div class="playlistContainer" v-for="(item, index) in createdPlaylist">
+        <div class="content">
+          <Icon type="queue" class="playlistIcon"></Icon>
+          <div class="playlistText">{{ item.name }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +47,7 @@ export default {
     Icon,
   },
   computed: {
-    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow']),
+    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist']),
   },
   methods: {
     musicImport() {
@@ -53,6 +61,10 @@ export default {
     },
     handleDisplayType() {
       this.$store.dispatch('updateDisplayType');
+    },
+    addCreatedPlaylist() {
+      this.$store.dispatch('updateCreatedPlaylist');
+      console.log(this.createdPlaylist);
     },
   },
 };
@@ -166,6 +178,35 @@ export default {
         height: 100%;
         margin: auto 20px auto auto;
         display: flex;
+      }
+    }
+    .createdPlaylist {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      overflow: scroll;
+      .playlistContainer {
+        width: 100%;
+        height: 30px;
+        display: flex;
+        .content {
+          margin: auto auto auto 20px;
+          display: flex;
+          flex-direction: row;
+          .playlistIcon {
+            width: 15px;
+            height: 15px;
+            display: flex;
+            margin: auto 0 auto 0;
+          }
+          .playlistText {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 1);
+            margin: auto auto auto 10px;
+            cursor: pointer;
+          }
+        }
       }
     }
   }
