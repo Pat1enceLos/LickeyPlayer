@@ -1,11 +1,11 @@
 <template>
   <div class="leftList">
     <div class="topContainer">
-      <div class="library" :style="{ background: musicLibraryToShow ? 'rgba(67, 67, 67)' : '' }">
+      <div class="library" :style="{ background: musicLibraryToShow ? 'rgb(67, 67, 67)' : '' }">
         <Icon type="music" class="libLogo"></Icon>
         <div class="libText" @mouseup="showMusicLibrary">Music Library</div>
       </div>
-      <div class="queue" :style="{ background: playlistQueueToShow ? 'rgba(67, 67, 67)' : ''}">
+      <div class="queue" :style="{ background: playlistQueueToShow ? 'rgb(67, 67, 67)' : ''}">
         <Icon type="queue" class="queLogo"></Icon>
         <div class="queText" @mouseup="showPlaylistQueue">Playback Queue</div>
       </div>
@@ -27,29 +27,56 @@
       <Icon type="addPlaylist" class="addLogo" @mouseup.native="addCreatedPlaylist"></Icon>
     </div>
     <div class="createdPlaylist">
-      <div class="playlistContainer" v-for="(item, index) in createdPlaylist">
-        <div class="content">
+      <div class="playlistContainer" v-for="(item, index) in createdPlaylist" @mouseup="choosePlaylist(item)" :style="{ background: item.name === playlistToShow ? 'rgb(67, 67, 67)' : ''}">
+        <div class="content" @mouseup="handlePlaylistSettings($event, index, item.name)">
           <Icon type="queue" class="playlistIcon"></Icon>
           <div class="playlistText">{{ item.name }}</div>
         </div>
       </div>
     </div>
+    <playlist-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="this.handlerPlaylistName"></playlist-handler>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import Icon from '../BaseIconContainer';
+import PlaylistHandler from './PlaylistHandler';
 
 export default {
   name: 'leftList',
+  data() {
+    return {
+      handlerPosX: 0,
+      handlerPosY: 0,
+      handlerIndex: -1,
+      ifRightClick: false,
+      handlerPlaylistName: '',
+      handlerClassLists: ['playlistHandlerContainer', 'playlistPlayNow', 'addMusic', 'rename', 'playlistRemove'],
+    };
+  },
+  created() {
+    window.addEventListener('mousedown', (e) => {
+      if (!this.handlerClassLists.includes(e.target.className)) {
+        this.ifRightClick = false;
+        this.handlerPosX = 0;
+        this.handlerPosY = 0;
+        this.handlerIndex = -1;
+        this.handlerPlaylistName = '';
+      }
+    });
+  },
   components: {
     Icon,
+    'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist']),
+    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist', 'playlistToShow']),
   },
   methods: {
+    choosePlaylist(item) {
+      this.$store.dispatch('updatePlaylistToShow', item.name);
+    },
     musicImport() {
       this.openFilesByDialog();
     },
@@ -64,7 +91,15 @@ export default {
     },
     addCreatedPlaylist() {
       this.$store.dispatch('updateCreatedPlaylist');
-      console.log(this.createdPlaylist);
+    },
+    handlePlaylistSettings(e, index, name) {
+      if (e.button === 2) {
+        this.handlerPosX = e.clientX;
+        this.handlerPosY = e.clientY;
+        this.handlerIndex = index;
+        this.ifRightClick = true;
+        this.handlerPlaylistName = name;
+      }
     },
   },
 };
@@ -168,6 +203,7 @@ export default {
       height: 35px;
       background: rgb(75, 75, 75);
       display: flex;
+      margin-bottom: 5px;
       .seText {
         color: rgba(255, 255, 255, 1);
         font-size: 13px;

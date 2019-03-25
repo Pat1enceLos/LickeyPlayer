@@ -43,7 +43,7 @@ export default {
       handlerPosY: 0,
       handlerIndex: -1,
       handlerSrc: '',
-      handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove'],
+      handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove', 'handlerContainer'],
     };
   },
   created() {
@@ -62,14 +62,20 @@ export default {
     Icon,
   },
   computed: {
-    ...mapGetters(['playlistQueue', 'playlistQueueToShow', 'src', 'musicLibraryToShow', 'musicLibraryPlaylist']),
+    ...mapGetters(['playlistQueue', 'playlistQueueToShow', 'src', 'musicLibraryToShow', 'musicLibraryPlaylist', 'createdPlaylist', 'playlistToShow']),
     displayPlaylist() {
+      let playlistSrc = [];
+      this.createdPlaylist.forEach((item) => {
+        if (item.name === this.playlistToShow) {
+          playlistSrc = item.src;
+        }
+      });
       if (this.playlistQueueToShow) {
         return this.playlistQueue;
       } else if (this.musicLibraryToShow) {
         return this.musicLibraryPlaylist;
       }
-      return '';
+      return playlistSrc;
     },
   },
   methods: {

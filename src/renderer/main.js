@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import fs from 'fs';
+import { mapGetters } from 'vuex';
 import VueElectron from 'vue-electron';
 import helpers from '@/helpers';
 import App from './App';
@@ -20,6 +21,9 @@ new Vue({
   router,
   store,
   template: '<App/>',
+  computed: {
+    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow']),
+  },
   mounted() {
     window.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -34,9 +38,15 @@ new Vue({
       const onlyFolders = files.every(file => fs.statSync(file).isDirectory());
       files.forEach(file => this.$electron.remote.app.addRecentDocument(file));
       if (onlyFolders) {
-        this.openFolders(...files);
-      } else {
+        if (this.playlistQueueToShow) {
+          this.openFolders(...files);
+        } else {
+          this.importFolders(...files);
+        }
+      } else if (this.playlistQueueToShow) {
         this.openFiles(...files);
+      } else {
+        this.importFiles(...files);
       }
     });
   },

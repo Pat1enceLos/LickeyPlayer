@@ -10,7 +10,8 @@ const state = {
   playlistQueue: [],
   singleCycle: false,
   playlistQueueToShow: false,
-  musicLibraryToShow: false,
+  musicLibraryToShow: true,
+  playlistToShow: '',
   musicLibraryPlaylist: [],
   displayType: true,
   createdPlaylist: [],
@@ -54,8 +55,9 @@ const getters = {
   musicLibraryToShow: state => state.musicLibraryToShow,
   displayType: state => state.displayType,
   createdPlaylist: state => state.createdPlaylist,
+  playlistToShow: state => state.playlistToShow,
 };
-
+let i = 0;
 const mutations = {
   durationUpdate(state, payload) {
     state.duration = payload;
@@ -94,15 +96,21 @@ const mutations = {
     if (state.musicLibraryToShow) {
       state.musicLibraryToShow = false;
     }
+    state.playlistToShow = '';
   },
   musicLibraryPlaylistUpdate(state, payload) {
-    state.musicLibraryPlaylist = payload.concat(state.musicLibraryPlaylist);
+    payload.forEach((item) => {
+      if (!state.musicLibraryPlaylist.includes(item)) {
+        state.musicLibraryPlaylist.unshift(item);
+      }
+    });
   },
   musicLibraryToShowUpdate(state, payload) {
     state.musicLibraryToShow = payload;
     if (state.playlistQueueToShow) {
       state.playlistQueueToShow = false;
     }
+    state.playlistToShow = '';
   },
   musicFromQueueRemove(state, payload) {
     state.playlistQueue.splice(state.playlistQueue.indexOf(payload), 1);
@@ -114,7 +122,30 @@ const mutations = {
     state.displayType = !state.displayType;
   },
   createdPlaylistUpdate(state) {
-    state.createdPlaylist.splice(0, 0, { name: '未命名歌单', src: [] });
+    i += 1;
+    state.createdPlaylist.push({ name: `未命名歌单 ${i}`, src: [] });
+  },
+  playlistToShowUpdate(state, payload) {
+    state.playlistToShow = payload;
+    if (state.playlistQueueToShow) {
+      state.playlistQueueToShow = false;
+    }
+    if (state.musicLibraryToShow) {
+      state.musicLibraryToShow = false;
+    }
+  },
+  musicAddToPlaylist(state, payload) {
+    state.createdPlaylist.forEach((item) => {
+      if (item.name === state.playlistToShow && !item.src.includes(payload)) {
+        payload.forEach((src) => {
+          console.log(src);
+          if (!item.src.includes(src)) {
+            item.src.unshift(src);
+          }
+        });
+        console.log(item.src);
+      }
+    });
   },
 };
 
@@ -166,6 +197,12 @@ const actions = {
   },
   updateCreatedPlaylist({ commit }) {
     commit('createdPlaylistUpdate');
+  },
+  updatePlaylistToShow({ commit }, delta) {
+    commit('playlistToShowUpdate', delta);
+  },
+  addMusicToPlaylist({ commit }, delta) {
+    commit('musicAddToPlaylist', delta);
   },
 };
 

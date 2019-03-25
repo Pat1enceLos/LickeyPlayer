@@ -1,9 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import { remote } from 'electron';
+import { mapGetters } from 'vuex';
 import { getValidAudioRegex, getValidAudioExtensions } from '../../shared/util';
 
 export default {
+  computed: {
+    ...mapGetters(['playlistToShow']),
+  },
   methods: {
     timeFormatter(s) {
       const dt = new Date(Math.abs(s) * 1000);
@@ -51,12 +55,51 @@ export default {
           const onlyFolders = files.every(file => fs.statSync(file).isDirectory());
           files.forEach(file => remote.app.addRecentDocument(file));
           if (onlyFolders) {
-            this.openFolders(...files);
+            this.importFolders(...files);
           } else {
-            this.openFiles(...files);
+            this.importFiles(...files);
           }
         }
       });
+    },
+    importFolders(...folders) {
+      const files = [];
+      const AudioFiles = [];
+
+      folders.forEach((dirPath) => {
+        if (fs.statSync(dirPath).isDirectory()) {
+          const dirFiles = fs.readdirSync(dirPath).map(file => path.join(dirPath, file));
+          files.push(...dirFiles);
+        }
+      });
+
+      for (let i = 0; i < files.length; i += 1) {
+        const file = files[i];
+        if (!path.basename(file).startsWith('.')) {
+          if (getValidAudioRegex().test(path.extname(file))) {
+            AudioFiles.push(file);
+          }
+        }
+      }
+      if (AudioFiles.length !== 0) {
+        this.importFiles(...AudioFiles);
+      } else {
+        // TODO: no AudioFiles in folders error catch
+        alert('不支持的音乐格式');
+      }
+    },
+    importFiles(...files) {
+      const validFiles = files.filter(file => getValidAudioRegex().test(path.extname(file)));
+      if (validFiles.length) {
+        this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
+        if (this.playlistToShow) {
+          this.$store.dispatch('addMusicToPlaylist', validFiles);
+        } else {
+          this.$store.dispatch('updateMusicLibraryToShow', true);
+        }
+      } else {
+        alert('暂不支持的音乐格式');
+      }
     },
     openFiles(...files) {
       const validFiles = files.filter(file => getValidAudioRegex().test(path.extname(file)));
