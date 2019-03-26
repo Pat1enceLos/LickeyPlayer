@@ -57,7 +57,6 @@ const getters = {
   createdPlaylist: state => state.createdPlaylist,
   playlistToShow: state => state.playlistToShow,
 };
-let i = 0;
 const mutations = {
   durationUpdate(state, payload) {
     state.duration = payload;
@@ -121,9 +120,8 @@ const mutations = {
   displayTypeUpdate(state) {
     state.displayType = !state.displayType;
   },
-  createdPlaylistUpdate(state) {
-    i += 1;
-    state.createdPlaylist.push({ name: `未命名歌单 ${i}`, src: [] });
+  createdPlaylistUpdate(state, payload) {
+    state.createdPlaylist.push({ name: payload, src: [] });
   },
   playlistToShowUpdate(state, payload) {
     state.playlistToShow = payload;
@@ -195,8 +193,8 @@ const actions = {
   updateDisplayType({ commit }) {
     commit('displayTypeUpdate');
   },
-  updateCreatedPlaylist({ commit }) {
-    commit('createdPlaylistUpdate');
+  updateCreatedPlaylist({ commit }, delta) {
+    commit('createdPlaylistUpdate', delta);
   },
   updatePlaylistToShow({ commit }, delta) {
     commit('playlistToShowUpdate', delta);

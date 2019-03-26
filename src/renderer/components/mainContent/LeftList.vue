@@ -34,6 +34,10 @@
         </div>
       </div>
     </div>
+    <div class="playlistInput" v-show="inputToShow">
+      <Icon type="queue" class="playlistIcon"></Icon>
+      <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput"/>
+    </div>
     <playlist-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="this.handlerPlaylistName"></playlist-handler>
   </div>
 </template>
@@ -53,6 +57,7 @@ export default {
       ifRightClick: false,
       handlerPlaylistName: '',
       handlerClassLists: ['playlistHandlerContainer', 'playlistPlayNow', 'addMusic', 'rename', 'playlistRemove'],
+      inputToShow: false,
     };
   },
   created() {
@@ -90,7 +95,8 @@ export default {
       this.$store.dispatch('updateDisplayType');
     },
     addCreatedPlaylist() {
-      this.$store.dispatch('updateCreatedPlaylist');
+      this.inputToShow = true;
+      // this.$store.dispatch('updateCreatedPlaylist');
     },
     handlePlaylistSettings(e, index, name) {
       if (e.button === 2) {
@@ -99,6 +105,23 @@ export default {
         this.handlerIndex = index;
         this.ifRightClick = true;
         this.handlerPlaylistName = name;
+      }
+    },
+    handleInput() {
+      const inputName = document.querySelector('.nameInput').value;
+      if (inputName !== '') {
+        this.$store.dispatch('updateCreatedPlaylist', inputName);
+        this.inputToShow = false;
+        document.querySelector('.nameInput').value = '';
+      }
+      console.log(document.querySelector('.nameInput').value);
+    },
+    handleKeyInput(e) {
+      const inputName = document.querySelector('.nameInput').value;
+      if (e.key === 'Enter' && inputName !== '') {
+        this.$store.dispatch('updateCreatedPlaylist', inputName);
+        this.inputToShow = false;
+        document.querySelector('.nameInput').value = '';
       }
     },
   },
@@ -243,6 +266,26 @@ export default {
             cursor: pointer;
           }
         }
+      }
+    }
+    .playlistInput {
+      width: 100%;
+      height: 30px;
+      display: flex;
+      flex-direction: row;
+      .playlistIcon {
+        width: 15px;
+        height: 15px;
+        display: flex;
+        margin: auto 10px auto 20px;
+      }
+      .nameInput {
+        width: 60%;
+        height: 20px;
+        font-size: 13px;
+        margin: auto auto auto 0;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 5px;
       }
     }
   }
