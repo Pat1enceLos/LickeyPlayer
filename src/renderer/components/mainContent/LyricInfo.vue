@@ -28,7 +28,7 @@ export default {
       return this.currentAudioInfo ? this.currentAudioInfo.artists[0] : '暂无歌手信息';
     },
     picture() {
-      return this.currentAudioInfo ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
+      return this.currentAudioInfo && this.currentAudioInfo.picture ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
     },
   },
 };

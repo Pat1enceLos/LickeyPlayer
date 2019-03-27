@@ -96,7 +96,6 @@ export default {
       return this.audioInfo.find(item => item.src === src);
     },
     title(item) {
-      console.log(this.fixedAudioInfo(item).picture[0].data.toString('base64'));
       return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).title : 'null';
     },
     artist(item) {
