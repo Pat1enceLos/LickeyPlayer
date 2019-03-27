@@ -34,7 +34,6 @@ new Vue({
     window.addEventListener('drop', (e) => {
       e.preventDefault();
       const files = Array.prototype.map.call(e.dataTransfer.files, f => f.path);
-      console.log(files);
       const onlyFolders = files.every(file => fs.statSync(file).isDirectory());
       files.forEach(file => this.$electron.remote.app.addRecentDocument(file));
       if (onlyFolders) {

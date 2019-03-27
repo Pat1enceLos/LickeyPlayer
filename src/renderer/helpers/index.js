@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs, { readdir } from 'fs';
+import path, { basename, dirname, extname, join } from 'path';
 import { remote } from 'electron';
 import { mapGetters } from 'vuex';
 import { getValidAudioRegex, getValidAudioExtensions } from '../../shared/util';
@@ -150,6 +150,26 @@ export default {
         .replace(/#/g, '%23')
         .replace(/[?]/g, '%3F');
       return fileUrl;
+    },
+    searchForLocalList(audioSrc) {
+      return new Promise((resolve, reject) => {
+        const audioDir = dirname(audioSrc);
+        const audioBasename = basename(audioSrc, extname(audioSrc)).toLowerCase();
+        const audioFilename = basename(audioSrc).toLowerCase();
+        const extensionRegex = new RegExp('\\.lrc$', 'i');
+        readdir(audioDir, (err, files) => {
+          if (err) reject(err);
+          resolve(files.filter((lyricFilename) => {
+            const lowerCasedName = lyricFilename.toLowerCase();
+            return (
+              extensionRegex.test(lowerCasedName) &&
+              lowerCasedName.slice(0, lowerCasedName.lastIndexOf('.')) === audioBasename &&
+              lowerCasedName !== audioFilename
+            );
+          })
+            .map(lyricFilename => (join(audioDir, lyricFilename))));
+        });
+      });
     },
   },
 };
