@@ -1,7 +1,8 @@
+import * as mm from 'music-metadata';
+
 const state = {
   src: '',
-  title: '',
-  singer: '',
+  audioInfo: [],
   duration: 0,
   currentTime: 0,
   paused: true,
@@ -19,8 +20,6 @@ const state = {
 
 const getters = {
   src: state => state.src,
-  title: state => state.title,
-  singer: state => state.singer,
   duration: state => state.duration,
   currentTime: state => state.currentTime,
   paused: state => state.paused,
@@ -29,7 +28,18 @@ const getters = {
   playlistQueue: state => state.playlistQueue,
   singleCycle: state => state.singleCycle,
   nextAudio: (state, getters) => {
-    const list = state.playlistQueue;
+    let list = [];
+    if (getters.playlistQueueToShow) {
+      list = state.playlistQueue;
+    } else if (getters.musicLibraryToShow) {
+      list = state.musicLibraryPlaylist;
+    } else {
+      this.createdPlaylist.forEach((item) => {
+        if (item.name === this.playlistToShow) {
+          list = item.src;
+        }
+      });
+    }
     const index = list.findIndex(value => value === getters.src);
     if (!getters.singleCycle) {
       if (index !== -1 && index + 1 < list.length) {
@@ -41,7 +51,18 @@ const getters = {
     return '';
   },
   preAudio: (state, getters) => {
-    const list = state.playlistQueue;
+    let list = [];
+    if (getters.playlistQueueToShow) {
+      list = state.playlistQueue;
+    } else if (getters.musicLibraryToShow) {
+      list = state.musicLibraryPlaylist;
+    } else {
+      this.createdPlaylist.forEach((item) => {
+        if (item.name === this.playlistToShow) {
+          list = item.src;
+        }
+      });
+    }
     const index = list.findIndex(value => value === getters.src);
     if (index !== 0 && index - 1 < list.length) {
       return list[index - 1];
@@ -56,6 +77,8 @@ const getters = {
   displayType: state => state.displayType,
   createdPlaylist: state => state.createdPlaylist,
   playlistToShow: state => state.playlistToShow,
+  audioInfo: state => state.audioInfo,
+  currentAudioInfo: (state, getters) => state.audioInfo.find(item => item.src === getters.src),
 };
 const mutations = {
   durationUpdate(state, payload) {
@@ -76,12 +99,6 @@ const mutations = {
   },
   srcUpdate(state, payload) {
     state.src = payload;
-  },
-  titleUpdate(state, payload) {
-    state.title = payload;
-  },
-  singerUpdate(state, payload) {
-    state.singer = payload;
   },
   playlistQueueUpdate(state, payload) {
     payload.forEach((item) => {
@@ -141,9 +158,11 @@ const mutations = {
             item.src.unshift(src);
           }
         });
-        console.log(item.src);
       }
     });
+  },
+  audioInfoUpdate(state, payload) {
+    state.audioInfo.unshift(payload);
   },
 };
 
@@ -165,12 +184,6 @@ const actions = {
   },
   updateSrc({ commit }, delta) {
     commit('srcUpdate', delta);
-  },
-  updateTitle({ commit }, delta) {
-    commit('titleUpdate', delta);
-  },
-  updateSinger({ commit }, delta) {
-    commit('singerUpdate', delta);
   },
   updatePlaylistQueue({ commit }, delta) {
     commit('playlistQueueUpdate', delta);
@@ -201,6 +214,23 @@ const actions = {
   },
   addMusicToPlaylist({ commit }, delta) {
     commit('musicAddToPlaylist', delta);
+  },
+  updateAudioInfo({ commit }, delta) {
+    delta.forEach(async (item) => {
+      const metadata = await mm.parseFile(item);
+      console.log(metadata);
+      commit('audioInfoUpdate', {
+        src: item,
+        title: metadata.common.title,
+        artists: metadata.common.artists,
+        album: metadata.common.album,
+        year: metadata.common.year,
+        track: metadata.common.track,
+        fileType: metadata.format.dataformat,
+        duration: metadata.format.duration,
+        picture: metadata.common.picture,
+      });
+    });
   },
 };
 

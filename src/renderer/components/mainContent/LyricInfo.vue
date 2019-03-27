@@ -1,11 +1,13 @@
 <template>
   <div class="lyricInfo">
-    <div class="lyricLogo"></div>
+    <div class="lyricLogo">
+      <img :src='picture' :style="{ width: '100%', height: '100%' }" v-show="picture">
+    </div>
     <div class="songTitle">
-      {{ title ? title : '暂无歌曲信息' }}
+      {{ title }}
     </div>
     <div class="songAuthor">
-      {{ singer ? singer : '暂无歌手信息' }}
+      {{ artist }}
     </div>
     <div class="lyric">
     </div>
@@ -18,7 +20,16 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'LyricInfo',
   computed: {
-    ...mapGetters(['title', 'singer']),
+    ...mapGetters(['currentAudioInfo', 'src']),
+    title() {
+      return this.currentAudioInfo ? this.currentAudioInfo.title : '暂无歌曲信息';
+    },
+    artist() {
+      return this.currentAudioInfo ? this.currentAudioInfo.artists[0] : '暂无歌手信息';
+    },
+    picture() {
+      return this.currentAudioInfo ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
+    },
   },
 };
 </script>

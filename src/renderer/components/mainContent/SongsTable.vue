@@ -17,11 +17,11 @@
         }">
         <div class="detailIndex" v-show="src !== item">{{ index + 1 }}</div>
         <Icon type="playing" v-show="src === item" class="playingIcon"></Icon>
-        <div class="detailSongTitle">{{ getMusicName(item) }}</div>
-        <div class="detailArtists">{{ 'test' }}</div>
-        <div class="detailAlbum">Album</div>
-        <div class="detailTime">Time</div>
-        <div class="detailFileType">{{ getMusicFileType(item) }}</div>
+        <div class="detailSongTitle">{{ title(item) }}</div>
+        <div class="detailArtists">{{ artist(item) }}</div>
+        <div class="detailAlbum">{{ album(item) }}</div>
+        <div class="detailTime">{{ timeFormatter(duration(item)) }}</div>
+        <div class="detailFileType">{{ fileType(item) }}</div>
       </div>
     </div>
     <music-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="handler" :musicSrc="handlerSrc"></music-handler>
@@ -43,7 +43,7 @@ export default {
       handlerPosY: 0,
       handlerIndex: -1,
       handlerSrc: '',
-      handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove', 'handlerContainer'],
+      handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove', 'handlerContainer', 'audioInfo'],
     };
   },
   created() {
@@ -62,7 +62,7 @@ export default {
     Icon,
   },
   computed: {
-    ...mapGetters(['playlistQueue', 'playlistQueueToShow', 'src', 'musicLibraryToShow', 'musicLibraryPlaylist', 'createdPlaylist', 'playlistToShow']),
+    ...mapGetters(['playlistQueue', 'playlistQueueToShow', 'src', 'musicLibraryToShow', 'musicLibraryPlaylist', 'createdPlaylist', 'playlistToShow', 'audioInfo']),
     displayPlaylist() {
       let playlistSrc = [];
       this.createdPlaylist.forEach((item) => {
@@ -92,13 +92,24 @@ export default {
         this.handlerSrc = src;
       }
     },
-    getMusicName(item) {
-      const basename = path.basename(item);
-      return basename.slice(0, basename.lastIndexOf('.'));
+    fixedAudioInfo(src) {
+      return this.audioInfo.find(item => item.src === src);
     },
-    getMusicFileType(item) {
-      const basename = path.basename(item);
-      return basename.slice(basename.lastIndexOf('.') + 1, basename.length);
+    title(item) {
+      console.log(this.fixedAudioInfo(item).picture[0].data.toString('base64'));
+      return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).title : 'null';
+    },
+    artist(item) {
+      return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).artists[0] : 'null';
+    },
+    album(item) {
+      return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).album : 'null';
+    },
+    duration(item) {
+      return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).duration : 'null';
+    },
+    fileType(item) {
+      return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).fileType : 'null';
     },
   },
 };

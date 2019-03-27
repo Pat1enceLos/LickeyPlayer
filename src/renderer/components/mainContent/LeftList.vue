@@ -27,8 +27,11 @@
       <Icon type="addPlaylist" class="addLogo" @mouseup.native="addCreatedPlaylist"></Icon>
     </div>
     <div class="createdPlaylist">
-      <div class="playlistContainer" v-for="(item, index) in createdPlaylist" @mouseup="choosePlaylist(item)" :style="{ background: item.name === playlistToShow ? 'rgb(67, 67, 67)' : ''}">
-        <div class="content" @mouseup="handlePlaylistSettings($event, index, item.name)">
+      <div class="playlistContainer"
+        v-for="(item, index) in createdPlaylist"
+        @mouseup="handlePlaylist($event, index, item)"
+        :style="{ background: item.name === playlistToShow ? 'rgb(67, 67, 67)' : ''}">
+        <div class="content">
           <Icon type="queue" class="playlistIcon"></Icon>
           <div class="playlistText">{{ item.name }}</div>
         </div>
@@ -76,11 +79,18 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist', 'playlistToShow']),
+    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist', 'playlistToShow', 'createdPlaylist']),
   },
   methods: {
-    choosePlaylist(item) {
+    handlePlaylist(e, index, item) {
       this.$store.dispatch('updatePlaylistToShow', item.name);
+      if (e.button === 2) {
+        this.handlerPosX = e.clientX;
+        this.handlerPosY = e.clientY;
+        this.handlerIndex = index;
+        this.ifRightClick = true;
+        this.handlerPlaylistName = item.name;
+      }
     },
     musicImport() {
       this.openFilesByDialog();
@@ -96,32 +106,41 @@ export default {
     },
     addCreatedPlaylist() {
       this.inputToShow = true;
-      // this.$store.dispatch('updateCreatedPlaylist');
-    },
-    handlePlaylistSettings(e, index, name) {
-      if (e.button === 2) {
-        this.handlerPosX = e.clientX;
-        this.handlerPosY = e.clientY;
-        this.handlerIndex = index;
-        this.ifRightClick = true;
-        this.handlerPlaylistName = name;
-      }
     },
     handleInput() {
       const inputName = document.querySelector('.nameInput').value;
       if (inputName !== '') {
-        this.$store.dispatch('updateCreatedPlaylist', inputName);
-        this.inputToShow = false;
-        document.querySelector('.nameInput').value = '';
+        let duplicate = false;
+        this.createdPlaylist.forEach((item) => {
+          if (item.name === inputName) {
+            duplicate = true;
+          }
+        });
+        if (!duplicate) {
+          this.$store.dispatch('updateCreatedPlaylist', inputName);
+          this.inputToShow = false;
+          document.querySelector('.nameInput').value = '';
+        } else {
+          alert('已存在该播放列表');
+        }
       }
-      console.log(document.querySelector('.nameInput').value);
     },
     handleKeyInput(e) {
       const inputName = document.querySelector('.nameInput').value;
       if (e.key === 'Enter' && inputName !== '') {
-        this.$store.dispatch('updateCreatedPlaylist', inputName);
-        this.inputToShow = false;
-        document.querySelector('.nameInput').value = '';
+        let duplicate = false;
+        this.createdPlaylist.forEach((item) => {
+          if (item.name === inputName) {
+            duplicate = true;
+          }
+        });
+        if (!duplicate) {
+          this.$store.dispatch('updateCreatedPlaylist', inputName);
+          this.inputToShow = false;
+          document.querySelector('.nameInput').value = '';
+        } else {
+          alert('已存在该播放列表');
+        }
       }
     },
   },
@@ -286,6 +305,7 @@ export default {
         margin: auto auto auto 0;
         background: rgba(255, 255, 255, 1);
         border-radius: 5px;
+        text-indent: 3px;
       }
     }
   }

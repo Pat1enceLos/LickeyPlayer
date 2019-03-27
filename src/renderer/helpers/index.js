@@ -92,6 +92,7 @@ export default {
       const validFiles = files.filter(file => getValidAudioRegex().test(path.extname(file)));
       if (validFiles.length) {
         this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
+        this.$store.dispatch('updateAudioInfo', validFiles);
         if (this.playlistToShow) {
           this.$store.dispatch('addMusicToPlaylist', validFiles);
         } else {
@@ -104,12 +105,11 @@ export default {
     openFiles(...files) {
       const validFiles = files.filter(file => getValidAudioRegex().test(path.extname(file)));
       if (validFiles.length) {
-        const basename = path.basename(validFiles[0]);
         this.$store.dispatch('updateSrc', validFiles[0]);
         this.$store.dispatch('updatePlaylistQueue', validFiles);
         this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
-        this.$store.dispatch('updateTitle', basename.slice(0, basename.lastIndexOf('.')));
         this.$store.dispatch('updatePlaylistQueueToShow', true);
+        this.$store.dispatch('updateAudioInfo', validFiles);
       } else {
         alert('暂不支持的音乐格式');
       }
