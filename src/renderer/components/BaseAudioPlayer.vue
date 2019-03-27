@@ -35,7 +35,8 @@ export default {
           this.$refs.audio.play();
         }, 0);
       } else {
-        alert('音乐文件被移除');
+        // alert('音乐文件被移除');
+        console.log('无可播放音乐');
       }
     });
     this.$bus.$on('pre-audio', () => {
@@ -45,7 +46,8 @@ export default {
           this.$refs.audio.play();
         }, 0);
       } else {
-        alert('音乐文件被移除');
+        // alert('音乐文件被移除');
+        console.log('无可播放音乐');
       }
     });
   },

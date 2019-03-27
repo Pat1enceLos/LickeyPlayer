@@ -43,7 +43,7 @@ export default {
   .lyricLogo {
     width: 180px;
     height: 180px;
-    margin: 20px auto 0 auto;
+    margin: 15px auto 0 auto;
     background: black;
   }
   .songTitle {

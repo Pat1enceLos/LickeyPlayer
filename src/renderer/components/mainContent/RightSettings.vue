@@ -7,11 +7,13 @@
         <div class="text">TAG EDIT</div></div>
     </div>
     <lyric-info v-show="isLyricShow"></lyric-info>
+    <tag-edit v-show="!isLyricShow"></tag-edit>
   </div>
 </template>
 
 <script>
 import LyricInfo from './LyricInfo';
+import TagEdit from './TagEdit';
 
 export default {
   name: 'rightSettings',
@@ -22,6 +24,7 @@ export default {
   },
   components: {
     'lyric-info': LyricInfo,
+    'tag-edit': TagEdit,
   },
   methods: {
     changeToLyric() {

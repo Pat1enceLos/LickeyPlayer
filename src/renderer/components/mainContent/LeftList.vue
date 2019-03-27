@@ -17,10 +17,10 @@
         <Icon type="import" class="importLogo"></Icon>
         <div class="importText" @mouseup="musicImport">Music Import</div>
       </div>
-      <div class="export">
-        <Icon type="export" class="exportLogo"></Icon>
-        <div class="exportText">Music Export</div>
-      </div>
+      <!--<div class="export">-->
+        <!--<Icon type="export" class="exportLogo"></Icon>-->
+        <!--<div class="exportText">Music Export</div>-->
+      <!--</div>-->
     </div>
     <div class="separate">
       <div class="seText">MY PLAYLIST</div>
@@ -105,7 +105,12 @@ export default {
       this.$store.dispatch('updateDisplayType');
     },
     addCreatedPlaylist() {
-      this.inputToShow = true;
+      if (!this.inputToShow) {
+        this.inputToShow = true;
+        setTimeout(() => {
+          document.querySelector('.nameInput').focus();
+        }, 0);
+      }
     },
     handleInput() {
       const inputName = document.querySelector('.nameInput').value;
@@ -123,6 +128,8 @@ export default {
         } else {
           alert('已存在该播放列表');
         }
+      } else {
+        this.inputToShow = false;
       }
     },
     handleKeyInput(e) {
@@ -158,7 +165,7 @@ export default {
     .topContainer {
       width: 100%;
       min-width: 150px;
-      height: 160px;
+      height: 140px;
       display: flex;
       flex-direction: column;
       font-size: 12px;
@@ -213,6 +220,7 @@ export default {
       .import {
         flex: 1;
         display: flex;
+        margin-bottom: 10px;
         .importText {
           cursor: pointer;
           margin: auto auto auto 10px;
@@ -304,8 +312,10 @@ export default {
         font-size: 13px;
         margin: auto auto auto 0;
         background: rgba(255, 255, 255, 1);
-        border-radius: 5px;
+        border-radius: 3px;
         text-indent: 3px;
+        outline: none;
+        border: none;
       }
     }
   }
