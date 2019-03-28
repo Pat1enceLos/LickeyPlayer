@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import fs from 'fs';
 import { mapGetters } from 'vuex';
 import VueElectron from 'vue-electron';
 import helpers from '@/helpers';
@@ -25,28 +24,5 @@ new Vue({
     ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow']),
   },
   mounted() {
-    window.addEventListener('dragover', (e) => {
-      e.preventDefault();
-    });
-    window.addEventListener('dragleave', (e) => {
-      e.preventDefault();
-    });
-    window.addEventListener('drop', (e) => {
-      e.preventDefault();
-      const files = Array.prototype.map.call(e.dataTransfer.files, f => f.path);
-      const onlyFolders = files.every(file => fs.statSync(file).isDirectory());
-      files.forEach(file => this.$electron.remote.app.addRecentDocument(file));
-      if (onlyFolders) {
-        if (this.playlistQueueToShow) {
-          this.openFolders(...files);
-        } else {
-          this.importFolders(...files);
-        }
-      } else if (this.playlistQueueToShow) {
-        this.openFiles(...files);
-      } else {
-        this.importFiles(...files);
-      }
-    });
   },
 }).$mount('#app');

@@ -40,14 +40,20 @@ export default {
   name: 'LyricInfo',
   data() {
     return {
-      lyric: {},
       currentLyric: [],
-      lyricTexts: [],
       lyricScrollTop: 0,
       transFlag: true,
       cueIndex: 0,
       lastCueIndex: 0,
     };
+  },
+  props: {
+    lyric: {
+      type: Object,
+    },
+    lyricTexts: {
+      type: Array,
+    },
   },
   computed: {
     ...mapGetters(['currentAudioInfo', 'src', 'currentTime', 'duration']),
@@ -75,6 +81,12 @@ export default {
     },
   },
   watch: {
+    lyric() {
+      this.transFlag = false;
+      setTimeout(() => {
+        this.transFlag = true;
+      }, 10);
+    },
     src(val) {
       this.searchForLocalList(val).then((src) => {
         if (src.length) {
@@ -82,8 +94,8 @@ export default {
             const encodingBuffer = await this.getFragmentBuffer(src[0]);
             const decodeData = iconv.decode(data, chardet.detect(encodingBuffer));
             const parsedData = lrcParser(decodeData);
-            this.lyric = parsedData;
-            this.lyricTexts = parsedData.scripts.map(lrc => lrc.text);
+            this.$emit('update:lyric', parsedData);
+            this.$emit('update:lyricTexts', parsedData.scripts.map(lrc => lrc.text));
           });
         }
       });

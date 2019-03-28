@@ -1,5 +1,5 @@
 <template>
-  <div class="playlist">
+  <div class="playlist" ref="playlistDrop">
     <base-audio-player :updateCurrentTime="true" :currentTime="seekTime" @update:currentTime="updateCurrentTime"></base-audio-player>
     <songs-table v-show="displayType"></songs-table>
     <songs-image v-show="!displayType"></songs-image>
@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import fs from 'fs';
 import { mapActions, mapGetters } from 'vuex';
 import BaseAudioPlayer from '../BaseAudioPlayer';
 import SongsTable from './SongsTable';
@@ -20,7 +21,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentTime', 'duration', 'displayType']),
+    ...mapGetters(['currentTime', 'duration', 'displayType', 'playlistQueueToShow', 'musicLibraryToShow']),
   },
   components: {
     'base-audio-player': BaseAudioPlayer,
@@ -30,6 +31,29 @@ export default {
   mounted() {
     this.$bus.$on('seek', (e) => {
       this.seekTime = [e];
+    });
+    this.$refs.playlistDrop.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+    this.$refs.playlistDrop.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+    });
+    this.$refs.playlistDrop.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const files = Array.prototype.map.call(e.dataTransfer.files, f => f.path);
+      const onlyFolders = files.every(file => fs.statSync(file).isDirectory());
+      files.forEach(file => this.$electron.remote.app.addRecentDocument(file));
+      if (onlyFolders) {
+        if (this.playlistQueueToShow) {
+          this.openFolders(...files);
+        } else {
+          this.importFolders(...files);
+        }
+      } else if (this.playlistQueueToShow) {
+        this.openFiles(...files);
+      } else {
+        this.importFiles(...files);
+      }
     });
   },
   watch: {

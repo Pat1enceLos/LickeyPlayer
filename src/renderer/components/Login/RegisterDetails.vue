@@ -1,7 +1,7 @@
 <template>
   <div class="registerContent">
-    <input class="userIdInput" placeholder="用户名"/>
-    <input class="passwordInput" placeholder="密码"/>
+    <input class="registerUser" placeholder="用户名"/>
+    <input class="registerPassword" placeholder="密码" type="password"/>
     <div class="registerButton">
       <div class="text">注册</div>
     </div>
@@ -16,9 +16,6 @@ import infoDB from '../../helpers/infoDB';
 export default {
   name: 'RegisterDetails',
   methods: {
-    handleBack() {
-      this.$bus.$emit('handleBack');
-    },
     turnBack() {
       this.$emit('update:loginToShow', true);
     },
@@ -69,7 +66,7 @@ export default {
   bottom: 0;
   display: flex;
   flex-direction: column;
-  .userIdInput {
+  .registerUser {
     width: 250px;
     height: 40px;
     margin: 40px auto 0 auto;
@@ -81,7 +78,7 @@ export default {
     text-indent: 5px;
     color: rgba(255, 255, 255, 1);
   }
-  .passwordInput {
+  .registerPassword {
     width: 250px;
     height: 40px;
     margin: 20px auto 0 auto;

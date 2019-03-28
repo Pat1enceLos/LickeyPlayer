@@ -1,7 +1,7 @@
 <template>
   <div class="loginContent">
-    <input class="userIdInput" placeholder="用户名"/>
-    <input class="passwordInput" placeholder="密码"/>
+    <input class="loginUser" placeholder="用户名"/>
+    <input class="loginPassword" placeholder="密码" type="password"/>
     <div class="loginButton">
       <div class="text">登陆</div>
     </div>
@@ -65,7 +65,7 @@ export default {
   bottom: 0;
   display: flex;
   flex-direction: column;
-  .userIdInput {
+  .loginUser {
     width: 250px;
     height: 40px;
     margin: 40px auto 0 auto;
@@ -77,7 +77,7 @@ export default {
     text-indent: 5px;
     color: rgba(255, 255, 255, 1);
   }
-  .passwordInput {
+  .loginPassword {
     width: 250px;
     height: 40px;
     margin: 20px auto 0 auto;
