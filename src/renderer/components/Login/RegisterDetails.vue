@@ -1,8 +1,8 @@
 <template>
   <div class="registerContent">
-    <input class="registerUser" placeholder="用户名"/>
-    <input class="registerPassword" placeholder="密码" type="password"/>
-    <div class="registerButton">
+    <input class="registerUser" id="registerId" placeholder="用户名"/>
+    <input class="registerPassword" id="registerPassword" placeholder="密码" type="password"/>
+    <div class="registerButton" @mouseup="handleRegister">
       <div class="text">注册</div>
     </div>
     <div class="turnBack" @mouseup="turnBack">返回登陆</div>

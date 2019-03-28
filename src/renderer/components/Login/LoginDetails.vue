@@ -1,8 +1,8 @@
 <template>
   <div class="loginContent">
-    <input class="loginUser" placeholder="用户名"/>
-    <input class="loginPassword" placeholder="密码" type="password"/>
-    <div class="loginButton">
+    <input class="loginUser" id="loginId"placeholder="用户名"/>
+    <input class="loginPassword" id="loginPassword" placeholder="密码" type="password"/>
+    <div class="loginButton" @mouseup="handleLogin">
       <div class="text">登陆</div>
     </div>
     <div class="turnToRegister" @mouseup="turnRegister">创建账号</div>
