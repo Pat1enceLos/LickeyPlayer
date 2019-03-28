@@ -1,13 +1,11 @@
 <template>
   <div class="registerContent">
-    <input class="id" id="registerId" placeholder="请输入用户名"/>
-    <input class="password" id="registerPassword" placeholder="请输入密码" type="password"/>
-    <div class="regButton" @mouseup="handleRegister">
+    <input class="userIdInput" placeholder="用户名"/>
+    <input class="passwordInput" placeholder="密码"/>
+    <div class="registerButton">
       <div class="text">注册</div>
     </div>
-    <div class="back" @mouseup="handleBack">
-      <div class="backText">返回登陆</div>
-    </div>
+    <div class="turnBack" @mouseup="turnBack">返回登陆</div>
   </div>
 </template>
 
@@ -20,6 +18,9 @@ export default {
   methods: {
     handleBack() {
       this.$bus.$emit('handleBack');
+    },
+    turnBack() {
+      this.$emit('update:loginToShow', true);
     },
     async handleRegister() {
       const inputId = document.querySelector('#registerId').value;
@@ -62,56 +63,59 @@ export default {
 
 <style scoped lang="scss">
 .registerContent {
+  position: absolute;
   width: 100%;
-  height: 300px;
+  height: 400px;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  .id {
-    width: 200px;
-    height: 30px;
-    background: #c8cccf;
-    margin: 80px auto 5px auto;
-    border-radius: 5px;
-    font-size: 15px;
-    text-indent: 10px;
-  }
-  .password {
-    width: 200px;
-    height: 30px;
-    background: #c8cccf;
-    margin: 0 auto 0 auto;
-    border-radius: 5px;
-    font-size: 15px;
-    text-indent: 10px;
-  }
-  .regButton {
-    width: 200px;
+  .userIdInput {
+    width: 250px;
     height: 40px;
-    margin: 20px auto;
-    background: #211C1C;
-    border: 2px solid #C7B36F;
+    margin: 40px auto 0 auto;
+    background: #505050;
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid white;
+    font-size: 15px;
+    text-indent: 5px;
+    color: rgba(255, 255, 255, 1);
+  }
+  .passwordInput {
+    width: 250px;
+    height: 40px;
+    margin: 20px auto 0 auto;
+    background: #505050;
+    outline: none;
+    border: none;
+    border-bottom: 0.5px solid white;
+    font-size: 15px;
+    text-indent: 5px;
+    color: rgba(255, 255, 255, 1);
+  }
+  .text {
+    color: #AA8B24;
+    width: auto;
+    height: auto;
+    margin: auto;
+  }
+  .registerButton {
+    width: 250px;
+    height: 50px;
+    background: #FFCF2E;
+    margin: 80px auto 0 auto;
     border-radius: 5px;
     display: flex;
     .text {
-      color: #AA8B24;
-      width: auto;
-      height: auto;
       margin: auto;
+      font-size: 18px;
+      color: rgba(0, 0, 0, 1);
     }
   }
-  .back {
-    width: auto;
-    height: 20px;
-    margin: auto auto 15px auto;
-    cursor: pointer;
-    &:hover {
-      border-bottom: 1px solid #AA8B24;
-    }
-    .backText {
-      font-size: 15px;
-      margin: auto;
-      color: #AA8B24;
-    }
+  .turnBack {
+    margin: 70px auto auto auto;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 1);
   }
 }
 </style>

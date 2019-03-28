@@ -14,19 +14,8 @@
       @click.native="handleClose"
       type="titleBarWinClose">
     </Icon>
-    <div class="loginContent">
-      <div class="Logo"></div>
-      <div class="home" v-show="pageToShow === 'login'">
-        <div class="loginButton" @mouseup="handleLoginUp">
-          <div class="text">登陆</div>
-        </div>
-        <div class="registerButton" @mouseup="handleRegisterUp">
-          <div class="text">注册</div>
-        </div>
-      </div>
-      <login-details v-show="pageToShow === 'loginDetails'"></login-details>
-      <register-details v-show="pageToShow === 'registerDetails'"></register-details>
-    </div>
+    <login-details :loginToShow.sync="loginToShow" v-show="loginToShow"></login-details>
+    <register-details v-show="!loginToShow" :loginToShow.sync="loginToShow"></register-details>
   </div>
 </template>
 
@@ -46,13 +35,10 @@ export default {
   data() {
     return {
       state: 'default',
-      pageToShow: 'login',
+      loginToShow: true,
     };
   },
   mounted() {
-    this.$bus.$on('handleBack', () => {
-      this.pageToShow = 'login';
-    });
   },
   computed: {
     isDarwin() {
@@ -62,12 +48,6 @@ export default {
   methods: {
     handleClose() {
       electron.remote.BrowserWindow.getFocusedWindow().close();
-    },
-    handleLoginUp() {
-      this.pageToShow = 'loginDetails';
-    },
-    handleRegisterUp() {
-      this.pageToShow = 'registerDetails';
     },
   },
 };
@@ -112,52 +92,6 @@ export default {
     }
     &:active {
       background-color: rgba(221, 221, 221, 0.5);
-    }
-  }
-  .loginContent {
-    position: absolute;
-    width: 100%;
-    height: 400px;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    .home {
-      width: 100%;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-    }
-    .Logo {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 0 auto;
-      background: #c8cccf;
-    }
-    .loginButton {
-      width: 200px;
-      height: 40px;
-      background: #211C1C;
-      margin: 100px auto 10px auto;
-      border: 2px solid #C7B36F;
-      border-radius: 5px;
-      text-align: center;
-      display: flex;
-    }
-    .registerButton {
-      width: 200px;
-      height: 40px;
-      background: #211C1C;
-      border: 2px solid #C7B36F;
-      border-radius: 5px;
-      margin: 0 auto auto auto;
-      text-align: center;
-      display: flex;
-    }
-    .text {
-      color: #AA8B24;
-      width: auto;
-      height: auto;
-      margin: auto;
     }
   }
 }
