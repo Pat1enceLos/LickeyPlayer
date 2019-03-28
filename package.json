@@ -82,6 +82,7 @@
     }
   },
   "dependencies": {
+    "chardet": "^0.7.0",
     "electron": "^4.0.7",
     "iconv-lite": "^0.4.24",
     "idb": "^3.0.2",

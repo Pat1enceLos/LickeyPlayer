@@ -20,7 +20,7 @@
             :style="{
               color: isCurrentCue(item) ? '#FFCF2E' : 'rgba(255, 255, 255)',
               transition: 'color 300ms linear',
-            }">{{ item.text }}</div>
+            }" v-html="item.text"></div>
         </div>
       </div>
     </div>
@@ -34,6 +34,7 @@ import fs from 'fs';
 import { mapGetters } from 'vuex';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
+import chardet from 'chardet';
 
 export default {
   name: 'LyricInfo',
@@ -77,8 +78,9 @@ export default {
     src(val) {
       this.searchForLocalList(val).then((src) => {
         if (src.length) {
-          fs.readFile(src[0], (err, data) => {
-            const decodeData = iconv.decode(data, 'utf8');
+          fs.readFile(src[0], async (err, data) => {
+            const encodingBuffer = await this.getFragmentBuffer(src[0]);
+            const decodeData = iconv.decode(data, chardet.detect(encodingBuffer));
             const parsedData = lrcParser(decodeData);
             this.lyric = parsedData;
             this.lyricTexts = parsedData.scripts.map(lrc => lrc.text);

@@ -1,4 +1,4 @@
-import fs, { readdir } from 'fs';
+import fs, { closeSync, open, readdir, readSync } from 'fs';
 import path, { basename, dirname, extname, join } from 'path';
 import { remote } from 'electron';
 import { mapGetters } from 'vuex';
@@ -168,6 +168,19 @@ export default {
             );
           })
             .map(lyricFilename => (join(audioDir, lyricFilename))));
+        });
+      });
+    },
+    getFragmentBuffer(path) {
+      return new Promise((resolve, reject) => {
+        const size = 4096;
+        open(path, 'r', (err, fd) => {
+          if (err) reject(err);
+          const pos = 0;
+          const buf = Buffer.alloc(size);
+          readSync(fd, buf, 0, size, pos);
+          resolve(buf);
+          closeSync(fd);
         });
       });
     },
