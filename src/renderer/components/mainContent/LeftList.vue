@@ -31,6 +31,7 @@
         v-for="(item, index) in createdPlaylist"
         @mouseup="handlePlaylist($event, index, item)"
         :style="{ background: item.name === playlistToShow ? 'rgb(67, 67, 67)' : ''}">
+        <div class="selectedMark"></div>
         <div class="content">
           <Icon type="queue" class="playlistIcon"></Icon>
           <div class="playlistText">{{ item.name }}</div>
@@ -275,8 +276,14 @@ export default {
         width: 100%;
         height: 30px;
         display: flex;
+        .selectedMark {
+          width: 3px;
+          height: 70%;
+          background: #FFCF2E;
+          margin: auto 0 auto 0;
+        }
         .content {
-          margin: auto auto auto 20px;
+          margin: auto auto auto 17px;
           display: flex;
           flex-direction: row;
           .playlistIcon {

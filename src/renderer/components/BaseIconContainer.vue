@@ -181,4 +181,9 @@ export default {
   height: 12px;
   margin: auto;
 }
+.save {
+  display: flex;
+  width: 20px;
+  height: 20px;
+}
 </style>
