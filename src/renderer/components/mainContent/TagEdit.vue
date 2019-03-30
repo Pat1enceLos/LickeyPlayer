@@ -5,17 +5,17 @@
     </div>
     <div class="titleEdit">
       <div class="titleTags">Title</div>
-      <input class="titleEditInput" :value="title" @keydown="titleInput"/>
-      <Icon v-show="titleTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)' }"></Icon>
+      <input class="titleEditInput" @input="handleTitleInput"/>
+      <Icon type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', display: titleTags ? 'inline-block' : 'none' }"></Icon>
     </div>
     <div class="artistEdit">
       <div class="artistTags">Artist</div>
-      <input class="artistEditInput" :value="artist" @keydown="artistInput"/>
+      <input class="artistEditInput" @input="handleArtistInput"/>
       <Icon type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)' }" v-show="artistTags"></Icon>
     </div>
     <div class="albumEdit">
       <div class="albumTags">Album</div>
-      <input class="albumEditInput" :value="album" @keydown="albumInput"/>
+      <input class="albumEditInput" @input="handleAlbumInput"/>
       <Icon type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)' }" v-show="albumTags"></Icon>
     </div>
   </div>
@@ -42,34 +42,23 @@ export default {
     picture() {
       return this.currentAudioInfo && this.currentAudioInfo.picture ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
     },
-    title() {
-      return this.currentAudioInfo ? this.currentAudioInfo.title : '暂无歌曲信息';
-    },
-    artist() {
-      return this.currentAudioInfo ? this.currentAudioInfo.artists[0] : '暂无歌手信息';
-    },
-    album() {
-      return this.currentAudioInfo ? this.currentAudioInfo.album : '';
+  },
+  watch: {
+    src() {
+      document.querySelector('.titleEditInput').setAttribute('value', this.currentAudioInfo ? this.currentAudioInfo.title : '暂无歌曲信息');
+      document.querySelector('.artistEditInput').setAttribute('value', this.currentAudioInfo ? this.currentAudioInfo.artists[0] : '暂无歌手信息');
+      document.querySelector('.albumEditInput').setAttribute('value', this.currentAudioInfo ? this.currentAudioInfo.album : '');
     },
   },
   methods: {
-    titleInput() {
-      const titleElement = document.querySelector('.titleEditInput');
-      setTimeout(() => {
-        this.titleTags = titleElement.value !== this.title;
-      }, 0);
+    handleTitleInput() {
+      this.titleTags = document.querySelector('.titleEditInput').value !== this.title;
     },
-    artistInput() {
-      const titleElement = document.querySelector('.artistEditInput');
-      setTimeout(() => {
-        this.artistTags = titleElement.value !== this.artist;
-      }, 0);
+    handleArtistInput() {
+      this.artistTags = document.querySelector('.artistEditInput').value !== this.artist;
     },
-    albumInput() {
-      const titleElement = document.querySelector('.albumEditInput');
-      setTimeout(() => {
-        this.albumTags = titleElement.value !== this.album;
-      }, 0);
+    handleAlbumInput() {
+      this.albumTags = document.querySelector('.albumEditInput').value !== this.album;
     },
   },
 };

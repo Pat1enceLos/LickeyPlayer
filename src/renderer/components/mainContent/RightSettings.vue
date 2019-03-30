@@ -64,7 +64,9 @@ export default {
       this.isLyricShow = true;
     },
     changeToTags() {
-      this.isLyricShow = false;
+      if (this.src) {
+        this.isLyricShow = false;
+      }
     },
   },
 };
