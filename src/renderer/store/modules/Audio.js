@@ -164,6 +164,14 @@ const mutations = {
   audioInfoUpdate(state, payload) {
     state.audioInfo.unshift(payload);
   },
+  currentAudioInfoUpdate(state, payload) {
+    state.audioInfo.forEach((item, index) => {
+      if (item.src === state.src) {
+        state.audioInfo.splice(index, 1, payload);
+      }
+    });
+    console.log(payload);
+  },
 };
 
 const actions = {
@@ -231,6 +239,9 @@ const actions = {
         picture: metadata.common.picture,
       });
     });
+  },
+  updateCurrentAudioInfo({ commit }, delta) {
+    commit('currentAudioInfoUpdate', delta);
   },
 };
 
