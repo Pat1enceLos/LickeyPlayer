@@ -49,6 +49,11 @@ export default {
   },
   watch: {
     src() {
+      this.title = this.currentAudioInfo ? this.currentAudioInfo.title : '暂无歌曲信息';
+      this.artist = this.currentAudioInfo ? this.currentAudioInfo.artists : '暂无歌手信息';
+      this.album = this.currentAudioInfo ? this.currentAudioInfo.album : '暂无专辑信息';
+    },
+    currentAudioInfo() {
       this.title = this.currentAudioInfo.title;
       this.artist = this.currentAudioInfo.artists;
       this.album = this.currentAudioInfo.album;

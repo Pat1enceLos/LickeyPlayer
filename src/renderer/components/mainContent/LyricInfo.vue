@@ -97,6 +97,9 @@ export default {
             this.$emit('update:lyric', parsedData);
             this.$emit('update:lyricTexts', parsedData.scripts.map(lrc => lrc.text));
           });
+        } else {
+          this.$emit('update:lyric', {});
+          this.$emit('update:lyricTexts', []);
         }
       });
     },

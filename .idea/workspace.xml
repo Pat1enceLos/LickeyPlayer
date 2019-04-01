@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d01459c-7834-4169-a08d-51477a0bf977" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -31,7 +31,7 @@
           <entry key="ejs" value="10" />
           <entry key="js" value="9271" />
           <entry key="json" value="141" />
-          <entry key="vue" value="38763" />
+          <entry key="vue" value="38819" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -39,7 +39,7 @@
           <entry key="EJS" value="10" />
           <entry key="JSON" value="141" />
           <entry key="JavaScript" value="9271" />
-          <entry key="Vue.js" value="38763" />
+          <entry key="Vue.js" value="38819" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -93,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+            <state relative-caret-position="276">
+              <caret line="101" column="43" selection-start-line="101" selection-start-column="43" selection-end-line="101" selection-end-column="43" />
               <folding>
                 <element signature="e#970#1005#0" expanded="true" />
               </folding>
@@ -105,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="885">
-              <caret line="59" selection-start-line="59" selection-end-line="59" />
+            <state relative-caret-position="266">
+              <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
               <folding>
                 <element signature="e#1256#1290#0" expanded="true" />
               </folding>
@@ -184,7 +184,6 @@
       <find>userIdInput</find>
       <find>loginToShow</find>
       <find>iconv.</find>
-      <find>lyric</find>
       <find>sqlite</find>
       <find>&quot;</find>
       <find>infoDb</find>
@@ -207,6 +206,7 @@
       <find>DIV</find>
       <find>Blur</find>
       <find>handleInput</find>
+      <find>lyric</find>
     </findStrings>
     <replaceStrings>
       <replace>registerId</replace>
@@ -279,13 +279,13 @@
         <option value="$PROJECT_DIR$/src/renderer/components/Login/LoginDetails.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/Login/RegisterDetails.vue" />
         <option value="$PROJECT_DIR$/src/renderer/global/db.js" />
-        <option value="$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue" />
         <option value="$PROJECT_DIR$/src/renderer/store/modules/Audio.js" />
         <option value="$PROJECT_DIR$/src/renderer/helpers/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue" />
       </list>
     </option>
   </component>
@@ -480,12 +480,12 @@
       <workItem from="1553605760304" duration="4111000" />
       <workItem from="1553656396567" duration="50181000" />
       <workItem from="1553867868530" duration="10663000" />
-      <workItem from="1554125241216" duration="5422000" />
+      <workItem from="1554125241216" duration="5679000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185685000" />
+    <option name="totallyTimeSpent" value="185942000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -820,16 +820,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
-          <folding>
-            <element signature="e#970#1005#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -870,10 +860,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="885">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        <state relative-caret-position="266">
+          <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
           <folding>
             <element signature="e#1256#1290#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="101" column="43" selection-start-line="101" selection-start-column="43" selection-end-line="101" selection-end-column="43" />
+          <folding>
+            <element signature="e#970#1005#0" expanded="true" />
           </folding>
         </state>
       </provider>
