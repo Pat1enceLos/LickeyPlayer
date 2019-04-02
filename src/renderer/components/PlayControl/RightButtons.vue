@@ -2,8 +2,8 @@
   <div class="rightButtons">
     <div class="content">
       <div class="button">
-        <Icon type="circle" class="circle"></Icon>
-        <Icon type="random" class="random"></Icon>
+        <Icon :type="cycleType === 'single' ? 'singleCycle' : 'playlistCycle'" class="circle" @mouseup.native="handleCyclePlay" :style="{ opacity: cycleType !== '' ? '1' : '0.35' }"></Icon>
+        <Icon type="random" class="random" @mouseup.native="handleRandomPlay":style="{ opacity: randomPlay ? '1' : '0.35' }"></Icon>
       </div>
       <div class="volumeControl">
         <Icon type="volume" v-show="volume !== 0" @mouseup.native="handleMute"></Icon>
@@ -42,12 +42,30 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['volume', 'lastVolume']),
+    ...mapGetters(['volume', 'lastVolume', 'cycleType', 'randomPlay']),
     manuControl() {
       return this.hoveredCurrentVolume !== 0;
     },
+    randomPlay: {
+      get() {
+        return this.$store.getters.randomPlay;
+      },
+      set(val) {
+        this.$store.dispatch('updateRandomPlay', val);
+      },
+    },
   },
   watch: {
+    randomPlay(val) {
+      if (val) {
+        this.$store.dispatch('updateCycleType', '');
+      }
+    },
+    cycleType(val) {
+      if (val) {
+        this.$store.dispatch('updateRandomPlay', false);
+      }
+    },
   },
   mounted() {
     window.addEventListener('mouseup', () => {
@@ -72,6 +90,16 @@ export default {
     Icon,
   },
   methods: {
+    handleCyclePlay() {
+      const typeArr = ['', 'single', 'playlist'];
+      const index = typeArr.indexOf(this.cycleType);
+      console.log(typeArr[index + 1] ? typeArr[index + 1] : typeArr[0]);
+      this.$store.dispatch('updateCycleType', typeArr[index + 1] ? typeArr[index + 1] : typeArr[0]);
+    },
+    handleRandomPlay() {
+      console.log(!this.randomPlay);
+      this.randomPlay = !this.randomPlay;
+    },
     handleMute() {
       this.$store.dispatch('updateMute');
     },

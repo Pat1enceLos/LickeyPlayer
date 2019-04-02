@@ -20,7 +20,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['paused']),
+    ...mapGetters(['paused', 'src']),
   },
   components: {
     Icon,
@@ -29,7 +29,9 @@ export default {
   },
   methods: {
     handleMouseup() {
-      this.$store.dispatch('updatePaused', !this.paused);
+      if (this.src) {
+        this.$store.dispatch('updatePaused', !this.paused);
+      }
     },
     handleNextAudio() {
       this.$bus.$emit('next-audio');

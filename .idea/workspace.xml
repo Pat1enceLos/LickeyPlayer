@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d01459c-7834-4169-a08d-51477a0bf977" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/assets/icon/playlistCycle-default-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/assets/icon/random-default-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/assets/icon/random-default-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/store/modules/Audio.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/store/modules/Audio.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,27 +24,27 @@
     <session id="1619836950">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
-          <entry key="project.open.time.0" value="11" />
+          <entry key="project.closed" value="13" />
+          <entry key="project.open.time.0" value="12" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="13" />
+          <entry key="project.opened" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="ejs" value="10" />
-          <entry key="js" value="9271" />
+          <entry key="js" value="10250" />
           <entry key="json" value="141" />
-          <entry key="vue" value="38819" />
+          <entry key="vue" value="39902" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="EJS" value="10" />
           <entry key="JSON" value="141" />
-          <entry key="JavaScript" value="9271" />
-          <entry key="Vue.js" value="38819" />
+          <entry key="JavaScript" value="10250" />
+          <entry key="Vue.js" value="39902" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -50,7 +55,7 @@
           <entry key="json" value="4" />
           <entry key="scss" value="2" />
           <entry key="svg" value="8" />
-          <entry key="vue" value="103" />
+          <entry key="vue" value="108" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -60,59 +65,56 @@
           <entry key="JavaScript" value="50" />
           <entry key="SCSS" value="2" />
           <entry key="SVG" value="8" />
-          <entry key="Vue.js" value="103" />
+          <entry key="Vue.js" value="108" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="ESLintLanguageService" value="13" />
+          <entry key="ESLintLanguageService" value="14" />
         </counts>
       </usages-collector>
     </session>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="LickeyPlayer" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1005">
-              <caret line="67" column="7" selection-start-line="67" selection-start-column="7" selection-end-line="67" selection-end-column="7" />
+            <state relative-caret-position="182">
+              <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="102" lean-forward="true" selection-start-line="16" selection-start-column="102" selection-end-line="16" selection-end-column="102" />
               <folding>
-                <element signature="e#602#622#0" expanded="true" />
+                <element signature="e#1097#1131#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/global/db.js">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="10" selection-start-line="35" selection-start-column="10" selection-end-line="35" selection-end-column="10" />
+            <state relative-caret-position="138">
+              <caret line="134" column="30" selection-start-line="134" selection-start-column="30" selection-end-line="134" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="101" column="43" selection-start-line="101" selection-start-column="43" selection-end-line="101" selection-end-column="43" />
-              <folding>
-                <element signature="e#970#1005#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
-              <folding>
-                <element signature="e#1256#1290#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="186">
+              <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -120,8 +122,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/store/modules/Audio.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="172" column="25" lean-forward="true" selection-start-line="172" selection-start-column="25" selection-end-line="172" selection-end-column="25" />
+            <state relative-caret-position="720">
+              <caret line="48" column="38" lean-forward="true" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -129,8 +131,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="41" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="41" />
+            <state relative-caret-position="30">
+              <caret line="2" column="92" selection-start-line="2" selection-start-column="81" selection-end-line="2" selection-end-column="92" />
               <folding>
                 <element signature="e#327#347#0" expanded="true" />
               </folding>
@@ -141,17 +143,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="117" column="29" lean-forward="true" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
+            <state relative-caret-position="465">
+              <caret line="31" column="53" selection-start-line="31" selection-start-column="53" selection-end-line="31" selection-end-column="53" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/Login/RegisterDetails.vue">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/SongsTable.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
+            <state relative-caret-position="43">
+              <caret line="82" selection-start-line="82" selection-end-line="82" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseAudioPlayer.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
+              <folding>
+                <element signature="e#109#143#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -159,8 +173,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/renderer/helpers/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="107" column="57" selection-start-line="107" selection-start-column="57" selection-end-line="107" selection-end-column="57" />
+            <state relative-caret-position="1605">
+              <caret line="111" column="60" lean-forward="true" selection-start-line="111" selection-start-column="60" selection-end-line="111" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -177,10 +191,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>update</find>
-      <find>sync</find>
-      <find>login</find>
-      <find>turnRegister</find>
       <find>userIdInput</find>
       <find>loginToShow</find>
       <find>iconv.</find>
@@ -207,6 +217,10 @@
       <find>Blur</find>
       <find>handleInput</find>
       <find>lyric</find>
+      <find>dbCli</find>
+      <find>playlistQueue</find>
+      <find>circ</find>
+      <find>currentTime</find>
     </findStrings>
     <replaceStrings>
       <replace>registerId</replace>
@@ -262,17 +276,13 @@
         <option value="$PROJECT_DIR$/src/renderer/helpers/infoDB.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/MainContent.vue" />
         <option value="$PROJECT_DIR$/src/shared/util.js" />
-        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/SongsImage.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/MusicHandler.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/playlistHandler.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/PlaylistHandler.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/mainContent/SongsTable.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" />
         <option value="$PROJECT_DIR$/src/main/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/Login/Login.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/BaseAudioPlayer.vue" />
         <option value="$PROJECT_DIR$/src/renderer/helpers/sqlite.js" />
         <option value="$PROJECT_DIR$/src/renderer/main.js" />
         <option value="$PROJECT_DIR$/package.json" />
@@ -280,12 +290,16 @@
         <option value="$PROJECT_DIR$/src/renderer/components/Login/RegisterDetails.vue" />
         <option value="$PROJECT_DIR$/src/renderer/global/db.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/store/modules/Audio.js" />
         <option value="$PROJECT_DIR$/src/renderer/helpers/index.js" />
-        <option value="$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/BaseAudioPlayer.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/mainContent/SongsTable.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/store/modules/Audio.js" />
+        <option value="$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue" />
       </list>
     </option>
   </component>
@@ -306,7 +320,8 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
+    <option name="x" value="-27" />
+    <option name="y" value="33" />
     <option name="width" value="1440" />
     <option name="height" value="834" />
   </component>
@@ -339,6 +354,13 @@
               <item name="LickeyPlayer" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LickeyPlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="renderer" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LickeyPlayer" type="b2602c69:ProjectViewProjectNode" />
@@ -480,12 +502,13 @@
       <workItem from="1553605760304" duration="4111000" />
       <workItem from="1553656396567" duration="50181000" />
       <workItem from="1553867868530" duration="10663000" />
-      <workItem from="1554125241216" duration="5679000" />
+      <workItem from="1554125241216" duration="6137000" />
+      <workItem from="1554201053873" duration="4965000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="185942000" />
+    <option name="totallyTimeSpent" value="191365000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -497,13 +520,13 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="834" extended-state="6" />
+    <frame x="-27" y="33" width="1440" height="834" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49898168" visible="true" weight="0.23185341" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49694502" visible="true" weight="0.23185341" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.50101835" side_tool="true" weight="0.23185341" />
-      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Favorites" order="3" sideWeight="0.503055" side_tool="true" weight="0.23185341" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3292683" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -514,7 +537,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.33827493" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.33827493" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -709,30 +732,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="66" selection-start-line="3" selection-start-column="66" selection-end-line="3" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/SongsTable.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="19" column="40" selection-start-line="19" selection-start-column="40" selection-end-line="19" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="41" selection-start-line="22" selection-start-column="41" selection-end-line="22" selection-end-column="41" />
-          <folding>
-            <element signature="e#1097#1131#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/css/style.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -755,23 +754,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/helpers/sqlite.js" />
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseAudioPlayer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="49" column="29" selection-start-line="49" selection-start-column="29" selection-end-line="49" selection-end-column="29" />
-          <folding>
-            <element signature="e#109#143#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/helpers/infoDB.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="35" column="51" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -796,16 +782,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2790">
-          <caret line="186" column="12" selection-start-line="186" selection-start-column="12" selection-end-line="186" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/RightSettings.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1005">
+        <state relative-caret-position="900">
           <caret line="67" column="7" selection-start-line="67" selection-start-column="7" selection-end-line="67" selection-end-column="7" />
           <folding>
             <element signature="e#602#622#0" expanded="true" />
@@ -820,12 +799,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="41" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="41" />
+        <state relative-caret-position="1425">
+          <caret line="101" column="34" selection-start-line="101" selection-start-column="29" selection-end-line="101" selection-end-column="34" />
           <folding>
-            <element signature="e#327#347#0" expanded="true" />
+            <element signature="e#970#1005#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -837,44 +816,82 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/store/modules/Audio.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="172" column="25" lean-forward="true" selection-start-line="172" selection-start-column="25" selection-end-line="172" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/helpers/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="107" column="57" selection-start-line="107" selection-start-column="57" selection-end-line="107" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="117" column="29" lean-forward="true" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
+        <state relative-caret-position="1605">
+          <caret line="111" column="60" lean-forward="true" selection-start-line="111" selection-start-column="60" selection-end-line="111" selection-end-column="60" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/TagEdit.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
+        <state relative-caret-position="182">
+          <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/SongsTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="43">
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/Playlist.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="92" selection-start-line="2" selection-start-column="81" selection-end-line="2" selection-end-column="92" />
           <folding>
-            <element signature="e#1256#1290#0" expanded="true" />
+            <element signature="e#327#347#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LyricInfo.vue">
+    <entry file="file://$PROJECT_DIR$/src/renderer/store/modules/Audio.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="101" column="43" selection-start-line="101" selection-start-column="43" selection-end-line="101" selection-end-column="43" />
+        <state relative-caret-position="720">
+          <caret line="48" column="38" lean-forward="true" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseIconContainer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="134" column="30" selection-start-line="134" selection-start-column="30" selection-end-line="134" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/mainContent/LeftList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="53" selection-start-line="31" selection-start-column="53" selection-end-line="31" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/RightButtons.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="102" lean-forward="true" selection-start-line="16" selection-start-column="102" selection-end-line="16" selection-end-column="102" />
           <folding>
-            <element signature="e#970#1005#0" expanded="true" />
+            <element signature="e#1097#1131#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/BaseAudioPlayer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
+          <folding>
+            <element signature="e#109#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/PlayControl/AudioControl.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
         </state>
       </provider>
     </entry>

@@ -9,13 +9,14 @@ const state = {
   volume: 25,
   lastVolume: 0,
   playlistQueue: [],
-  singleCycle: false,
+  cycleType: '',
   playlistQueueToShow: false,
   musicLibraryToShow: true,
   playlistToShow: '',
   musicLibraryPlaylist: [],
   displayType: true,
   createdPlaylist: [],
+  randomPlay: false,
 };
 
 const getters = {
@@ -26,22 +27,36 @@ const getters = {
   volume: state => state.volume,
   lastVolume: state => state.lastVolume,
   playlistQueue: state => state.playlistQueue,
-  singleCycle: state => state.singleCycle,
+  currentPlaylistQueue: state => state.playlistQueue, // TODO define current Playlist
+  randomPlay: state => state.randomPlay,
+  cycleType: state => state.cycleType,
   nextAudio: (state, getters) => {
     let list = [];
     if (getters.playlistQueueToShow) {
-      list = state.playlistQueue;
+      list = list.concat(state.playlistQueue);
     } else if (getters.musicLibraryToShow) {
-      list = state.musicLibraryPlaylist;
+      list = list.concat(state.musicLibraryPlaylist);
     } else {
-      this.createdPlaylist.forEach((item) => {
-        if (item.name === this.playlistToShow) {
-          list = item.src;
+      getters.createdPlaylist.forEach((item) => {
+        if (item.name === getters.playlistToShow) {
+          list = list.concat(item.src);
         }
       });
     }
     const index = list.findIndex(value => value === getters.src);
-    if (!getters.singleCycle) {
+    if (getters.randomPlay) {
+      list.splice(index, 1);
+      return list[Math.floor(Math.random() * Math.floor(list.length))];
+    }
+    if (getters.cycleType === '') {
+      if (index !== -1 && index + 1 < list.length) {
+        return list[index + 1];
+      } else if (index + 1 >= list.length) {
+        return '';
+      }
+    } else if (getters.cycleType === 'single') {
+      return list[index];
+    } else if (getters.cycleType === 'playlist') {
       if (index !== -1 && index + 1 < list.length) {
         return list[index + 1];
       } else if (index + 1 >= list.length) {
@@ -57,8 +72,8 @@ const getters = {
     } else if (getters.musicLibraryToShow) {
       list = state.musicLibraryPlaylist;
     } else {
-      this.createdPlaylist.forEach((item) => {
-        if (item.name === this.playlistToShow) {
+      getters.createdPlaylist.forEach((item) => {
+        if (item.name === getters.playlistToShow) {
           list = item.src;
         }
       });
@@ -172,6 +187,12 @@ const mutations = {
     });
     console.log(payload);
   },
+  cycleTypeUpdate(state, payload) {
+    state.cycleType = payload;
+  },
+  randomPlayUpdate(state, payload) {
+    state.randomPlay = payload;
+  },
 };
 
 const actions = {
@@ -242,6 +263,12 @@ const actions = {
   },
   updateCurrentAudioInfo({ commit }, delta) {
     commit('currentAudioInfoUpdate', delta);
+  },
+  updateCycleType({ commit }, delta) {
+    commit('cycleTypeUpdate', delta);
+  },
+  updateRandomPlay({ commit }, delta) {
+    commit('randomPlayUpdate', delta);
   },
 };
 
