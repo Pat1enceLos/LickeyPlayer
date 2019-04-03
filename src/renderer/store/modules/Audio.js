@@ -8,15 +8,16 @@ const state = {
   paused: true,
   volume: 25,
   lastVolume: 0,
-  playlistQueue: [],
+  playlistQueue: [], // 播放队列
   cycleType: '',
-  playlistQueueToShow: false,
-  musicLibraryToShow: true,
-  playlistToShow: '',
-  musicLibraryPlaylist: [],
-  displayType: true,
-  createdPlaylist: [],
-  randomPlay: false,
+  playlistQueueToShow: false, // 显示的是否为播放队列
+  musicLibraryToShow: true, // 显示的是否为音乐库
+  playlistToShow: '', // 显示的playlist名称
+  musicLibraryPlaylist: [], // 音乐库列表
+  displayType: true, // 图片和列表切换
+  createdPlaylist: [], // 所有创建的playlist的信息
+  randomPlay: false, // 随机播放
+  currentCreatedPlaylistPlay: '', // 当前播放的歌单的名称
 };
 
 const getters = {
@@ -94,6 +95,7 @@ const getters = {
   playlistToShow: state => state.playlistToShow,
   audioInfo: state => state.audioInfo,
   currentAudioInfo: (state, getters) => state.audioInfo.find(item => item.src === getters.src),
+  currentCreatedPlaylistPlay: state => state.currentCreatedPlaylistPlay,
 };
 const mutations = {
   durationUpdate(state, payload) {
@@ -193,6 +195,9 @@ const mutations = {
   randomPlayUpdate(state, payload) {
     state.randomPlay = payload;
   },
+  currentCreatedPlaylistPlayUpdate(state, payload) {
+    state.currentCreatedPlaylistPlay = payload;
+  },
 };
 
 const actions = {
@@ -269,6 +274,9 @@ const actions = {
   },
   updateRandomPlay({ commit }, delta) {
     commit('randomPlayUpdate', delta);
+  },
+  updateCurrentCreatedPlaylistPlay({ commit }, delta) {
+    commit('currentCreatedPlaylistPlayUpdate', delta);
   },
 };
 

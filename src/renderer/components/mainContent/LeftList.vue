@@ -30,8 +30,9 @@
       <div class="playlistContainer"
         v-for="(item, index) in createdPlaylist"
         @mouseup="handlePlaylist($event, index, item)"
+        @dblclick="handleCreatedPlaylistPlay(item)"
         :style="{ background: item.name === playlistToShow ? 'rgb(67, 67, 67)' : ''}">
-        <div class="selectedMark"></div>
+        <div class="selectedMark" v-show="item.name === currentCreatedPlaylistPlay"></div>
         <div class="content">
           <Icon type="queue" class="playlistIcon"></Icon>
           <div class="playlistText">{{ item.name }}</div>
@@ -42,7 +43,7 @@
       <Icon type="queue" class="playlistIcon"></Icon>
       <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput"/>
     </div>
-    <playlist-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="this.handlerPlaylistName"></playlist-handler>
+    <playlist-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
   </div>
 </template>
 
@@ -80,9 +81,17 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist', 'playlistToShow', 'createdPlaylist']),
+    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist', 'playlistToShow', 'createdPlaylist', 'currentCreatedPlaylistPlay']),
   },
   methods: {
+    handleCreatedPlaylistPlay(item) {
+      console.log(item);
+      this.$store.dispatch('updatePlaylistToShow', item.name);
+      if (item.src[0]) {
+        this.$store.dispatch('updateCurrentCreatedPlaylistPlay', item.name);
+        this.$store.dispatch('updateSrc', item.src[0]);
+      }
+    },
     handlePlaylist(e, index, item) {
       this.$store.dispatch('updatePlaylistToShow', item.name);
       if (e.button === 2) {
