@@ -35,7 +35,8 @@
         <div class="selectedMark" v-show="item.name === currentPlaylistPlay"></div>
         <div class="content">
           <Icon type="queue" class="playlistIcon"></Icon>
-          <div class="playlistText">{{ item.name }}</div>
+          <div class="playlistText" v-show="item.name !== rePlaylist">{{ item.name }}</div>
+          <input class="nameReset" v-show="item.name === rePlaylist" v-model="exName" autofocus="autofocus" @blur="handleRename" @keypress="handleKeyRename">
         </div>
       </div>
     </div>
@@ -43,7 +44,7 @@
       <Icon type="queue" class="playlistIcon"></Icon>
       <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput"/>
     </div>
-    <playlist-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
+    <playlist-handler v-show="ifRightClick" :rePlaylist.sync="rePlaylist" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
   </div>
 </template>
 
@@ -61,8 +62,10 @@ export default {
       handlerIndex: -1,
       ifRightClick: false,
       handlerPlaylistName: '',
-      handlerClassLists: ['playlistHandlerContainer', 'playlistPlayNow', 'addMusic', 'rename', 'playlistRemove', 'currentPlaylistShow'],
+      handlerClassLists: ['playlistHandlerContainer', 'playlistPlayNow', 'addMusic', 'rename', 'playlistRemove', 'currentPlaylistShow', 'handlerText', 'playlistExport', 'playlistAddToQueue'],
       inputToShow: false,
+      rePlaylist: '',
+      exName: '',
     };
   },
   created() {
@@ -84,6 +87,12 @@ export default {
     ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow']),
   },
   watch: {
+    rePlaylist(val) {
+      this.exName = val;
+      setTimeout(() => {
+        document.querySelector('.nameReset').focus();
+      }, 0);
+    },
   },
   methods: {
     handleCreatedPlaylistPlay(item) {
@@ -122,6 +131,30 @@ export default {
         }, 0);
       }
     },
+    handleRename() {
+      const inputName = document.querySelector('.nameReset').value;
+      if (inputName !== '') {
+        let duplicate = false;
+        this.createdPlaylist.forEach((item) => {
+          if (item.name === inputName) {
+            duplicate = true;
+          }
+        });
+        if (!duplicate) {
+          this.$store.dispatch('renamePlaylist', { oldName: this.rePlaylist, newName: inputName });
+          this.rePlaylist = '';
+        } else {
+          this.rePlaylist = '';
+        }
+      } else {
+        this.rePlaylist = '';
+      }
+    },
+    handleKeyRename(e) {
+      if (e.key === 'Enter') {
+        this.handleRename();
+      }
+    },
     handleInput() {
       const inputName = document.querySelector('.nameInput').value;
       if (inputName !== '') {
@@ -143,21 +176,9 @@ export default {
       }
     },
     handleKeyInput(e) {
-      const inputName = document.querySelector('.nameInput').value;
-      if (e.key === 'Enter' && inputName !== '') {
-        let duplicate = false;
-        this.createdPlaylist.forEach((item) => {
-          if (item.name === inputName) {
-            duplicate = true;
-          }
-        });
-        if (!duplicate) {
-          this.$store.dispatch('updateCreatedPlaylist', inputName);
-          this.inputToShow = false;
-          document.querySelector('.nameInput').value = '';
-        } else {
-          alert('已存在该播放列表');
-        }
+      if (e.key === 'Enter') {
+        this.handleInput();
+        e.preventDefault();
       }
     },
   },
@@ -307,6 +328,17 @@ export default {
             color: rgba(255, 255, 255, 1);
             margin: auto auto auto 10px;
             cursor: pointer;
+          }
+          .nameReset {
+            width: 60%;
+            height: 20px;
+            font-size: 13px;
+            margin: auto auto auto 10px;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 3px;
+            text-indent: 3px;
+            outline: none;
+            border: none;
           }
         }
       }

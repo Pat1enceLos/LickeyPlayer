@@ -1,38 +1,71 @@
 <template>
   <div class="playlistHandlerContainer">
-    <div class="playlistPlayNow" :style="{ marginTop: '5px' }">
+    <div class="playlistPlayNow" :style="{ marginTop: '5px' }" @mouseup="handlePlaylistPlay">
       <div class="handlerText">Play Now</div>
     </div>
-    <div class="playlistAddToQueue">
+    <div class="playlistAddToQueue" @mouseup="addPlaylistToQueue">
       <div class="handlerText">Add To Queue</div>
     </div>
-    <div class="addMusic">
+    <div class="addMusic" @mouseup="importMusicToPlaylist">
       <div class="handlerText">Import Music</div>
     </div>
     <div class="playlistExport">
       <div class="handlerText">Export List</div>
     </div>
-    <div class="rename">
+    <div class="rename" @mouseup="playlistRename">
       <div class="handlerText">Rename</div>
     </div>
-    <div class="playlistRemove" :style="{ marginBottom: '5px' }">
+    <div class="playlistRemove" :style="{ marginBottom: '5px' }" @mouseup="removePlaylist">
       <div class="handlerText">Delete</div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'playlistHandler',
   props: {
     name: {
       type: String,
     },
+    rePlaylist: {
+      type: String,
+    },
     ifRightClick: {
       type: Boolean,
     },
   },
+  computed: {
+    ...mapGetters(['createdPlaylist']),
+  },
   methods: {
+    handlePlaylistPlay() {
+      const playlist = this.createdPlaylist.find(item => item.name === this.name);
+      if (playlist.src[0]) {
+        this.$store.dispatch('updateCurrentPlaylistPlay', playlist.name);
+        this.$store.dispatch('updateSrc', playlist.src[0]);
+      }
+      this.$emit('update:ifRightClick', false);
+    },
+    addPlaylistToQueue() {
+      const playlist = this.createdPlaylist.find(item => item.name === this.name);
+      this.$store.dispatch('updatePlaylistQueue', playlist.src);
+      this.$emit('update:ifRightClick', false);
+    },
+    importMusicToPlaylist() {
+      this.openFilesByDialog();
+      this.$emit('update:ifRightClick', false);
+    },
+    playlistRename() {
+      this.$emit('update:rePlaylist', this.name);
+      this.$emit('update:ifRightClick', false);
+    },
+    removePlaylist() {
+      this.$store.dispatch('removePlaylist', this.name);
+      this.$emit('update:ifRightClick', false);
+    },
   },
 };
 </script>

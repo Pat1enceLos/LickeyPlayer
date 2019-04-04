@@ -140,6 +140,9 @@ const mutations = {
       }
     });
   },
+  playlistRemove(state, payload) {
+    state.createdPlaylist = state.createdPlaylist.filter(item => item.name !== payload);
+  },
   displayTypeUpdate(state) {
     state.displayType = !state.displayType;
   },
@@ -180,6 +183,13 @@ const mutations = {
   },
   currentPlaylistShowUpdate(state, payload) {
     state.currentPlaylistShow = payload;
+  },
+  playlistRename(state, payload) {
+    state.createdPlaylist.forEach((item, index) => {
+      if (item.name === payload.oldName) {
+        state.createdPlaylist.splice(index, 1, { name: payload.newName, src: item.src });
+      }
+    });
   },
 };
 
@@ -257,6 +267,12 @@ const actions = {
   },
   updateCurrentPlaylistShow({ commit }, delta) {
     commit('currentPlaylistShowUpdate', delta);
+  },
+  removePlaylist({ commit }, delta) {
+    commit('playlistRemove', delta);
+  },
+  renamePlaylist({ commit }, delta) {
+    commit('playlistRename', delta);
   },
 };
 
