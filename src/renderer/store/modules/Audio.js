@@ -133,18 +133,26 @@ const mutations = {
   musicFromLibraryRemove(state, payload) {
     state.musicLibraryPlaylist.splice(state.musicLibraryPlaylist.indexOf(payload), 1);
   },
+  musicFromPlaylistRemove(state, payload) {
+    state.createdPlaylist.forEach((item) => {
+      if (item.name === payload.name) {
+        item.src.splice(item.src.indexOf(payload.src), 1);
+      }
+    });
+  },
   displayTypeUpdate(state) {
     state.displayType = !state.displayType;
   },
   createdPlaylistUpdate(state, payload) {
     state.createdPlaylist.push({ name: payload, src: [] });
   },
-  musicAddToPlaylist(state, payload) {
+  musicAddToPlaylist(state, payload) { // 拖动音乐添加
+    const playlistName = payload[0].name ? payload[0].name : state.currentPlaylistShow;
     state.createdPlaylist.forEach((item) => {
-      if (item.name === state.currentPlaylistShow && !item.src.includes(payload)) {
-        payload.forEach((src) => {
-          if (!item.src.includes(src)) {
-            item.src.unshift(src);
+      if (item.name === playlistName) {
+        payload.forEach((i) => {
+          if (!item.src.includes(i.src)) {
+            item.src.unshift(i.src);
           }
         });
       }
@@ -205,6 +213,9 @@ const actions = {
   },
   removeMusicFromLibrary({ commit }, delta) {
     commit('musicFromLibraryRemove', delta);
+  },
+  removeMusicFromPlaylist({ commit }, delta) {
+    commit('musicFromPlaylistRemove', delta);
   },
   updateDisplayType({ commit }) {
     commit('displayTypeUpdate');

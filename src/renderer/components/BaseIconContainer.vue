@@ -186,4 +186,9 @@ export default {
   width: 20px;
   height: 20px;
 }
+.moreInfo {
+  display: block;
+  width: 13px;
+  height: 13px;
+}
 </style>

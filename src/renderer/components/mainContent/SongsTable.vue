@@ -43,7 +43,7 @@ export default {
       handlerPosY: 0,
       handlerIndex: -1,
       handlerSrc: '',
-      handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove', 'handlerContainer', 'audioInfo'],
+      handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove', 'handlerContainer', 'audioInfo', 'playlistDetail', 'playlistContainer', 'content'],
     };
   },
   created() {

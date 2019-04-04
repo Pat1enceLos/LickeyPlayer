@@ -94,7 +94,7 @@ export default {
         this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
         this.$store.dispatch('updateAudioInfo', validFiles);
         if (!['musicLibrary', 'playlistQueue'].includes(this.currentPlaylistShow)) {
-          this.$store.dispatch('addMusicToPlaylist', validFiles);
+          this.$store.dispatch('addMusicToPlaylist', validFiles.map(item => ({ src: item })));
         } else {
           this.$store.dispatch('updateCurrentPlaylistShow', 'musicLibrary');
         }
