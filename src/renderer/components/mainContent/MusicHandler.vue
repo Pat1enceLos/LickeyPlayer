@@ -3,7 +3,7 @@
     <div class="playNow" @mouseup="handlePlayNow" :style="{ marginTop: '5px' }">
       <div class="handlerText">Play Now</div>
     </div>
-    <div class="addToQueue" v-show="!playlistQueueToShow">
+    <div class="addToQueue" v-show="currentPlaylistShow !== 'playlistQueue'">
       <div class="handlerText">Add To Queue</div>
     </div>
     <div class="addToPlaylist">
@@ -32,18 +32,19 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'src']),
+    ...mapGetters(['src', 'currentPlaylistShow']),
   },
   methods: {
     handlePlayNow() {
       this.$store.dispatch('updateSrc', this.musicSrc);
+      this.$store.dispatch('updateCurrentPlaylistPlay', this.currentPlaylistShow);
       this.$store.dispatch('updatePaused', false);
       this.$emit('update:ifRightClick', false);
     },
     handleRemove() {
-      if (this.playlistQueueToShow) {
+      if (this.currentPlaylistShow === 'playlistQueue') {
         this.$store.dispatch('removeMusicFromQueue', this.musicSrc);
-      } else if (this.musicLibraryToShow) {
+      } else if (this.currentPlaylistShow === 'musicLibrary') {
         this.$store.dispatch('removeMusicFromLibrary', this.musicSrc);
       }
       this.$emit('update:ifRightClick', false);

@@ -10,14 +10,12 @@ const state = {
   lastVolume: 0,
   playlistQueue: [], // 播放队列
   cycleType: '',
-  playlistQueueToShow: false, // 显示的是否为播放队列
-  musicLibraryToShow: true, // 显示的是否为音乐库
-  playlistToShow: '', // 显示的playlist名称
   musicLibraryPlaylist: [], // 音乐库列表
   displayType: true, // 图片和列表切换
   createdPlaylist: [], // 所有创建的playlist的信息
   randomPlay: false, // 随机播放
-  currentCreatedPlaylistPlay: '', // 当前播放的歌单的名称
+  currentPlaylistPlay: '', // 当前播放的列表的名称
+  currentPlaylistShow: 'musicLibrary', // 当前显示的列表的名称
 };
 
 const getters = {
@@ -33,13 +31,13 @@ const getters = {
   cycleType: state => state.cycleType,
   nextAudio: (state, getters) => {
     let list = [];
-    if (getters.playlistQueueToShow) {
+    if (getters.currentPlaylistPlay === 'playlistQueue') {
       list = list.concat(state.playlistQueue);
-    } else if (getters.musicLibraryToShow) {
+    } else if (getters.currentPlaylistPlay === 'musicLibrary') {
       list = list.concat(state.musicLibraryPlaylist);
     } else {
       getters.createdPlaylist.forEach((item) => {
-        if (item.name === getters.playlistToShow) {
+        if (item.name === getters.currentPlaylistPlay) {
           list = list.concat(item.src);
         }
       });
@@ -68,13 +66,13 @@ const getters = {
   },
   preAudio: (state, getters) => {
     let list = [];
-    if (getters.playlistQueueToShow) {
+    if (getters.currentPlaylistPlay === 'playlistQueue') {
       list = state.playlistQueue;
-    } else if (getters.musicLibraryToShow) {
+    } else if (getters.currentPlaylistPlay === 'musicLibrary') {
       list = state.musicLibraryPlaylist;
     } else {
       getters.createdPlaylist.forEach((item) => {
-        if (item.name === getters.playlistToShow) {
+        if (item.name === getters.currentPlaylistPlay) {
           list = item.src;
         }
       });
@@ -87,15 +85,13 @@ const getters = {
     }
     return '';
   },
-  playlistQueueToShow: state => state.playlistQueueToShow,
   musicLibraryPlaylist: state => state.musicLibraryPlaylist,
-  musicLibraryToShow: state => state.musicLibraryToShow,
   displayType: state => state.displayType,
   createdPlaylist: state => state.createdPlaylist,
-  playlistToShow: state => state.playlistToShow,
   audioInfo: state => state.audioInfo,
   currentAudioInfo: (state, getters) => state.audioInfo.find(item => item.src === getters.src),
-  currentCreatedPlaylistPlay: state => state.currentCreatedPlaylistPlay,
+  currentPlaylistPlay: state => state.currentPlaylistPlay,
+  currentPlaylistShow: state => state.currentPlaylistShow,
 };
 const mutations = {
   durationUpdate(state, payload) {
@@ -124,26 +120,12 @@ const mutations = {
       }
     });
   },
-  playlistQueueToShowUpdate(state, payload) {
-    state.playlistQueueToShow = payload;
-    if (state.musicLibraryToShow) {
-      state.musicLibraryToShow = false;
-    }
-    state.playlistToShow = '';
-  },
   musicLibraryPlaylistUpdate(state, payload) {
     payload.forEach((item) => {
       if (!state.musicLibraryPlaylist.includes(item)) {
         state.musicLibraryPlaylist.unshift(item);
       }
     });
-  },
-  musicLibraryToShowUpdate(state, payload) {
-    state.musicLibraryToShow = payload;
-    if (state.playlistQueueToShow) {
-      state.playlistQueueToShow = false;
-    }
-    state.playlistToShow = '';
   },
   musicFromQueueRemove(state, payload) {
     state.playlistQueue.splice(state.playlistQueue.indexOf(payload), 1);
@@ -157,18 +139,9 @@ const mutations = {
   createdPlaylistUpdate(state, payload) {
     state.createdPlaylist.push({ name: payload, src: [] });
   },
-  playlistToShowUpdate(state, payload) {
-    state.playlistToShow = payload;
-    if (state.playlistQueueToShow) {
-      state.playlistQueueToShow = false;
-    }
-    if (state.musicLibraryToShow) {
-      state.musicLibraryToShow = false;
-    }
-  },
   musicAddToPlaylist(state, payload) {
     state.createdPlaylist.forEach((item) => {
-      if (item.name === state.playlistToShow && !item.src.includes(payload)) {
+      if (item.name === state.currentPlaylistShow && !item.src.includes(payload)) {
         payload.forEach((src) => {
           console.log(src);
           if (!item.src.includes(src)) {
@@ -195,8 +168,11 @@ const mutations = {
   randomPlayUpdate(state, payload) {
     state.randomPlay = payload;
   },
-  currentCreatedPlaylistPlayUpdate(state, payload) {
-    state.currentCreatedPlaylistPlay = payload;
+  currentPlaylistPlayUpdate(state, payload) {
+    state.currentPlaylistPlay = payload;
+  },
+  currentPlaylistShowUpdate(state, payload) {
+    state.currentPlaylistShow = payload;
   },
 };
 
@@ -222,14 +198,8 @@ const actions = {
   updatePlaylistQueue({ commit }, delta) {
     commit('playlistQueueUpdate', delta);
   },
-  updatePlaylistQueueToShow({ commit }, delta) {
-    commit('playlistQueueToShowUpdate', delta);
-  },
   updateMusicLibraryPlaylist({ commit }, delta) {
     commit('musicLibraryPlaylistUpdate', delta);
-  },
-  updateMusicLibraryToShow({ commit }, delta) {
-    commit('musicLibraryToShowUpdate', delta);
   },
   removeMusicFromQueue({ commit }, delta) {
     commit('musicFromQueueRemove', delta);
@@ -242,9 +212,6 @@ const actions = {
   },
   updateCreatedPlaylist({ commit }, delta) {
     commit('createdPlaylistUpdate', delta);
-  },
-  updatePlaylistToShow({ commit }, delta) {
-    commit('playlistToShowUpdate', delta);
   },
   addMusicToPlaylist({ commit }, delta) {
     commit('musicAddToPlaylist', delta);
@@ -275,8 +242,11 @@ const actions = {
   updateRandomPlay({ commit }, delta) {
     commit('randomPlayUpdate', delta);
   },
-  updateCurrentCreatedPlaylistPlay({ commit }, delta) {
-    commit('currentCreatedPlaylistPlayUpdate', delta);
+  updateCurrentPlaylistPlay({ commit }, delta) {
+    commit('currentPlaylistPlayUpdate', delta);
+  },
+  updateCurrentPlaylistShow({ commit }, delta) {
+    commit('currentPlaylistShowUpdate', delta);
   },
 };
 

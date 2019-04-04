@@ -21,7 +21,7 @@ new Vue({
   store,
   template: '<App/>',
   computed: {
-    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow']),
+    ...mapGetters([]),
   },
   mounted() {
   },

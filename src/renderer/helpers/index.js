@@ -6,7 +6,7 @@ import { getValidAudioRegex, getValidAudioExtensions } from '../../shared/util';
 
 export default {
   computed: {
-    ...mapGetters(['playlistToShow']),
+    ...mapGetters(['currentPlaylistShow']),
   },
   methods: {
     timeFormatter(s) {
@@ -93,10 +93,10 @@ export default {
       if (validFiles.length) {
         this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
         this.$store.dispatch('updateAudioInfo', validFiles);
-        if (this.playlistToShow) {
+        if (!['musicLibrary', 'playlistQueue'].includes(this.currentPlaylistShow)) {
           this.$store.dispatch('addMusicToPlaylist', validFiles);
         } else {
-          this.$store.dispatch('updateMusicLibraryToShow', true);
+          this.$store.dispatch('updateCurrentPlaylistShow', 'musicLibrary');
         }
       } else {
         alert('暂不支持的音乐格式');
@@ -105,10 +105,11 @@ export default {
     openFiles(...files) {
       const validFiles = files.filter(file => getValidAudioRegex().test(path.extname(file)));
       if (validFiles.length) {
-        this.$store.dispatch('updateSrc', validFiles[0]);
+        this.$store.dispatch('updateSrc', validFiles[0]); // 拖到播放列表直接播放时
         this.$store.dispatch('updatePlaylistQueue', validFiles);
         this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
-        this.$store.dispatch('updatePlaylistQueueToShow', true);
+        this.$store.dispatch('updateCurrentPlaylistShow', 'playlistQueue');
+        this.$store.dispatch('updateCurrentPlaylistPlay', 'playlistQueue');
         this.$store.dispatch('updateAudioInfo', validFiles);
       } else {
         alert('暂不支持的音乐格式');

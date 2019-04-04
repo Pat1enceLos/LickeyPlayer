@@ -15,8 +15,8 @@
         :style="{
           background: index % 2 === 0 ? '#434343' : 'rgba(0, 0, 0, 0.1)',
         }">
-        <div class="detailIndex" v-show="src !== item">{{ index + 1 }}</div>
-        <Icon type="playing" v-show="src === item" class="playingIcon"></Icon>
+        <div class="detailIndex" v-show="src !== item || currentPlaylistShow !== currentPlaylistPlay">{{ index + 1 }}</div>
+        <Icon type="playing" v-show="src === item && currentPlaylistShow === currentPlaylistPlay" class="playingIcon"></Icon>
         <div class="detailSongTitle">{{ title(item) }}</div>
         <div class="detailArtists">{{ artist(item) }}</div>
         <div class="detailAlbum">{{ album(item) }}</div>
@@ -62,25 +62,26 @@ export default {
     Icon,
   },
   computed: {
-    ...mapGetters(['playlistQueue', 'playlistQueueToShow', 'src', 'musicLibraryToShow', 'musicLibraryPlaylist', 'createdPlaylist', 'playlistToShow', 'audioInfo']),
+    ...mapGetters(['playlistQueue', 'src', 'musicLibraryPlaylist', 'createdPlaylist', 'audioInfo', 'currentPlaylistShow', 'currentPlaylistPlay']),
     displayPlaylist() {
+      if (this.currentPlaylistShow === 'playlistQueue') {
+        return this.playlistQueue;
+      } else if (this.currentPlaylistShow === 'musicLibrary') {
+        return this.musicLibraryPlaylist;
+      }
       let playlistSrc = [];
       this.createdPlaylist.forEach((item) => {
-        if (item.name === this.playlistToShow) {
+        if (item.name === this.currentPlaylistShow) {
           playlistSrc = item.src;
         }
       });
-      if (this.playlistQueueToShow) {
-        return this.playlistQueue;
-      } else if (this.musicLibraryToShow) {
-        return this.musicLibraryPlaylist;
-      }
       return playlistSrc;
     },
   },
   methods: {
     dbClickToPlay(src) {
       this.$store.dispatch('updateSrc', src);
+      this.$store.dispatch('updateCurrentPlaylistPlay', this.currentPlaylistShow);
       this.$store.dispatch('updatePaused', false);
     },
     handleMusicSettings(e, index, src) {

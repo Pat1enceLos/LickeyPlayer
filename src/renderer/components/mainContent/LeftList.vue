@@ -1,11 +1,11 @@
 <template>
   <div class="leftList">
     <div class="topContainer">
-      <div class="library" :style="{ background: musicLibraryToShow ? 'rgb(67, 67, 67)' : '' }">
+      <div class="library" :style="{ background: currentPlaylistShow === 'musicLibrary' ? 'rgb(67, 67, 67)' : '' }">
         <Icon type="music" class="libLogo"></Icon>
         <div class="libText" @mouseup="showMusicLibrary">Music Library</div>
       </div>
-      <div class="queue" :style="{ background: playlistQueueToShow ? 'rgb(67, 67, 67)' : ''}">
+      <div class="queue" :style="{ background: currentPlaylistShow === 'playlistQueue' ? 'rgb(67, 67, 67)' : ''}">
         <Icon type="queue" class="queLogo"></Icon>
         <div class="queText" @mouseup="showPlaylistQueue">Playback Queue</div>
       </div>
@@ -31,8 +31,8 @@
         v-for="(item, index) in createdPlaylist"
         @mouseup="handlePlaylist($event, index, item)"
         @dblclick="handleCreatedPlaylistPlay(item)"
-        :style="{ background: item.name === playlistToShow ? 'rgb(67, 67, 67)' : ''}">
-        <div class="selectedMark" v-show="item.name === currentCreatedPlaylistPlay"></div>
+        :style="{ background: item.name === currentPlaylistShow ? 'rgb(67, 67, 67)' : ''}">
+        <div class="selectedMark" v-show="item.name === currentPlaylistPlay"></div>
         <div class="content">
           <Icon type="queue" class="playlistIcon"></Icon>
           <div class="playlistText">{{ item.name }}</div>
@@ -61,7 +61,7 @@ export default {
       handlerIndex: -1,
       ifRightClick: false,
       handlerPlaylistName: '',
-      handlerClassLists: ['playlistHandlerContainer', 'playlistPlayNow', 'addMusic', 'rename', 'playlistRemove'],
+      handlerClassLists: ['playlistHandlerContainer', 'playlistPlayNow', 'addMusic', 'rename', 'playlistRemove', 'currentPlaylistShow'],
       inputToShow: false,
     };
   },
@@ -81,19 +81,26 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist', 'playlistToShow', 'createdPlaylist', 'currentCreatedPlaylistPlay']),
+    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow']),
+  },
+  watch: {
+    currentPlaylistShow(val) {
+      console.log(val);
+    },
+    currentPlaylistPlay(val) {
+      console.log(val);
+    },
   },
   methods: {
     handleCreatedPlaylistPlay(item) {
       console.log(item);
-      this.$store.dispatch('updatePlaylistToShow', item.name);
       if (item.src[0]) {
-        this.$store.dispatch('updateCurrentCreatedPlaylistPlay', item.name);
+        this.$store.dispatch('updateCurrentPlaylistPlay', item.name);
         this.$store.dispatch('updateSrc', item.src[0]);
       }
     },
     handlePlaylist(e, index, item) {
-      this.$store.dispatch('updatePlaylistToShow', item.name);
+      this.$store.dispatch('updateCurrentPlaylistShow', item.name);
       if (e.button === 2) {
         this.handlerPosX = e.clientX;
         this.handlerPosY = e.clientY;
@@ -106,10 +113,10 @@ export default {
       this.openFilesByDialog();
     },
     showPlaylistQueue() {
-      this.$store.dispatch('updatePlaylistQueueToShow', true);
+      this.$store.dispatch('updateCurrentPlaylistShow', 'playlistQueue');
     },
     showMusicLibrary() {
-      this.$store.dispatch('updateMusicLibraryToShow', true);
+      this.$store.dispatch('updateCurrentPlaylistShow', 'musicLibrary');
     },
     handleDisplayType() {
       this.$store.dispatch('updateDisplayType');
