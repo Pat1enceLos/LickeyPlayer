@@ -143,7 +143,6 @@ const mutations = {
     state.createdPlaylist.forEach((item) => {
       if (item.name === state.currentPlaylistShow && !item.src.includes(payload)) {
         payload.forEach((src) => {
-          console.log(src);
           if (!item.src.includes(src)) {
             item.src.unshift(src);
           }

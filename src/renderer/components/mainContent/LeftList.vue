@@ -84,16 +84,9 @@ export default {
     ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow']),
   },
   watch: {
-    currentPlaylistShow(val) {
-      console.log(val);
-    },
-    currentPlaylistPlay(val) {
-      console.log(val);
-    },
   },
   methods: {
     handleCreatedPlaylistPlay(item) {
-      console.log(item);
       if (item.src[0]) {
         this.$store.dispatch('updateCurrentPlaylistPlay', item.name);
         this.$store.dispatch('updateSrc', item.src[0]);
@@ -296,7 +289,7 @@ export default {
           width: 3px;
           height: 70%;
           background: #FFCF2E;
-          margin: auto 0 auto 0;
+          margin: auto -3px auto 0;
         }
         .content {
           margin: auto auto auto 17px;
