@@ -169,6 +169,7 @@ export default {
           this.inputToShow = false;
           document.querySelector('.nameInput').value = '';
         } else {
+          document.querySelector('.nameInput').value = '';
           alert('已存在该播放列表');
         }
       } else {
@@ -178,7 +179,6 @@ export default {
     handleKeyInput(e) {
       if (e.key === 'Enter') {
         this.handleInput();
-        e.preventDefault();
       }
     },
   },

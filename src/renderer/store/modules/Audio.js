@@ -16,6 +16,7 @@ const state = {
   randomPlay: false, // 随机播放
   currentPlaylistPlay: '', // 当前播放的列表的名称
   currentPlaylistShow: 'musicLibrary', // 当前显示的列表的名称
+  enabledEditType: ['title', 'artists', 'album'],
 };
 
 const getters = {
@@ -92,6 +93,7 @@ const getters = {
   currentAudioInfo: (state, getters) => state.audioInfo.find(item => item.src === getters.src),
   currentPlaylistPlay: state => state.currentPlaylistPlay,
   currentPlaylistShow: state => state.currentPlaylistShow,
+  enabledEditType: state => state.enabledEditType,
 };
 const mutations = {
   durationUpdate(state, payload) {
@@ -243,12 +245,31 @@ const actions = {
       commit('audioInfoUpdate', {
         src: item,
         title: metadata.common.title,
-        artists: metadata.common.artists,
+        artists: metadata.common.artists.join(','),
         album: metadata.common.album,
+        trackNo: metadata.common.track.no,
+        totalTracks: '',
+        diskNo: metadata.common.disk.no,
+        totalDisk: '',
         year: metadata.common.year,
-        track: metadata.common.track,
-        fileType: metadata.format.dataformat,
+        BPM: '',
+        genre: metadata.common.genre.join(','),
+        albumArtist: '',
+        composer: '',
+        performer: '',
+        publisher: '',
+        description: '',
+        comment: metadata.common.comment,
+        rating: '',
         duration: metadata.format.duration,
+        sampleRate: metadata.format.sampleRate,
+        channels: '',
+        bits: '',
+        bitrate: metadata.format.bitrate,
+        codec: metadata.format.codecProfile,
+        encoding: metadata.format.encoder,
+        fileSize: '',
+        fileType: metadata.format.dataformat,
         picture: metadata.common.picture,
       });
     });

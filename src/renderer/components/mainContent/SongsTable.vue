@@ -100,7 +100,7 @@ export default {
       return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).title : 'null';
     },
     artist(item) {
-      return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).artists[0] : 'null';
+      return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).artists : 'null';
     },
     album(item) {
       return this.fixedAudioInfo(item) ? this.fixedAudioInfo(item).album : 'null';

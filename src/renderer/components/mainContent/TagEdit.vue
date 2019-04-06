@@ -3,21 +3,28 @@
     <div class="logoEdit">
       <img :src='picture' :style="{ width: '100%', height: '100%' }" v-show="picture">
     </div>
-    <div class="titleEdit">
-      <div class="titleTags">Title</div>
-      <input class="titleEditInput" v-model="title" @input="handleTitleInput"/>
-      <Icon v-show="titleTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveTitle"></Icon>
+    <div class="editContainer">
+      <div class="edit" v-for="(item, index) in enabledEditType">
+        <div class="tagsType">{{ item }}</div>
+        <input class="typeEditInput" :class="`${item}EditInput`" v-model="types[item]" @input="handleTypeInput(item, index)"/>
+        <Icon v-show="modifyToShow[index][item]" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveEdit(item, index)"></Icon>
+      </div>
     </div>
-    <div class="artistEdit">
-      <div class="artistTags">Artist</div>
-      <input class="artistEditInput" v-model="artist" @input="handleArtistInput"/>
-      <Icon v-show="artistTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveArtist"></Icon>
-    </div>
-    <div class="albumEdit">
-      <div class="albumTags">Album</div>
-      <input class="albumEditInput" v-model="album" @input="handleAlbumInput"/>
-      <Icon v-show="albumTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveAlbum"></Icon>
-    </div>
+    <!--<div class="titleEdit">-->
+      <!--<div class="titleTags">Title</div>-->
+      <!--<input class="titleEditInput" v-model="title" @input="handleTitleInput"/>-->
+      <!--<Icon v-show="titleTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveTitle"></Icon>-->
+    <!--</div>-->
+    <!--<div class="artistEdit">-->
+      <!--<div class="artistTags">Artist</div>-->
+      <!--<input class="artistEditInput" v-model="artist" @input="handleArtistInput"/>-->
+      <!--<Icon v-show="artistTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveArtist"></Icon>-->
+    <!--</div>-->
+    <!--<div class="albumEdit">-->
+      <!--<div class="albumTags">Album</div>-->
+      <!--<input class="albumEditInput" v-model="album" @input="handleAlbumInput"/>-->
+      <!--<Icon v-show="albumTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveAlbum"></Icon>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -29,34 +36,36 @@ export default {
   name: 'TagEdit',
   data() {
     return {
-      titleTags: false,
-      artistTags: false,
-      albumTags: false,
-      title: '暂无歌曲信息',
-      artist: '暂无歌手信息',
-      album: '暂无专辑信息',
+      types: {},
       inputClassList: ['titleEditInput', 'artistEditInput', 'albumEditInput'],
+      modifyToShow: [
+        { title: false },
+        { artists: false },
+        { album: false },
+      ],
     };
   },
   components: {
     Icon,
   },
   computed: {
-    ...mapGetters(['currentAudioInfo', 'src']),
+    ...mapGetters(['currentAudioInfo', 'src', 'enabledEditType']),
     picture() {
       return this.currentAudioInfo && this.currentAudioInfo.picture ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
     },
   },
   watch: {
     src() {
-      this.title = this.currentAudioInfo ? this.currentAudioInfo.title : '暂无歌曲信息';
-      this.artist = this.currentAudioInfo ? this.currentAudioInfo.artists : '暂无歌手信息';
-      this.album = this.currentAudioInfo ? this.currentAudioInfo.album : '暂无专辑信息';
+      this.enabledEditType.forEach((item, index) => {
+        const info = ['暂无歌曲信息', '暂无歌手信息', '暂无专辑信息'];
+        const defaultInfo = index < 3 ? info[index] : '';
+        this.types[item] = this.currentAudioInfo ? this.currentAudioInfo[item] : defaultInfo;
+      });
     },
     currentAudioInfo() {
-      this.title = this.currentAudioInfo.title;
-      this.artist = this.currentAudioInfo.artists;
-      this.album = this.currentAudioInfo.album;
+      this.enabledEditType.forEach((item) => {
+        this.types[item] = this.currentAudioInfo[item];
+      });
     },
   },
   mounted() {
@@ -92,35 +101,15 @@ export default {
     //   this.album = this.currentAudioInfo.album;
     //   this.albumTags = false;
     // },
-    saveTitle() {
-      const newVal = document.querySelector('.titleEditInput').value;
+    saveEdit(item, index) {
+      const newVal = document.querySelector(`.${item}EditInput`).value;
       const newCurrentAudioInfo = Object.assign({}, this.currentAudioInfo);
-      newCurrentAudioInfo.title = newVal;
+      newCurrentAudioInfo[item] = newVal;
       this.$store.dispatch('updateCurrentAudioInfo', newCurrentAudioInfo);
-      this.titleTags = false;
+      this.modifyToShow[index][item] = false;
     },
-    saveArtist() {
-      const newVal = document.querySelector('.artistEditInput').value;
-      const newCurrentAudioInfo = Object.assign({}, this.currentAudioInfo);
-      newCurrentAudioInfo.artists[0] = newVal;
-      this.$store.dispatch('updateCurrentAudioInfo', newCurrentAudioInfo);
-      this.artistTags = false;
-    },
-    saveAlbum() {
-      const newVal = document.querySelector('.albumEditInput').value;
-      const newCurrentAudioInfo = Object.assign({}, this.currentAudioInfo);
-      newCurrentAudioInfo.album = newVal;
-      this.$store.dispatch('updateCurrentAudioInfo', newCurrentAudioInfo);
-      this.albumTags = false;
-    },
-    handleTitleInput() {
-      this.titleTags = document.querySelector('.titleEditInput').value !== this.currentAudioInfo.title;
-    },
-    handleArtistInput() {
-      this.artistTags = document.querySelector('.artistEditInput').value !== this.currentAudioInfo.artists[0];
-    },
-    handleAlbumInput() {
-      this.albumTags = document.querySelector('.albumEditInput').value !== this.currentAudioInfo.album;
+    handleTypeInput(item, index) {
+      this.modifyToShow[index][item] = document.querySelector(`.${item}EditInput`).value !== this.currentAudioInfo[item];
     },
   },
 };
@@ -138,73 +127,32 @@ export default {
     margin: 15px auto 0 auto;
     background: black;
   }
-  .titleEdit {
-    width: 180px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
+  .editContainer {
     margin: 20px auto 0 auto;
-    border-bottom: 0.1px solid rgba(255, 255, 255, 1);
-    .titleTags {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 1);
-      margin-bottom: 5px;
-    }
-    .titleEditInput {
-      height: 24px;
-      width: 83%;
-      background: transparent;
-      outline: none;
-      font-size: 13px;
-      text-indent: 4px;
-      border-radius: 3px;
-      border: none;
-    }
-  }
-  .artistEdit {
+    height: 300px;
     width: 180px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    margin: 5px auto 0 auto;
-    border-bottom: 0.1px solid rgba(255, 255, 255, 1);
-    .artistTags {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 1);
-      margin-bottom: 5px;
-    }
-    .artistEditInput {
-      height: 24px;
-      width: 83%;
-      background: transparent;
-      outline: none;
-      font-size: 13px;
-      text-indent: 4px;
-      border-radius: 3px;
-      border: none;
-    }
-  }
-  .albumEdit {
-    width: 180px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    margin: 5px auto 0 auto;
-    border-bottom: 0.1px solid rgba(255, 255, 255, 1);
-    .albumTags {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 1);
-      margin-bottom: 5px;
-    }
-    .albumEditInput {
-      height: 24px;
-      width: 83%;
-      background: transparent;
-      outline: none;
-      font-size: 13px;
-      text-indent: 4px;
-      border-radius: 3px;
-      border: none;
+    .edit {
+      width: 180px;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto 5px auto;
+      border-bottom: 0.1px solid rgba(255, 255, 255, 1);
+      .tagsType {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 1);
+        margin-bottom: 5px;
+      }
+      .typeEditInput {
+        height: 24px;
+        width: 83%;
+        background: transparent;
+        outline: none;
+        font-size: 13px;
+        text-indent: 4px;
+        border-radius: 3px;
+        border: none;
+      }
     }
   }
 }

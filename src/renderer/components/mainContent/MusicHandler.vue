@@ -17,13 +17,11 @@
       <div class="handlerText">Remove</div>
     </div>
     <div class="playlistDetail" v-show="playlistHovered || playlistDetailHovered" @mouseover="handlePlaylistDetailOver" @mouseleave="handlePlaylistDetailLeave">
-      <div class="playlistContainer" v-for="(item, index) in createdPlaylist.map(i => i.name)"
-        @mouseup="handleAddMusicToPlaylist(item)"
-        :style="{
-          marginTop: index === 0 ? '5px' : '',
-          marginBottom: index === createdPlaylist.length - 1 ? '5px' : ''
-        }">
-        <div class="content">{{ item }}</div>
+      <div class="playlistContent">
+        <div class="playlistContainer" v-for="(item, index) in createdPlaylist.map(i => i.name)"
+          @mouseup="handleAddMusicToPlaylist(item)">
+          <div class="content">{{ item }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -134,6 +132,13 @@ export default {
     border: 0.3px solid rgb(75, 75, 75);
     display: flex;
     flex-direction: column;
+    max-height: 160px;
+    .playlistContent {
+      max-height: 150px;
+      overflow: scroll;
+      height: auto;
+      margin: 5px 0 5px 0;
+    }
     .playlistContainer {
       width: auto;
       height: 30px;
