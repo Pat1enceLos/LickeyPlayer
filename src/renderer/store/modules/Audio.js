@@ -164,6 +164,7 @@ const mutations = {
     });
   },
   audioInfoUpdate(state, payload) {
+    console.log(payload);
     state.audioInfo.unshift(payload);
   },
   currentAudioInfoUpdate(state, payload) {
@@ -244,7 +245,6 @@ const actions = {
   updateAudioInfo({ commit }, delta) {
     delta.forEach(async (item) => {
       const metadata = await mm.parseFile(item);
-      console.log(metadata);
       commit('audioInfoUpdate', {
         src: item,
         title: metadata.common.title,
@@ -254,7 +254,7 @@ const actions = {
         totalTracks: '',
         diskNo: metadata.common.disk.no,
         totalDisk: '',
-        year: metadata.common.year,
+        year: metadata.common.year || '',
         BPM: '',
         genre: metadata.common.genre ? metadata.common.genre.join(',') : '',
         albumArtist: '',

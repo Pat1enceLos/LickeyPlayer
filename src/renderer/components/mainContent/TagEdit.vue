@@ -15,14 +15,17 @@
         </div>
       </div>
       <div class="iconContainer">
-        <Icon type="edit"></Icon>
+        <Icon type="edit" @mouseup.native="editShift"></Icon>
         <Icon type="addTags" @mouseup.native="addMoreTags"></Icon>
       </div>
       <div class="tagsScroll">
-        <div class="edit" v-for="(item, index) in enabledEditType">
+        <div class="edit" v-for="(item) in enabledEditType">
           <div class="tagsType">{{ item }}</div>
-          <input class="typeEditInput" :class="`${item}EditInput`" v-model="types[item]" @input="handleTypeInput(item, index)"/>
-          <Icon v-show="modifyToShow[index][item]" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveEdit(item, index)"></Icon>
+          <div class="editContent">
+            <div v-show="tagsToShow" class="normalShow">{{ types[item] }}</div>
+            <input v-show="!tagsToShow" class="typeEditInput" :class="`${item}EditInput`" v-model="types[item]" @input="handleTypeInput(item)"/>
+            <Icon v-show="modifyToShow[item] && !tagsToShow" type="save" class="tagsChanged" @mouseup.native="saveEdit(item)"></Icon>
+          </div>
         </div>
       </div>
     </div>
@@ -40,39 +43,39 @@ export default {
     return {
       types: {},
       inputClassList: ['titleEditInput', 'artistEditInput', 'albumEditInput'],
-      modifyToShow: [
-        { title: false },
-        { artists: false },
-        { album: false },
-        { trackNo: false },
-        { totalTracks: false },
-        { discNo: false },
-        { totalDisk: false },
-        { year: false },
-        { BMP: false },
-        { genre: false },
-        { albumArtist: false },
-        { composer: false },
-        { performer: false },
-        { publisher: false },
-        { description: false },
-        { comment: false },
-        { rating: false },
-        { duration: false },
-        { sampleRate: false },
-        { channels: false },
-        { bits: false },
-        { bitrate: false },
-        { codec: false },
-        { encoding: false },
-      ],
+      modifyToShow: {
+        title: false,
+        artists: false,
+        album: false,
+        trackNo: false,
+        totalTracks: false,
+        diskNo: false,
+        totalDisk: false,
+        year: false,
+        BMP: false,
+        genre: false,
+        albumArtist: false,
+        composer: false,
+        performer: false,
+        publisher: false,
+        description: false,
+        comment: false,
+        rating: false,
+        duration: false,
+        sampleRate: false,
+        channels: false,
+        bits: false,
+        bitrate: false,
+        codec: false,
+        encoding: false,
+      },
       tags: {
         title: 'Title',
         artists: 'Artist',
         album: 'Album',
         trackNo: 'Track No.',
         totalTracks: 'Total Tracks',
-        discNo: 'Disc No.',
+        diskNo: 'Disc No.',
         totalDisk: 'Total Discs',
         year: 'Year',
         BMP: 'BPM',
@@ -94,6 +97,7 @@ export default {
       },
       addTags: false,
       mousedownTags: [],
+      tagsToShow: true,
     };
   },
   components: {
@@ -118,22 +122,39 @@ export default {
         this.types[item] = this.currentAudioInfo[item];
       });
     },
+    enabledEditType(val) {
+      val.forEach((item) => {
+        this.types[item] = this.currentAudioInfo[item];
+      });
+    },
   },
   mounted() {
   },
   methods: {
+    editShift() {
+      this.tagsToShow = !this.tagsToShow;
+      if (this.tagsToShow) {
+        this.enabledEditType.forEach((item) => {
+          this.types[item] = this.currentAudioInfo[item];
+        });
+      } else {
+        this.enabledEditType.forEach((item) => {
+          this.modifyToShow[item] = false;
+        });
+      }
+    },
     selectedToShow(item) {
       return this.enabledEditType.includes(_.findKey(this.tags, i => i === item));
     },
-    saveEdit(item, index) {
+    saveEdit(item) {
       const newVal = document.querySelector(`.${item}EditInput`).value;
       const newCurrentAudioInfo = Object.assign({}, this.currentAudioInfo);
       newCurrentAudioInfo[item] = newVal;
       this.$store.dispatch('updateCurrentAudioInfo', newCurrentAudioInfo);
-      this.modifyToShow[index][item] = false;
+      this.modifyToShow[item] = false;
     },
-    handleTypeInput(item, index) {
-      this.modifyToShow[index][item] = document.querySelector(`.${item}EditInput`).value !== this.currentAudioInfo[item];
+    handleTypeInput(item) {
+      this.modifyToShow[item] = document.querySelector(`.${item}EditInput`).value !== this.currentAudioInfo[item];
     },
     addMoreTags() {
       this.addTags = true;
@@ -221,20 +242,37 @@ export default {
       flex-direction: column;
       margin: 0 auto 5px auto;
       border-bottom: 0.1px solid rgba(255, 255, 255, 1);
+      .editContent {
+        width: 180px;
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        .tagsChanged {
+          width: auto;
+          height: auto;
+          margin: auto auto auto 10px;
+          cursor: pointer;
+        }
+        .typeEditInput {
+          height: 24px;
+          width: 83%;
+          background: transparent;
+          outline: none;
+          font-size: 13px;
+          text-indent: 4px;
+          border-radius: 3px;
+          border: none;
+        }
+        .normalShow {
+          font-size: 13px;
+          color: rgba(255, 255, 255, 1);
+          height: 24px;
+        }
+      }
       .tagsType {
         font-size: 13px;
         color: rgba(255, 255, 255, 1);
         margin-bottom: 5px;
-      }
-      .typeEditInput {
-        height: 24px;
-        width: 83%;
-        background: transparent;
-        outline: none;
-        font-size: 13px;
-        text-indent: 4px;
-        border-radius: 3px;
-        border: none;
       }
     }
   }
