@@ -21,7 +21,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentTime', 'duration', 'displayType', 'playlistQueueToShow', 'musicLibraryToShow']),
+    ...mapGetters(['currentTime', 'duration', 'displayType', 'currentPlaylistShow']),
   },
   components: {
     'base-audio-player': BaseAudioPlayer,
@@ -44,12 +44,12 @@ export default {
       const onlyFolders = files.every(file => fs.statSync(file).isDirectory());
       files.forEach(file => this.$electron.remote.app.addRecentDocument(file));
       if (onlyFolders) {
-        if (this.playlistQueueToShow) {
+        if (this.currentPlaylistShow === 'playlistQueue') {
           this.openFolders(...files);
         } else {
           this.importFolders(...files);
         }
-      } else if (this.playlistQueueToShow) {
+      } else if (this.currentPlaylistShow === 'playlistQueue') {
         this.openFiles(...files);
       } else {
         this.importFiles(...files);

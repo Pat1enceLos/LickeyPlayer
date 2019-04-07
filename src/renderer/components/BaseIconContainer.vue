@@ -186,4 +186,28 @@ export default {
   width: 20px;
   height: 20px;
 }
+.moreInfo {
+  display: block;
+  width: 13px;
+  height: 13px;
+}
+.edit {
+  display: block;
+  width: 15px;
+  height: 15px;
+  margin: auto 5px auto 145px;
+  cursor: pointer;
+}
+.addTags {
+  display: block;
+  width: 15px;
+  height: 15px;
+  margin: auto auto auto 0;
+  cursor: pointer;
+}
+.tagsSelected {
+  display: block;
+  width: 10px;
+  height: 10px;
+}
 </style>

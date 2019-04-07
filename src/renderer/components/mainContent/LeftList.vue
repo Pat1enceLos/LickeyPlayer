@@ -1,11 +1,11 @@
 <template>
   <div class="leftList">
     <div class="topContainer">
-      <div class="library" :style="{ background: musicLibraryToShow ? 'rgb(67, 67, 67)' : '' }">
+      <div class="library" :style="{ background: currentPlaylistShow === 'musicLibrary' ? 'rgb(67, 67, 67)' : '' }">
         <Icon type="music" class="libLogo"></Icon>
         <div class="libText" @mouseup="showMusicLibrary">Music Library</div>
       </div>
-      <div class="queue" :style="{ background: playlistQueueToShow ? 'rgb(67, 67, 67)' : ''}">
+      <div class="queue" :style="{ background: currentPlaylistShow === 'playlistQueue' ? 'rgb(67, 67, 67)' : ''}">
         <Icon type="queue" class="queLogo"></Icon>
         <div class="queText" @mouseup="showPlaylistQueue">Playback Queue</div>
       </div>
@@ -31,11 +31,12 @@
         v-for="(item, index) in createdPlaylist"
         @mouseup="handlePlaylist($event, index, item)"
         @dblclick="handleCreatedPlaylistPlay(item)"
-        :style="{ background: item.name === playlistToShow ? 'rgb(67, 67, 67)' : ''}">
-        <div class="selectedMark" v-show="item.name === currentCreatedPlaylistPlay"></div>
+        :style="{ background: item.name === currentPlaylistShow ? 'rgb(67, 67, 67)' : ''}">
+        <div class="selectedMark" v-show="item.name === currentPlaylistPlay"></div>
         <div class="content">
           <Icon type="queue" class="playlistIcon"></Icon>
-          <div class="playlistText">{{ item.name }}</div>
+          <div class="playlistText" v-show="item.name !== rePlaylist">{{ item.name }}</div>
+          <input class="nameReset" v-show="item.name === rePlaylist" v-model="exName" autofocus="autofocus" @blur="handleRename" @keypress="handleKeyRename">
         </div>
       </div>
     </div>
@@ -43,7 +44,7 @@
       <Icon type="queue" class="playlistIcon"></Icon>
       <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput"/>
     </div>
-    <playlist-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
+    <playlist-handler v-show="ifRightClick" :rePlaylist.sync="rePlaylist" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
   </div>
 </template>
 
@@ -61,8 +62,10 @@ export default {
       handlerIndex: -1,
       ifRightClick: false,
       handlerPlaylistName: '',
-      handlerClassLists: ['playlistHandlerContainer', 'playlistPlayNow', 'addMusic', 'rename', 'playlistRemove'],
+      handlerClassLists: ['playlistHandlerContainer', 'playlistPlayNow', 'addMusic', 'rename', 'playlistRemove', 'currentPlaylistShow', 'handlerText', 'playlistExport', 'playlistAddToQueue'],
       inputToShow: false,
+      rePlaylist: '',
+      exName: '',
     };
   },
   created() {
@@ -81,19 +84,25 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['playlistQueueToShow', 'musicLibraryToShow', 'createdPlaylist', 'playlistToShow', 'createdPlaylist', 'currentCreatedPlaylistPlay']),
+    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow']),
+  },
+  watch: {
+    rePlaylist(val) {
+      this.exName = val;
+      setTimeout(() => {
+        document.querySelector('.nameReset').focus();
+      }, 0);
+    },
   },
   methods: {
     handleCreatedPlaylistPlay(item) {
-      console.log(item);
-      this.$store.dispatch('updatePlaylistToShow', item.name);
       if (item.src[0]) {
-        this.$store.dispatch('updateCurrentCreatedPlaylistPlay', item.name);
+        this.$store.dispatch('updateCurrentPlaylistPlay', item.name);
         this.$store.dispatch('updateSrc', item.src[0]);
       }
     },
     handlePlaylist(e, index, item) {
-      this.$store.dispatch('updatePlaylistToShow', item.name);
+      this.$store.dispatch('updateCurrentPlaylistShow', item.name);
       if (e.button === 2) {
         this.handlerPosX = e.clientX;
         this.handlerPosY = e.clientY;
@@ -106,10 +115,10 @@ export default {
       this.openFilesByDialog();
     },
     showPlaylistQueue() {
-      this.$store.dispatch('updatePlaylistQueueToShow', true);
+      this.$store.dispatch('updateCurrentPlaylistShow', 'playlistQueue');
     },
     showMusicLibrary() {
-      this.$store.dispatch('updateMusicLibraryToShow', true);
+      this.$store.dispatch('updateCurrentPlaylistShow', 'musicLibrary');
     },
     handleDisplayType() {
       this.$store.dispatch('updateDisplayType');
@@ -120,6 +129,30 @@ export default {
         setTimeout(() => {
           document.querySelector('.nameInput').focus();
         }, 0);
+      }
+    },
+    handleRename() {
+      const inputName = document.querySelector('.nameReset').value;
+      if (inputName !== '') {
+        let duplicate = false;
+        this.createdPlaylist.forEach((item) => {
+          if (item.name === inputName) {
+            duplicate = true;
+          }
+        });
+        if (!duplicate) {
+          this.$store.dispatch('renamePlaylist', { oldName: this.rePlaylist, newName: inputName });
+          this.rePlaylist = '';
+        } else {
+          this.rePlaylist = '';
+        }
+      } else {
+        this.rePlaylist = '';
+      }
+    },
+    handleKeyRename(e) {
+      if (e.key === 'Enter') {
+        this.handleRename();
       }
     },
     handleInput() {
@@ -136,6 +169,7 @@ export default {
           this.inputToShow = false;
           document.querySelector('.nameInput').value = '';
         } else {
+          document.querySelector('.nameInput').value = '';
           alert('已存在该播放列表');
         }
       } else {
@@ -143,21 +177,8 @@ export default {
       }
     },
     handleKeyInput(e) {
-      const inputName = document.querySelector('.nameInput').value;
-      if (e.key === 'Enter' && inputName !== '') {
-        let duplicate = false;
-        this.createdPlaylist.forEach((item) => {
-          if (item.name === inputName) {
-            duplicate = true;
-          }
-        });
-        if (!duplicate) {
-          this.$store.dispatch('updateCreatedPlaylist', inputName);
-          this.inputToShow = false;
-          document.querySelector('.nameInput').value = '';
-        } else {
-          alert('已存在该播放列表');
-        }
+      if (e.key === 'Enter') {
+        this.handleInput();
       }
     },
   },
@@ -289,7 +310,7 @@ export default {
           width: 3px;
           height: 70%;
           background: #FFCF2E;
-          margin: auto 0 auto 0;
+          margin: auto -3px auto 0;
         }
         .content {
           margin: auto auto auto 17px;
@@ -307,6 +328,17 @@ export default {
             color: rgba(255, 255, 255, 1);
             margin: auto auto auto 10px;
             cursor: pointer;
+          }
+          .nameReset {
+            width: 60%;
+            height: 20px;
+            font-size: 13px;
+            margin: auto auto auto 10px;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 3px;
+            text-indent: 3px;
+            outline: none;
+            border: none;
           }
         }
       }
