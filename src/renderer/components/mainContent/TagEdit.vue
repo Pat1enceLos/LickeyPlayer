@@ -4,32 +4,34 @@
       <img :src='picture' :style="{ width: '100%', height: '100%' }" v-show="picture">
     </div>
     <div class="editContainer">
-      <div class="edit" v-for="(item, index) in enabledEditType">
-        <div class="tagsType">{{ item }}</div>
-        <input class="typeEditInput" :class="`${item}EditInput`" v-model="types[item]" @input="handleTypeInput(item, index)"/>
-        <Icon v-show="modifyToShow[index][item]" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveEdit(item, index)"></Icon>
+      <div class="moreTagsInfo" v-show="addTags" @blur="handleBlur" tabindex="1">
+        <div class="tagsMargin">
+          <div class="tagsContainer" v-for="(item) in Object.values(tags)" @mouseup="changeOneTag(item)">
+            <div :style="{ width: '10px', height: '10px', margin: 'auto 0 auto 10px' }">
+              <Icon v-show="selectedToShow(item)" type="tagsSelected"></Icon>
+            </div>
+            <p>{{ item }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="iconContainer">
+        <Icon type="edit"></Icon>
+        <Icon type="addTags" @mouseup.native="addMoreTags"></Icon>
+      </div>
+      <div class="tagsScroll">
+        <div class="edit" v-for="(item, index) in enabledEditType">
+          <div class="tagsType">{{ item }}</div>
+          <input class="typeEditInput" :class="`${item}EditInput`" v-model="types[item]" @input="handleTypeInput(item, index)"/>
+          <Icon v-show="modifyToShow[index][item]" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveEdit(item, index)"></Icon>
+        </div>
       </div>
     </div>
-    <!--<div class="titleEdit">-->
-      <!--<div class="titleTags">Title</div>-->
-      <!--<input class="titleEditInput" v-model="title" @input="handleTitleInput"/>-->
-      <!--<Icon v-show="titleTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveTitle"></Icon>-->
-    <!--</div>-->
-    <!--<div class="artistEdit">-->
-      <!--<div class="artistTags">Artist</div>-->
-      <!--<input class="artistEditInput" v-model="artist" @input="handleArtistInput"/>-->
-      <!--<Icon v-show="artistTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveArtist"></Icon>-->
-    <!--</div>-->
-    <!--<div class="albumEdit">-->
-      <!--<div class="albumTags">Album</div>-->
-      <!--<input class="albumEditInput" v-model="album" @input="handleAlbumInput"/>-->
-      <!--<Icon v-show="albumTags" type="save" :style="{ position: 'absolute', transform: 'translate(780%, 125%)', cursor: 'pointer' }" @mouseup.native="saveAlbum"></Icon>-->
-    <!--</div>-->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import _ from 'lodash';
 import Icon from '../BaseIconContainer';
 
 export default {
@@ -42,7 +44,56 @@ export default {
         { title: false },
         { artists: false },
         { album: false },
+        { trackNo: false },
+        { totalTracks: false },
+        { discNo: false },
+        { totalDisk: false },
+        { year: false },
+        { BMP: false },
+        { genre: false },
+        { albumArtist: false },
+        { composer: false },
+        { performer: false },
+        { publisher: false },
+        { description: false },
+        { comment: false },
+        { rating: false },
+        { duration: false },
+        { sampleRate: false },
+        { channels: false },
+        { bits: false },
+        { bitrate: false },
+        { codec: false },
+        { encoding: false },
       ],
+      tags: {
+        title: 'Title',
+        artists: 'Artist',
+        album: 'Album',
+        trackNo: 'Track No.',
+        totalTracks: 'Total Tracks',
+        discNo: 'Disc No.',
+        totalDisk: 'Total Discs',
+        year: 'Year',
+        BMP: 'BPM',
+        genre: 'Genre',
+        albumArtist: 'Album Artist',
+        composer: 'Composer',
+        performer: 'Performer',
+        publisher: 'Publisher',
+        description: 'Description',
+        comment: 'Comment',
+        rating: 'Rating',
+        duration: 'Duration',
+        sampleRate: 'Sample Rate',
+        channels: 'Channels',
+        bits: 'Bits / Sample',
+        bitrate: 'Bitrate',
+        codec: 'Codec',
+        encoding: 'Encoding',
+      },
+      addTags: false,
+      mousedownTags: [],
     };
   },
   components: {
@@ -69,38 +120,11 @@ export default {
     },
   },
   mounted() {
-    // this.$refs.tagsEdit.addEventListener('mousedown', (e) => {
-    //   if (['svg', 'use'].includes(e.target.nodeName)) {
-    //     e.preventDefault();
-    //   } else {
-    //     if (e.target.className !== 'titleEditInput') {
-    //       this.title = this.currentAudioInfo ? this.currentAudioInfo.title : '暂无歌曲信息';
-    //       this.titleTags = false;
-    //     }
-    //     if (e.target.className !== 'artistEditInput') {
-    //       this.artist = this.currentAudioInfo ? this.currentAudioInfo.artists : '暂无歌手信息';
-    //       this.artistTags = false;
-    //     }
-    //     if (e.target.className !== 'albumEditInput') {
-    //       this.album = this.currentAudioInfo ? this.currentAudioInfo.album : '暂无专辑信息';
-    //       this.albumTags = false;
-    //     }
-    //   }
-    // });
   },
   methods: {
-    // handleTitleBlur() {
-    //   this.title = this.currentAudioInfo.title;
-    //   this.titleTags = false;
-    // },
-    // handleArtistBlur() {
-    //   this.artist = this.currentAudioInfo.artists;
-    //   this.artistTags = false;
-    // },
-    // handleAlbumBlur() {
-    //   this.album = this.currentAudioInfo.album;
-    //   this.albumTags = false;
-    // },
+    selectedToShow(item) {
+      return this.enabledEditType.includes(_.findKey(this.tags, i => i === item));
+    },
     saveEdit(item, index) {
       const newVal = document.querySelector(`.${item}EditInput`).value;
       const newCurrentAudioInfo = Object.assign({}, this.currentAudioInfo);
@@ -110,6 +134,28 @@ export default {
     },
     handleTypeInput(item, index) {
       this.modifyToShow[index][item] = document.querySelector(`.${item}EditInput`).value !== this.currentAudioInfo[item];
+    },
+    addMoreTags() {
+      this.addTags = true;
+      setTimeout(() => {
+        document.querySelector('.moreTagsInfo').focus();
+      }, 0);
+    },
+    handleBlur() {
+      this.addTags = false;
+    },
+    changeOneTag(item) {
+      const tmpArr = [].concat(this.enabledEditType);
+      if (this.selectedToShow(item)) {
+        this.enabledEditType.forEach((i, index) => {
+          if (i === _.findKey(this.tags, i => i === item)) {
+            tmpArr.splice(index, 1);
+          }
+        });
+      } else {
+        tmpArr.push(_.findKey(this.tags, i => i === item));
+      }
+      this.$store.dispatch('updateEnabledEditType', tmpArr);
     },
   },
 };
@@ -128,9 +174,46 @@ export default {
     background: black;
   }
   .editContainer {
-    margin: 20px auto 0 auto;
+    margin: 5px auto 0 auto;
     height: 300px;
     width: 180px;
+    .iconContainer {
+      height: 15px;
+      width: 180px;
+      display: flex;
+    }
+    .moreTagsInfo {
+      width: auto;
+      height: auto;
+      position: absolute;
+      background: rgb(76, 76, 76);
+      top: 200px;
+      outline: none;
+      .tagsMargin {
+        margin: 5px 0 5px 0;
+        width: auto;
+        height: auto;
+        .tagsContainer {
+          height: 15px;
+          width: auto;
+          font-size: 10px;
+          color: rgba(255, 255, 255, 1);
+          display: flex;
+          p {
+            margin-right: 10px;
+            margin-left: 5px;
+          }
+          &:hover {
+            background: #434343;
+          }
+        }
+      }
+    }
+    .tagsScroll {
+      width: 180px;
+      height: 285px;
+      overflow: scroll;
+    }
     .edit {
       width: 180px;
       height: auto;

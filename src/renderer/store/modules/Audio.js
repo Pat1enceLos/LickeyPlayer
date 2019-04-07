@@ -193,6 +193,9 @@ const mutations = {
       }
     });
   },
+  enabledEditTypeUpdate(state, payload) {
+    state.enabledEditType = payload;
+  },
 };
 
 const actions = {
@@ -253,14 +256,14 @@ const actions = {
         totalDisk: '',
         year: metadata.common.year,
         BPM: '',
-        genre: metadata.common.genre.join(','),
+        genre: metadata.common.genre ? metadata.common.genre.join(',') : '',
         albumArtist: '',
         composer: '',
         performer: '',
         publisher: '',
         description: '',
         comment: metadata.common.comment,
-        rating: '',
+        rating: metadata.common.rating ? metadata.common.rating[0].rating : '',
         duration: metadata.format.duration,
         sampleRate: metadata.format.sampleRate,
         channels: '',
@@ -294,6 +297,9 @@ const actions = {
   },
   renamePlaylist({ commit }, delta) {
     commit('playlistRename', delta);
+  },
+  updateEnabledEditType({ commit }, delta) {
+    commit('enabledEditTypeUpdate', delta);
   },
 };
 
