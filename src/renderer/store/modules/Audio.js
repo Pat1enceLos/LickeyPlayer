@@ -197,6 +197,13 @@ const mutations = {
   enabledEditTypeUpdate(state, payload) {
     state.enabledEditType = payload;
   },
+  musicCoverUpdate(state, payload) {
+    state.audioInfo.forEach((item) => {
+      if (item.src === state.src) {
+        item.picture.splice(0, 1, payload);
+      }
+    });
+  },
 };
 
 const actions = {
@@ -300,6 +307,9 @@ const actions = {
   },
   updateEnabledEditType({ commit }, delta) {
     commit('enabledEditTypeUpdate', delta);
+  },
+  updateMusicCover({ commit }, delta) {
+    commit('musicCoverUpdate', delta);
   },
 };
 

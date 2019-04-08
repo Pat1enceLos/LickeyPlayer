@@ -6,7 +6,7 @@ import { getValidAudioRegex, getValidAudioExtensions } from '../../shared/util';
 
 export default {
   computed: {
-    ...mapGetters(['currentPlaylistShow']),
+    ...mapGetters(['currentPlaylistShow', 'currentAudioInfo']),
   },
   methods: {
     timeFormatter(s) {
@@ -183,6 +183,32 @@ export default {
           resolve(buf);
           closeSync(fd);
         });
+      });
+    },
+    changeMusicCover({ defaultPath } = {}) {
+      if (this.showingPopupDialog) return;
+      this.showingPopupDialog = true;
+      const opts = ['openFile'];
+      process.env.NODE_ENV === 'testing' ? '' : remote.dialog.showOpenDialog({
+        title: 'Open Dialog',
+        defaultPath,
+        filters: [{
+          name: 'Music Cover',
+          extensions: ['jpg', 'png'],
+        }, {
+          name: 'All Files',
+          extensions: ['*'],
+        }],
+        properties: opts,
+      }, (files) => {
+        this.showingPopupDialog = false;
+        if (files) {
+          fs.readFile(files[0], (err, data) => {
+            this.$store.dispatch('updateMusicCover', {
+              data, description: '', format: files[0].slice(files[0].lastIndexOf('.') + 1, files[0].length), type: 'Other',
+            });
+          });
+        }
       });
     },
   },
