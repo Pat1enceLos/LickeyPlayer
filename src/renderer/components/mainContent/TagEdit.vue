@@ -1,7 +1,10 @@
 <template>
   <div class="tagEdit" ref="tagsEdit">
     <div class="logoEdit">
-      <img :src='picture' :style="{ width: '100%', height: '100%' }" v-show="picture">
+      <div class="mask" v-show="!tagsToShow"></div>
+      <img :src='picture' :style="{ width: '180px', height: '180px', position: 'absolute' }" v-show="picture">
+      <Icon type="coverDelete" @mouseup.native="deleteCover" v-show="!tagsToShow" :style="{ width: 'auto', height: 'auto', margin: 'auto 0 5px 5px', zIndex: '6', cursor: 'pointer' }"></Icon>
+      <Icon type="coverEdit" @mouseup.native="editCover" v-show="!tagsToShow && picture" :style="{ width: 'auto', height: 'auto', margin: 'auto auto auto 60px', zIndex: '6', cursor: 'pointer' }"></Icon>
     </div>
     <div class="editContainer">
       <div class="moreTagsInfo" v-show="addTags" @blur="handleBlur" tabindex="1">
@@ -131,6 +134,13 @@ export default {
   mounted() {
   },
   methods: {
+    deleteCover() {
+      const newCurrentAudioInfo = Object.assign({}, this.currentAudioInfo);
+      newCurrentAudioInfo.picture = '';
+      this.$store.dispatch('updateCurrentAudioInfo', newCurrentAudioInfo);
+    },
+    editCover() {
+    },
     editShift() {
       this.tagsToShow = !this.tagsToShow;
       if (this.tagsToShow) {
@@ -193,6 +203,14 @@ export default {
     height: 180px;
     margin: 15px auto 0 auto;
     background: black;
+    display: flex;
+    .mask {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 5;
+    }
   }
   .editContainer {
     margin: 5px auto 0 auto;

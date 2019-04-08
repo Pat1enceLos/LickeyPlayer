@@ -210,4 +210,15 @@ export default {
   width: 10px;
   height: 10px;
 }
+.coverDelete {
+  display: block;
+  width: 15px;
+  height: 15px;
+
+}
+.coverEdit {
+  display: block;
+  width: 25px;
+  height: 25px;
+}
 </style>
