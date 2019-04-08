@@ -3,8 +3,8 @@
     <div class="logoEdit">
       <div class="mask" v-show="!tagsToShow"></div>
       <img :src='picture' :style="{ width: '180px', height: '180px', position: 'absolute' }" v-show="picture">
-      <Icon type="coverDelete" @mouseup.native="deleteCover" v-show="!tagsToShow" :style="{ width: 'auto', height: 'auto', margin: 'auto 0 5px 5px', zIndex: '6', cursor: 'pointer' }"></Icon>
-      <Icon type="coverEdit" @mouseup.native="editCover" v-show="!tagsToShow && picture" :style="{ width: 'auto', height: 'auto', margin: 'auto auto auto 60px', zIndex: '6', cursor: 'pointer' }"></Icon>
+      <Icon type="coverDelete" @mouseup.native="deleteCover" v-show="!tagsToShow && picture" :style="{ width: 'auto', height: 'auto', margin: 'auto 0 5px 5px', zIndex: '6', cursor: 'pointer' }"></Icon>
+      <Icon type="coverEdit" @mouseup.native="editCover" v-show="!tagsToShow" :style="{ width: 'auto', height: 'auto', margin: picture ? 'auto auto auto 60px' : 'auto auto auto 80px', zIndex: '6', cursor: 'pointer' }"></Icon>
     </div>
     <div class="editContainer">
       <div class="moreTagsInfo" v-show="addTags" @blur="handleBlur" tabindex="1">
@@ -109,7 +109,7 @@ export default {
   computed: {
     ...mapGetters(['currentAudioInfo', 'src', 'enabledEditType']),
     picture() {
-      return this.currentAudioInfo && this.currentAudioInfo.picture ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
+      return this.currentAudioInfo && this.currentAudioInfo.picture.length && !_.isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
     },
   },
   watch: {
@@ -135,11 +135,10 @@ export default {
   },
   methods: {
     deleteCover() {
-      const newCurrentAudioInfo = Object.assign({}, this.currentAudioInfo);
-      newCurrentAudioInfo.picture = '';
-      this.$store.dispatch('updateCurrentAudioInfo', newCurrentAudioInfo);
+      this.$store.dispatch('updateMusicCover', {});
     },
     editCover() {
+      this.changeMusicCover();
     },
     editShift() {
       this.tagsToShow = !this.tagsToShow;
@@ -285,6 +284,8 @@ export default {
           font-size: 13px;
           color: rgba(255, 255, 255, 1);
           height: 24px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
       }
       .tagsType {
