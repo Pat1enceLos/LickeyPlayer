@@ -17,6 +17,9 @@ const state = {
   currentPlaylistPlay: '', // 当前播放的列表的名称
   currentPlaylistShow: 'musicLibrary', // 当前显示的列表的名称
   enabledEditType: ['title', 'artists', 'album'],
+  fullTitleSearcher: [],
+  fullArtistSearcher: [],
+  fullAlbumSearcher: [],
 };
 
 const getters = {
@@ -94,6 +97,9 @@ const getters = {
   currentPlaylistPlay: state => state.currentPlaylistPlay,
   currentPlaylistShow: state => state.currentPlaylistShow,
   enabledEditType: state => state.enabledEditType,
+  fullTitleSearcher: state => state.fullTitleSearcher,
+  fullArtistSearcher: state => state.fullArtistSearcher,
+  fullAlbumSearcher: state => state.fullAlbumSearcher,
 };
 const mutations = {
   durationUpdate(state, payload) {
@@ -204,6 +210,15 @@ const mutations = {
       }
     });
   },
+  fullTitleSearchUpdate(state, payload) {
+    state.fullTitleSearcher = payload;
+  },
+  fullArtistSearchUpdate(state, payload) {
+    state.fullArtistSearcher = payload;
+  },
+  fullAlbumSearchUpdate(state, payload) {
+    state.fullAlbumSearcher = payload;
+  },
 };
 
 const actions = {
@@ -310,6 +325,15 @@ const actions = {
   },
   updateMusicCover({ commit }, delta) {
     commit('musicCoverUpdate', delta);
+  },
+  updateFullTitleSearch({ commit }, delta) {
+    commit('fullTitleSearchUpdate', delta);
+  },
+  updateFullArtistSearch({ commit }, delta) {
+    commit('fullArtistSearchUpdate', delta);
+  },
+  updateFullAlbumSearch({ commit }, delta) {
+    commit('fullAlbumSearchUpdate', delta);
   },
 };
 
