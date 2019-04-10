@@ -227,6 +227,7 @@ export default {
       background: rgb(76, 76, 76);
       top: 200px;
       outline: none;
+      z-index: 8;
       .tagsMargin {
         margin: 5px 0 5px 0;
         width: auto;

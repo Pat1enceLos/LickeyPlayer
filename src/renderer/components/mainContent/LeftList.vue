@@ -170,6 +170,7 @@ export default {
           document.querySelector('.nameInput').value = '';
         } else {
           document.querySelector('.nameInput').value = '';
+          document.querySelector('.nameInput').focus();
           alert('已存在该播放列表');
         }
       } else {
@@ -352,7 +353,7 @@ export default {
         width: 15px;
         height: 15px;
         display: flex;
-        margin: auto 10px auto 20px;
+        margin: auto 10px auto 17px;
       }
       .nameInput {
         width: 60%;
