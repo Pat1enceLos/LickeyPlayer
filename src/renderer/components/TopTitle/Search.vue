@@ -2,30 +2,30 @@
   <div class="searchInput">
     <input ref="inputSearch" class="input" @input="handleSearch">
     <Icon type="search"></Icon>
-    <div class="searchTips" v-show="fullTitleSearcher.length || fullArtistSearcher.length || fullAlbumSearcher.length">
+    <div class="searchTips" v-show="(fullTitleSearcher.length || fullArtistSearcher.length || fullAlbumSearcher.length) && !tipsBlur">
       <div class="tipsMargin">
         <div class="titleTips">
           <div class="titleTags" v-show="fullTitleSearcher.length">
-            <p>{{ '歌曲' }}</p>
+            <span>{{ '歌曲' }}</span>
           </div>
           <div class="titleContainer" v-for="(item, index) in fullTitleSearcher">
-            <p>{{ item.name }}</p>
+            <span>{{ item.name }}</span>
           </div>
         </div>
         <div class="artistTips">
           <div class="artistTags" v-show="fullArtistSearcher.length">
-            <p>{{ '歌手' }}</p>
+            <span>{{ '歌手' }}</span>
           </div>
           <div class="artistContainer" v-for="(item, index) in fullArtistSearcher">
-            <p>{{ item.name }}</p>
+            <span>{{ item.name }}</span>
           </div>
         </div>
         <div class="albumTips">
           <div class="albumTags" v-show="fullAlbumSearcher.length">
-            <p>{{ '专辑' }}</p>
+            <span>{{ '专辑' }}</span>
           </div>
           <div class="albumContainer" v-for="(item, index) in fullAlbumSearcher">
-            <p>{{ item.name }}</p>
+            <span>{{ item.name }}</span>
           </div>
         </div>
       </div>
@@ -44,9 +44,16 @@ export default {
   },
   data() {
     return {
+      tipsBlur: false,
+      blurClass: ['searchTips', 'tipsMargin', 'titleTips', 'titleTags', 'titleContainer', 'artistTips', 'artistTags', 'artistContainer', 'albumTips', 'albumTags', 'albumContainer'],
     };
   },
   mounted() {
+    window.addEventListener('mousedown', (e) => {
+      if (!this.blurClass.includes(e.target.className) && e.target.nodeName !== 'SPAN') {
+        this.tipsBlur = true;
+      }
+    });
   },
   computed: {
     ...mapGetters(['audioInfo', 'fullTitleSearcher', 'fullArtistSearcher', 'fullAlbumSearcher']),
@@ -64,6 +71,7 @@ export default {
   },
   methods: {
     handleSearch() {
+      this.tipsBlur = false;
       const mainKey = this.$refs.inputSearch.value;
       this.searchTitle(mainKey);
       this.searchArtist(mainKey);
@@ -149,7 +157,7 @@ export default {
             height: 20px;
             display: flex;
             background: #434343;
-            p {
+            span {
               width: auto;
               margin: auto 50px auto 13px;
               font-size: 13px;
@@ -160,7 +168,7 @@ export default {
             width: auto;
             height: 18px;
             display: flex;
-            p {
+            span {
               font-size: 10px;
               margin: auto 50px auto 10px;
               color: rgba(255, 255, 255, 1);
