@@ -64,8 +64,11 @@ export default {
       if (val) {
         this.$refs.audio.src = this.filePathToUrl(val);
         this.$refs.audio.play();
+        this.$store.dispatch('updatePaused', false);
+      } else {
+        this.$refs.audio.src = '';
+        this.$store.dispatch('updatePaused', true);
       }
-      this.$store.dispatch('updatePaused', false);
     },
     updateCurrentTime(newVal) {
       if (newVal) {

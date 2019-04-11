@@ -38,7 +38,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['createdPlaylist']),
+    ...mapGetters(['createdPlaylist', 'currentPlaylistPlay']),
   },
   methods: {
     handlePlaylistPlay() {
@@ -64,6 +64,11 @@ export default {
     },
     removePlaylist() {
       this.$store.dispatch('removePlaylist', this.name);
+      this.$store.dispatch('updateCurrentPlaylistShow', '');
+      if (this.name === this.currentPlaylistPlay) {
+        this.$store.dispatch('updateCurrentPlaylistPlay', '');
+        this.$store.dispatch('updateSrc', '');
+      }
       this.$emit('update:ifRightClick', false);
     },
   },

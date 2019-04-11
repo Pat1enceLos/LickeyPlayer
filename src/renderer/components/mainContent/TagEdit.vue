@@ -120,15 +120,23 @@ export default {
         this.types[item] = this.currentAudioInfo ? this.currentAudioInfo[item] : defaultInfo;
       });
     },
-    currentAudioInfo() {
-      this.enabledEditType.forEach((item) => {
-        this.types[item] = this.currentAudioInfo[item];
-      });
+    currentAudioInfo(val) {
+      if (val) {
+        this.enabledEditType.forEach((item) => {
+          this.types[item] = val[item];
+        });
+      } else {
+        this.types = {};
+      }
     },
     enabledEditType(val) {
-      val.forEach((item) => {
-        this.types[item] = this.currentAudioInfo[item];
-      });
+      if (this.currentAudioInfo) {
+        val.forEach((item) => {
+          this.types[item] = this.currentAudioInfo[item];
+        });
+      } else {
+        this.types = {};
+      }
     },
   },
   mounted() {

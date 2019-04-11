@@ -157,7 +157,7 @@ export default {
     },
     handleInput() {
       const inputName = document.querySelector('.nameInput').value;
-      if (inputName !== '') {
+      if (!inputName.match(/^[ ]*$/)) {
         let duplicate = false;
         this.createdPlaylist.forEach((item) => {
           if (item.name === inputName) {
@@ -174,6 +174,7 @@ export default {
           alert('已存在该播放列表');
         }
       } else {
+        document.querySelector('.nameInput').value = '';
         this.inputToShow = false;
       }
     },
