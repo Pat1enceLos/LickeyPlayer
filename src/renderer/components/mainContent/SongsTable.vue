@@ -69,13 +69,8 @@ export default {
       } else if (this.currentPlaylistShow === 'musicLibrary') {
         return this.musicLibraryPlaylist;
       }
-      let playlistSrc = [];
-      this.createdPlaylist.forEach((item) => {
-        if (item.name === this.currentPlaylistShow) {
-          playlistSrc = item.src;
-        }
-      });
-      return playlistSrc;
+      return this.createdPlaylist.find(i => i.name === this.currentPlaylistShow) ?
+        this.createdPlaylist.find(i => i.name === this.currentPlaylistShow).src : [];
     },
   },
   methods: {
