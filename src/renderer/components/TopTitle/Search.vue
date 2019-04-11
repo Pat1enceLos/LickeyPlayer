@@ -56,7 +56,16 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(['audioInfo', 'fullTitleSearcher', 'fullArtistSearcher', 'fullAlbumSearcher']),
+    ...mapGetters(['audioInfo', 'fullTitleSearcher', 'fullArtistSearcher', 'fullAlbumSearcher', 'currentPlaylistShow', 'musicLibraryPlaylist', 'playlistQueue', 'createdPlaylist']),
+    searchAudioInfo() {
+      if (this.currentPlaylistShow === 'musicLibrary') {
+        return this.audioInfo.filter(info => this.musicLibraryPlaylist.includes(info.src));
+      } else if (this.currentPlaylistShow === 'playlistQueue') {
+        return this.audioInfo.filter(info => this.playlistQueue.includes(info.src));
+      }
+      const tmp = this.createdPlaylist.find(i => i.name === this.currentPlaylistShow);
+      return this.audioInfo.filter(info => tmp.src.includes(info.src));
+    },
   },
   watch: {
     fullTitleSearcher(val) {
@@ -71,6 +80,7 @@ export default {
   },
   methods: {
     handleSearch() {
+      console.log(this.searchAudioInfo);
       this.tipsBlur = false;
       const mainKey = this.$refs.inputSearch.value;
       this.searchTitle(mainKey);
@@ -79,7 +89,7 @@ export default {
     },
     searchTitle(key) {
       const similarMatch = [];
-      this.audioInfo.forEach((item) => {
+      this.searchAudioInfo.forEach((item) => {
         if (item.title.includes(key) && key) {
           similarMatch.push({
             name: item.title,
@@ -91,7 +101,7 @@ export default {
     },
     searchArtist(key) {
       const similarMatch = [];
-      this.audioInfo.forEach((item) => {
+      this.searchAudioInfo.forEach((item) => {
         if (item.artists.includes(key) && key) {
           similarMatch.push({
             name: item.artists,
@@ -103,7 +113,7 @@ export default {
     },
     searchAlbum(key) {
       const similarMatch = [];
-      this.audioInfo.forEach((item) => {
+      this.searchAudioInfo.forEach((item) => {
         if (item.album.includes(key) && key) {
           similarMatch.push({
             name: item.album,
