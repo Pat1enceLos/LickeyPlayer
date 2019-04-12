@@ -2,14 +2,14 @@
   <div class="searchInput">
     <input ref="inputSearch" class="input" @input="handleSearch">
     <Icon type="search"></Icon>
-    <div class="searchTips" v-show="(fullTitleSearcher.length || fullArtistSearcher.length || fullAlbumSearcher.length) && !tipsBlur">
+    <div class="searchTips" v-show="(fullTitleSearcher.length || fullArtistSearcher.length || fullAlbumSearcher.length) && !tipsBlur && false">
       <div class="tipsMargin">
         <div class="titleTips">
           <div class="titleTags" v-show="fullTitleSearcher.length">
             <span>{{ '歌曲' }}</span>
           </div>
           <div class="titleContainer" v-for="(item, index) in fullTitleSearcher">
-            <span>{{ item.name }}</span>
+            <span>{{ item.title }}</span>
           </div>
         </div>
         <div class="artistTips">
@@ -17,7 +17,7 @@
             <span>{{ '歌手' }}</span>
           </div>
           <div class="artistContainer" v-for="(item, index) in fullArtistSearcher">
-            <span>{{ item.name }}</span>
+            <span>{{ item.artists }}</span>
           </div>
         </div>
         <div class="albumTips">
@@ -25,7 +25,7 @@
             <span>{{ '专辑' }}</span>
           </div>
           <div class="albumContainer" v-for="(item, index) in fullAlbumSearcher">
-            <span>{{ item.name }}</span>
+            <span>{{ item.album }}</span>
           </div>
         </div>
       </div>
@@ -67,61 +67,50 @@ export default {
       return this.audioInfo.filter(info => tmp.src.includes(info.src));
     },
   },
-  watch: {
-    fullTitleSearcher(val) {
-      console.log(val);
-    },
-    fullArtistSearcher(val) {
-      console.log(val);
-    },
-    fullAlbumSearcher(val) {
-      console.log(val);
-    },
-  },
   methods: {
     handleSearch() {
-      console.log(this.searchAudioInfo);
       this.tipsBlur = false;
       const mainKey = this.$refs.inputSearch.value;
       this.searchTitle(mainKey);
       this.searchArtist(mainKey);
       this.searchAlbum(mainKey);
+      this.$bus.$emit('search-tips', mainKey);
     },
     searchTitle(key) {
       const similarMatch = [];
       this.searchAudioInfo.forEach((item) => {
-        if (item.title.includes(key) && key) {
-          similarMatch.push({
-            name: item.title,
-            rank: (1000 - (item.title.indexOf(key) * 50)) + (key.length / 10),
-          });
+        if (item.title.toLowerCase().includes(key) && key) {
+          similarMatch.push(Object.assign(
+            item,
+            { rank: (1000 - (item.title.indexOf(key) * 50)) + (key.length / 10) },
+          ));
         }
       });
-      this.$store.dispatch('updateFullTitleSearch', similarMatch.sort((a, b) => b.rank - a.rank));
+      this.$store.dispatch('updateFullTitleSearch', similarMatch.sort((a, b) => b.rank - a.rank)); // may use in the future
     },
     searchArtist(key) {
       const similarMatch = [];
       this.searchAudioInfo.forEach((item) => {
-        if (item.artists.includes(key) && key) {
-          similarMatch.push({
-            name: item.artists,
-            rank: (1000 - (item.artists.indexOf(key) * 50)) + (key.length / 10),
-          });
+        if (item.artists.toLowerCase().includes(key) && key) {
+          similarMatch.push(Object.assign(
+            item,
+            { rank: (1000 - (item.artists.indexOf(key) * 50)) + (key.length / 10) },
+          ));
         }
       });
-      this.$store.dispatch('updateFullArtistSearch', similarMatch.sort((a, b) => b.rank - a.rank));
+      this.$store.dispatch('updateFullArtistSearch', similarMatch.sort((a, b) => b.rank - a.rank)); // may use in the future
     },
     searchAlbum(key) {
       const similarMatch = [];
       this.searchAudioInfo.forEach((item) => {
-        if (item.album.includes(key) && key) {
-          similarMatch.push({
-            name: item.album,
-            rank: (1000 - (item.album.indexOf(key) * 50)) + (key.length / 10),
-          });
+        if (item.album.toLowerCase().includes(key) && key) {
+          similarMatch.push(Object.assign(
+            item,
+            { rank: (1000 - (item.album.indexOf(key) * 50)) + (key.length / 10) },
+          ));
         }
       });
-      this.$store.dispatch('updateFullAlbumSearch', similarMatch.sort((a, b) => b.rank - a.rank));
+      this.$store.dispatch('updateFullAlbumSearch', similarMatch.sort((a, b) => b.rank - a.rank)); // may use in the future
     },
   },
 };
