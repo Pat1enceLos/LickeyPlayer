@@ -5,6 +5,7 @@ import {
   INFO_DB_NAME,
   INFO_DB_SCHEMA as schema,
 } from '../global/db';
+
 const currentSchema = schema.find(({ version }) => version === currentVersion).schema;
 
 export class InfoDB {

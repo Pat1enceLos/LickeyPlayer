@@ -8,6 +8,7 @@ import store from './store';
 
 Vue.prototype.$bus = new Vue(); // Global event bus
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
+
 Vue.config.productionTip = false;
 
 Vue.use(VueElectron);

@@ -6,6 +6,8 @@
 
 <script>
 import '@/css/style.scss';
+import drag from '@/helpers/drag';
+
 export default {
   name: 'lickeymusic',
   methods: {
@@ -17,6 +19,7 @@ export default {
     this.$electron.ipcRenderer.on('mainCommit', (event, commitType, commitPayload) => {
       this.mainCommitProxy(commitType, commitPayload);
     });
+    drag(this.$el);
   },
 };
 </script>
