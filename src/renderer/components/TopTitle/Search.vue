@@ -1,6 +1,6 @@
 <template>
   <div class="searchInput">
-    <input ref="inputSearch" class="input" @input="handleSearch">
+    <input ref="inputSearch" class="input" @input="handleSearch" placeholder="Title, Artist, Album">
     <Icon type="search"></Icon>
     <div class="searchTips" v-show="(fullTitleSearcher.length || fullArtistSearcher.length || fullAlbumSearcher.length) && !tipsBlur && false">
       <div class="tipsMargin">
@@ -130,6 +130,9 @@ export default {
       text-indent: 28px;
       outline: none;
       font-size: 12px;
+    }
+    input::-webkit-input-placeholder {
+      font-style: italic
     }
     .searchTips {
       width: auto;
