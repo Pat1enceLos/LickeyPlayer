@@ -31,6 +31,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import path from 'path';
+import _ from 'lodash';
 import MusicHandler from './MusicHandler';
 import Icon from '../BaseIconContainer';
 
@@ -43,6 +44,7 @@ export default {
       handlerPosY: 0,
       handlerIndex: -1,
       handlerSrc: '',
+      isSearch: false,
       handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove', 'handlerContainer', 'audioInfo', 'playlistDetail', 'playlistContainer', 'content'],
     };
   },
@@ -57,20 +59,29 @@ export default {
       }
     });
   },
+  mounted() {
+    this.$bus.$on('search-tips', (key) => {
+      this.isSearch = key !== '';
+    });
+  },
   components: {
     'music-handler': MusicHandler,
     Icon,
   },
   computed: {
-    ...mapGetters(['playlistQueue', 'src', 'musicLibraryPlaylist', 'createdPlaylist', 'audioInfo', 'currentPlaylistShow', 'currentPlaylistPlay']),
+    ...mapGetters(['playlistQueue', 'src', 'musicLibraryPlaylist', 'createdPlaylist', 'audioInfo', 'currentPlaylistShow', 'currentPlaylistPlay', 'fullTitleSearcher', 'fullArtistSearcher', 'fullAlbumSearcher']),
     displayPlaylist() {
-      if (this.currentPlaylistShow === 'playlistQueue') {
-        return this.playlistQueue;
-      } else if (this.currentPlaylistShow === 'musicLibrary') {
-        return this.musicLibraryPlaylist;
+      if (!this.isSearch) {
+        if (this.currentPlaylistShow === 'playlistQueue') {
+          return this.playlistQueue;
+        } else if (this.currentPlaylistShow === 'musicLibrary') {
+          return this.musicLibraryPlaylist;
+        }
+        return this.createdPlaylist.find(i => i.name === this.currentPlaylistShow) ?
+          this.createdPlaylist.find(i => i.name === this.currentPlaylistShow).src : [];
       }
-      return this.createdPlaylist.find(i => i.name === this.currentPlaylistShow) ?
-        this.createdPlaylist.find(i => i.name === this.currentPlaylistShow).src : [];
+      const tmp = this.fullTitleSearcher.concat(this.fullArtistSearcher, this.fullAlbumSearcher);
+      return _.uniqWith(tmp, _.isEqual).map(i => i.src);
     },
   },
   methods: {
