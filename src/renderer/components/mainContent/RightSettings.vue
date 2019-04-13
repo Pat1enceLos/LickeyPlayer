@@ -1,5 +1,5 @@
 <template>
-  <div class="rightSettings" ref="lyricDrop">
+  <div class="rightSettings no-drag" ref="lyricDrop">
     <div class="infoShift">
       <div class="songInfo" @mouseup="changeToLyric" :style="{ background: isLyricShow ? '#4B4B4B' : '#707070' }">
         <div class="text">LYRIC SHOW</div></div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="leftList">
+  <div class="leftList no-drag">
     <div class="topContainer">
       <div class="library" :style="{ background: currentPlaylistShow === 'musicLibrary' ? 'rgb(67, 67, 67)' : '' }">
         <Icon type="music" class="libLogo"></Icon>
@@ -26,7 +26,7 @@
       <div class="seText">MY PLAYLIST</div>
       <Icon type="addPlaylist" class="addLogo" @mouseup.native="addCreatedPlaylist"></Icon>
     </div>
-    <div class="createdPlaylist">
+    <div class="createdPlaylist" :style="{ overflowY: createdPlaylist.length > 10 ? 'scroll' : '' }">
       <div class="playlistContainer"
         v-for="(item, index) in createdPlaylist"
         @mouseup="handlePlaylist($event, index, item)"
@@ -188,6 +188,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #4b4b4b;
+  border-radius: 3px;
+}
   .leftList {
     width: 100%;
     height: 100%;
@@ -303,7 +310,6 @@ export default {
       width: 100%;
       height: auto;
       max-height: 300px;
-      overflow: scroll;
       .playlistContainer {
         width: 100%;
         height: 30px;

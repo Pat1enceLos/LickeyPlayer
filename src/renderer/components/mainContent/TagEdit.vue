@@ -21,7 +21,7 @@
         <Icon type="edit" @mouseup.native="editShift"></Icon>
         <Icon type="addTags" @mouseup.native="addMoreTags"></Icon>
       </div>
-      <div class="tagsScroll">
+      <div class="tagsScroll" :style="{ overflowY: enabledEditType.length > 6 ? 'scroll' : ''}">
         <div class="edit" v-for="(item) in enabledEditType">
           <div class="tagsType">{{ item }}</div>
           <div class="editContent">
@@ -200,6 +200,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+::-webkit-scrollbar {
+  width: 3.5px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
 .tagEdit {
   width: 100%;
   height: 525px;
@@ -259,17 +266,16 @@ export default {
     .tagsScroll {
       width: 180px;
       height: 285px;
-      overflow: scroll;
     }
     .edit {
-      width: 180px;
+      width: 176px;
       height: auto;
       display: flex;
       flex-direction: column;
       margin: 0 auto 5px auto;
       border-bottom: 0.1px solid rgba(255, 255, 255, 1);
       .editContent {
-        width: 180px;
+        width: 176px;
         height: auto;
         display: flex;
         flex-direction: row;

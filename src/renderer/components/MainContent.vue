@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContent">
+  <div class="mainContent no-drag">
     <left-list :style="{ width: `${disXLeft}px` }"></left-list>
     <div class="leftResizer" @mousedown="handleMousedownLeft" @mouseup="handleMouseupLeft"
       :style="{ left: `${disXLeft}px` }"></div>
