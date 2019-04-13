@@ -1,5 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { throttle, debounce } from 'lodash';
+import { throttle } from 'lodash';
 
 /**
  * Set `__static` path to static files in production

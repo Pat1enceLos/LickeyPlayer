@@ -58,8 +58,7 @@
             "m4a",
             "flac"
           ],
-          "role": "Viewer",
-          "icon": "build/icons/others.ico"
+          "role": "Viewer"
         }
       ]
     },
@@ -74,8 +73,7 @@
             "m4a",
             "flac"
           ],
-          "role": "Viewer",
-          "icon": "build/icons/others.ico"
+          "role": "Viewer"
         }
       ]
     },
@@ -85,7 +83,6 @@
   },
   "dependencies": {
     "chardet": "^0.7.0",
-    "electron": "^4.0.7",
     "iconv-lite": "^0.4.24",
     "idb": "^3.0.2",
     "lodash": "^4.17.11",
@@ -102,6 +99,7 @@
     "vuex-electron": "^1.0.0"
   },
   "optionalDependencies": {
+    "fsevents": "1.2.4",
     "win-mouse": "^1.2.0"
   },
   "devDependencies": {
