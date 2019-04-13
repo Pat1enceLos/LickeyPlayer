@@ -31,7 +31,7 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     // force the use of unix linebreak-syle
-    'linebreak-style': ['error', 'unix'],
+    'linebreak-style': ['error', 'windows'],
     // allow dangling after this and super
     'no-underscore-dangle': ['error', { allowAfterThis: true, allowAfterSuper: true }]
   }
