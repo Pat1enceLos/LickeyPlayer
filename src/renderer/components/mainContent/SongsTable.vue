@@ -8,7 +8,7 @@
       <div class="time">Time</div>
       <div class="fileType">File Type</div>
     </div>
-    <div class="musicPlaylist">
+    <div class="musicPlaylist" :style="{ overflowY: displayPlaylist.length > 13 ? 'scroll': '' }">
       <div class="musicContainer"  v-for="(item, index) in displayPlaylist"
         @dblclick="dbClickToPlay(item)"
         @mouseup="handleMusicSettings($event, index, item)"
@@ -122,6 +122,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
 .songTable {
   width: 98.5%;
   height: 99%;
@@ -152,7 +159,6 @@ export default {
     width: 100%;
     height: auto;
     text-align: center;
-    overflow: scroll;
     .musicContainer {
       width: 100%;
       height: 35px;

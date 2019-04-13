@@ -16,6 +16,7 @@
     <% if (!process.browser) { %>
       <script>
         if (process.env.NODE_ENV !== 'development') window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+        document.body.classList.add(`platform-${process.platform}`);
       </script>
     <% } %>
 
