@@ -193,7 +193,7 @@ export default {
 }
 ::-webkit-scrollbar-thumb {
   background: #4b4b4b;
-  border-radius: 3px;
+  border-radius: 4px;
 }
   .leftList {
     width: 100%;
@@ -321,9 +321,10 @@ export default {
           margin: auto -3px auto 0;
         }
         .content {
-          margin: auto auto auto 17px;
+          margin: auto 10px auto 17px;
           display: flex;
           flex-direction: row;
+          overflow: hidden;
           .playlistIcon {
             width: 15px;
             height: 15px;
@@ -331,11 +332,14 @@ export default {
             margin: auto 0 auto 0;
           }
           .playlistText {
+            width: auto;
             text-align: center;
             font-size: 13px;
             color: rgba(255, 255, 255, 1);
             margin: auto auto auto 10px;
             cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           .nameReset {
             width: 60%;
