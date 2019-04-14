@@ -62,6 +62,10 @@
         }
       ]
     },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
     "win": {
       "icon": "build/icons/icon.ico",
       "fileAssociations": [
