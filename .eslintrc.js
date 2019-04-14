@@ -33,6 +33,7 @@ module.exports = {
     // force the use of unix linebreak-syle
     'linebreak-style': [0, 'error', 'windows'],
     // allow dangling after this and super
-    'no-underscore-dangle': ['error', { allowAfterThis: true, allowAfterSuper: true }]
+    'no-underscore-dangle': ['error', { allowAfterThis: true, allowAfterSuper: true }],
+    "import/no-extraneous-dependencies": 0
   }
 }

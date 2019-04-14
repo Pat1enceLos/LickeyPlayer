@@ -30,7 +30,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import path from 'path';
 import _ from 'lodash';
 import MusicHandler from './MusicHandler';
 import Icon from '../BaseIconContainer';
