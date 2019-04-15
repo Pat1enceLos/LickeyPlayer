@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import leftList from './mainContent/LeftList';
 import rightSettings from './mainContent/RightSettings';
 import playlist from './mainContent/Playlist';
@@ -19,7 +20,6 @@ export default {
     return {
       isMousedownLeft: false,
       isMousedownRight: false,
-      disXLeft: 165,
     };
   },
   components: {
@@ -27,15 +27,18 @@ export default {
     'right-settings': rightSettings,
     'play-list': playlist,
   },
+  computed: {
+    ...mapGetters(['disXLeft']),
+  },
   mounted() {
     window.addEventListener('mousemove', (e) => {
       if (this.isMousedownLeft) {
         if (e.clientX <= 165) {
-          this.disXLeft = 165;
+          this.$store.dispatch('updateDisXLeft', 165);
         } else if (e.clientX > 165 && e.clientX < 300) {
-          this.disXLeft = e.clientX;
+          this.$store.dispatch('updateDisXLeft', e.clientX);
         } else if (e.clientX >= 300) {
-          this.disXLeft = 300;
+          this.$store.dispatch('updateDisXLeft', 300);
         }
       }
     });

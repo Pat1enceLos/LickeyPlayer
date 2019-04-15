@@ -1,4 +1,5 @@
 import * as mm from 'music-metadata';
+import groupBy from 'lodash/groupBy';
 
 const state = {
   src: '',
@@ -20,6 +21,7 @@ const state = {
   fullTitleSearcher: [],
   fullArtistSearcher: [],
   fullAlbumSearcher: [],
+  disXLeft: 165,
 };
 
 const getters = {
@@ -100,6 +102,8 @@ const getters = {
   fullTitleSearcher: state => state.fullTitleSearcher,
   fullArtistSearcher: state => state.fullArtistSearcher,
   fullAlbumSearcher: state => state.fullAlbumSearcher,
+  audioInfoSortByAlbum: state => groupBy(state.audioInfo, 'album'),
+  disXLeft: state => state.disXLeft,
 };
 const mutations = {
   durationUpdate(state, payload) {
@@ -219,6 +223,9 @@ const mutations = {
   fullAlbumSearchUpdate(state, payload) {
     state.fullAlbumSearcher = payload;
   },
+  disXLeftUpdate(state, payload) {
+    state.disXLeft = payload;
+  },
 };
 
 const actions = {
@@ -334,6 +341,9 @@ const actions = {
   },
   updateFullAlbumSearch({ commit }, delta) {
     commit('fullAlbumSearchUpdate', delta);
+  },
+  updateDisXLeft({ commit }, delta) {
+    commit('disXLeftUpdate', delta);
   },
 };
 
