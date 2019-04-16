@@ -77,7 +77,7 @@ export default {
     /*width: 660px;*/
     overflow: hidden;
     height: 100%;
-    background: rgba(0, 0, 0, 0.1);
+    background: #505050;
     display: flex;
   }
 </style>

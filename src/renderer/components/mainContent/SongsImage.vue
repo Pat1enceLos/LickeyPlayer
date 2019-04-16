@@ -2,10 +2,26 @@
   <div class="songs-image" :style="{
     overflowY: rowMaxShowNum === 4 && albumList.length > 12 || rowMaxShowNum === 3 && albumList.length > 9 ? 'scroll' : ''
   }">
-    <div class="songs-container" v-for="(item, index) in albumList" :style="{
-      marginRight: isMargin && (index + 1) % rowMaxShowNum !== 0 ? '20px' : '',
-      width: rowMaxShowNum === 4 ? '150px' : '160px',
-      height: rowMaxShowNum === 4 ? '150px' : '160px'
+    <div class="songs-container" v-for="(item, index) in firstAlbumList"
+      @mouseup="handleshowAlbumPlaylist(item, index)"
+      :style="{
+        marginRight: isMargin && (index + 1) % rowMaxShowNum !== 0 ? '20px' : '',
+        width: rowMaxShowNum === 4 ? '150px' : '160px',
+        height: rowMaxShowNum === 4 ? '150px' : '160px',
+        border: showAlbumPlaylist === item.name ? '1px solid #FFCF2E' : '',
+        order: '0',
+    }">
+      <img :src='pictureImage(item.picture)' :style="{ width: '100%', height: '100%' }">
+    </div>
+    <div class="album-playlist-details" v-show="showAlbumPlaylist" :style="{ order: '2' }">{{ 123 }}</div> // songsTable
+    <div class="songs-container" v-for="(item, index) in secondAlbumList"
+      @mouseup="handleSecondshowAlbumPlaylist(item, index)"
+      :style="{
+        marginRight: isMargin && (index + 1) % rowMaxShowNum !== 0 ? '20px' : '',
+        width: rowMaxShowNum === 4 ? '150px' : '160px',
+        height: rowMaxShowNum === 4 ? '150px' : '160px',
+        border: showAlbumPlaylist === item.name ? '1px solid #FFCF2E' : '',
+        order: '3',
     }">
       <img :src='pictureImage(item.picture)' :style="{ width: '100%', height: '100%' }">
     </div>
@@ -13,6 +29,7 @@
       width: rowMaxShowNum === 4 ? '150px' : '160px',
       height: rowMaxShowNum === 4 ? '150px' : '160px',
       marginRight: isMargin && (index + 1 + albumList.length) % rowMaxShowNum !== 0 ? '20px' : '',
+      order: isLastRow ? '1' : '4',
     }"></div>
   </div>
 </template>
@@ -23,6 +40,12 @@ import isEmpty from 'lodash/isEmpty';
 
 export default {
   name: 'SongsImage',
+  data() {
+    return {
+      showAlbumPlaylist: '',
+      showAlbumIndex: -1,
+    };
+  },
   computed: {
     ...mapGetters(['audioInfoSortByAlbum', 'winWidth', 'disXLeft']),
     albumList() {
@@ -42,6 +65,29 @@ export default {
         });
       });
       return tmp;
+    },
+    firstNum() {
+      const rest = (this.showAlbumIndex + 1) % this.rowMaxShowNum === 0 ?
+        0 : (this.rowMaxShowNum - ((this.showAlbumIndex + 1) % this.rowMaxShowNum));
+      return this.showAlbumIndex + 1 > this.rowMaxShowNum ?
+        rest + this.showAlbumIndex + 1 : this.rowMaxShowNum;
+    },
+    isLastRow() {
+      return this.showAlbumIndex + 1 + 3 >= this.albumList.length + this.blanks.length;
+    },
+    firstAlbumList() {
+      if (this.showAlbumPlaylist) {
+        console.log(this.firstNum);
+        return this.albumList.slice(0, this.firstNum);
+      }
+      return this.albumList;
+    },
+    secondAlbumList() {
+      if (this.showAlbumPlaylist) {
+        return this.albumList.length > this.firstNum ?
+          this.albumList.slice(this.firstNum, this.albumList.length) : [];
+      }
+      return [];
     },
     rowMaxShowNum() {
       if (850 - this.disXLeft >= 660) return 4;
@@ -63,6 +109,14 @@ export default {
     pictureImage(data) {
       return data ? `data:image/jpeg;base64,${data.toString('base64')}` : '';
     },
+    handleshowAlbumPlaylist(item, index) {
+      this.showAlbumPlaylist = item.name;
+      this.showAlbumIndex = index;
+    },
+    handleSecondshowAlbumPlaylist(item, index) {
+      this.showAlbumPlaylist = item.name;
+      this.showAlbumIndex = this.firstAlbumList.length + index;
+    },
   },
 };
 </script>
@@ -78,8 +132,13 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
   align-content: start;
+  .album-playlist-details {
+    width: 100%;
+    height: auto;
+  }
   .songs-container {
     margin-bottom: 20px;
+    box-sizing: border-box;
   }
   .blank-space {
     visibility: hidden;

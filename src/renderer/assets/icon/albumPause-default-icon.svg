@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+  <g id="播放按钮" transform="translate(-366 -248)">
+    <circle id="椭圆_2" data-name="椭圆 2" cx="16.5" cy="16.5" r="16.5" transform="translate(366 248)" fill="#fff"/>
+    <path id="暂停" d="M128,0h4.152V16.8H128Zm8.4,0h4.2V16.8h-4.2Z" transform="translate(247.975 256.088)"/>
+  </g>
+</svg>
