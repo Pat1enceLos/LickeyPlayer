@@ -20,7 +20,7 @@
         <p class="album-artist">{{ item.playlist[0].artists }}</p>
       </div>
     </div>
-    <songs-table v-show="showAlbumPlaylist" :style="{ order: '2' }" :albumPlaylist="selectedAlbumPlaylist"></songs-table>
+    <songs-table v-show="showAlbumPlaylist && albumList.find(i => i.name === showAlbumPlaylist)" :style="{ order: '2' }" :albumPlaylist="selectedAlbumPlaylist"></songs-table>
     <div class="songs-container" v-for="(item, index) in secondAlbumList"
       @mouseup="handleSecondshowAlbumPlaylist(item, index)"
       :style="{
@@ -177,8 +177,13 @@ export default {
       return data ? `data:image/jpeg;base64,${data.toString('base64')}` : '';
     },
     handleshowAlbumPlaylist(item, index) {
-      this.showAlbumPlaylist = item.name;
-      this.showAlbumIndex = index;
+      if (this.showAlbumPlaylist === item.name) {
+        this.showAlbumPlaylist = '';
+        this.showAlbumIndex = -1;
+      } else {
+        this.showAlbumPlaylist = item.name;
+        this.showAlbumIndex = index;
+      }
     },
     handleSecondshowAlbumPlaylist(item, index) {
       this.showAlbumPlaylist = item.name;
