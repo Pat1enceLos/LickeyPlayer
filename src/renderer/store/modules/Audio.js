@@ -102,7 +102,6 @@ const getters = {
   fullTitleSearcher: state => state.fullTitleSearcher,
   fullArtistSearcher: state => state.fullArtistSearcher,
   fullAlbumSearcher: state => state.fullAlbumSearcher,
-  audioInfoSortByAlbum: state => groupBy(state.audioInfo, 'album'),
   disXLeft: state => state.disXLeft,
 };
 const mutations = {

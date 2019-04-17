@@ -1,33 +1,48 @@
 <template>
   <div class="songs-image" :style="{
-    overflowY: rowMaxShowNum === 4 && albumList.length > 12 || rowMaxShowNum === 3 && albumList.length > 9 ? 'scroll' : ''
+    overflowY: isOverflow ? 'scroll' : ''
   }">
     <div class="songs-container" v-for="(item, index) in firstAlbumList"
       @mouseup="handleshowAlbumPlaylist(item, index)"
       :style="{
         marginRight: isMargin && (index + 1) % rowMaxShowNum !== 0 ? '20px' : '',
-        width: rowMaxShowNum === 4 ? '150px' : '160px',
-        height: rowMaxShowNum === 4 ? '150px' : '160px',
-        border: showAlbumPlaylist === item.name ? '1px solid #FFCF2E' : '',
+        width: `${imageWidth}px`,
+        height: `${imageHeight}px`,
         order: '0',
     }">
-      <img :src='pictureImage(item.picture)' :style="{ width: '100%', height: '100%' }">
+      <div class="img-container">
+        <img :src='pictureImage(item.picture)' class="album-image" :style="{
+         border: showAlbumPlaylist === item.name ? '1px solid #FFCF2E' : '',
+        }">
+      </div>
+      <div class="album-info">
+        <p class="album-name">{{ item.name }}</p>
+        <p class="album-artist">{{ item.playlist[0].artists }}</p>
+      </div>
     </div>
-    <div class="album-playlist-details" v-show="showAlbumPlaylist" :style="{ order: '2' }">{{ 123 }}</div> // songsTable
+    <songs-table v-show="showAlbumPlaylist" :style="{ order: '2' }" :albumPlaylist="selectedAlbumPlaylist"></songs-table>
     <div class="songs-container" v-for="(item, index) in secondAlbumList"
       @mouseup="handleSecondshowAlbumPlaylist(item, index)"
       :style="{
         marginRight: isMargin && (index + 1) % rowMaxShowNum !== 0 ? '20px' : '',
-        width: rowMaxShowNum === 4 ? '150px' : '160px',
-        height: rowMaxShowNum === 4 ? '150px' : '160px',
+        width: `${imageWidth}px`,
+        height: `${imageHeight}px`,
         border: showAlbumPlaylist === item.name ? '1px solid #FFCF2E' : '',
         order: '3',
     }">
-      <img :src='pictureImage(item.picture)' :style="{ width: '100%', height: '100%' }">
+      <div class="img-container">
+        <img :src='pictureImage(item.picture)' class="album-image" :style="{
+         border: showAlbumPlaylist === item.name ? '1px solid #FFCF2E' : '',
+        }">
+      </div>
+      <div class="album-info">
+        <p class="album-name">{{ item.name }}</p>
+        <p class="album-artist">{{ item.playlist[0].artists }}</p>
+      </div>
     </div>
     <div class="blank-space" v-for="(item, index) in blanks" :style="{
-      width: rowMaxShowNum === 4 ? '150px' : '160px',
-      height: rowMaxShowNum === 4 ? '150px' : '160px',
+      width: `${imageWidth}px`,
+      height: `${imageHeight}px`,
       marginRight: isMargin && (index + 1 + albumList.length) % rowMaxShowNum !== 0 ? '20px' : '',
       order: isLastRow ? '1' : '4',
     }"></div>
@@ -36,7 +51,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import _ from 'lodash';
 import isEmpty from 'lodash/isEmpty';
+import songsTable from './SongsTable.vue';
 
 export default {
   name: 'SongsImage',
@@ -44,11 +61,54 @@ export default {
     return {
       showAlbumPlaylist: '',
       showAlbumIndex: -1,
+      isSearch: false,
     };
   },
+  components: {
+    'songs-table': songsTable,
+  },
+  mounted() {
+    this.$bus.$on('search-tips', (key) => {
+      this.isSearch = key !== '';
+    });
+  },
   computed: {
-    ...mapGetters(['audioInfoSortByAlbum', 'winWidth', 'disXLeft']),
+    ...mapGetters(['winWidth', 'disXLeft', 'playlistQueue', 'musicLibraryPlaylist', 'currentPlaylistShow', 'createdPlaylist',
+      'fullTitleSearcher', 'fullArtistSearcher', 'fullAlbumSearcher', 'audioInfo']),
+    displayPlaylist() {
+      if (!this.isSearch) {
+        if (this.currentPlaylistShow === 'playlistQueue') {
+          return this.playlistQueue;
+        } else if (this.currentPlaylistShow === 'musicLibrary') {
+          return this.musicLibraryPlaylist;
+        }
+        return this.createdPlaylist.find(i => i.name === this.currentPlaylistShow) ?
+          this.createdPlaylist.find(i => i.name === this.currentPlaylistShow).src : [];
+      }
+      const tmp = this.fullTitleSearcher.concat(this.fullArtistSearcher, this.fullAlbumSearcher);
+      return _.uniqWith(tmp, _.isEqual)
+        .map(i => i.src);
+    },
+    isOverflow() {
+      const imageLine = (this.albumList.length + this.blanks.length) / this.rowMaxShowNum;
+      const allHeight = this.selectedAlbumPlaylist.length === 0 ?
+        (imageLine * this.imageHeight) + ((imageLine - 1) * 20) :
+        (imageLine * this.imageHeight) + ((imageLine - 1) * 20) +
+        (this.selectedAlbumPlaylist.length * 35) + 60;
+      console.log(allHeight);
+      return allHeight > 560 * 0.99;
+    },
+    selectedAlbumPlaylist() {
+      const selectedAlbum = this.albumList.filter(i => i.name === this.showAlbumPlaylist);
+      return selectedAlbum.length ? selectedAlbum[0].playlist.map(i => i.src) : [];
+    },
+    audioInfoSortByAlbum() {
+      const currentPlaylistAlbum = this.audioInfo.filter(i => this.displayPlaylist.includes(i.src));
+      console.log(currentPlaylistAlbum);
+      return _.groupBy(currentPlaylistAlbum, 'album');
+    },
     albumList() {
+      console.log(this.displayPlaylist);
       const keys = Object.keys(this.audioInfoSortByAlbum);
       const tmp = [];
       keys.forEach((item) => {
@@ -77,7 +137,6 @@ export default {
     },
     firstAlbumList() {
       if (this.showAlbumPlaylist) {
-        console.log(this.firstNum);
         return this.albumList.slice(0, this.firstNum);
       }
       return this.albumList;
@@ -93,11 +152,19 @@ export default {
       if (850 - this.disXLeft >= 660) return 4;
       return 3;
     },
+    imageWidth() {
+      return this.rowMaxShowNum === 3 ? '150' : '140';
+    },
+    imageHeight() {
+      return this.rowMaxShowNum === 3 ? '180' : '170';
+    },
     isMargin() {
-      return ((850 - this.disXLeft) - (this.rowMaxShowNum * 150)) / (this.rowMaxShowNum - 1) >= 20;
+      return ((850 - this.disXLeft) - (this.rowMaxShowNum * this.imageWidth)) /
+        (this.rowMaxShowNum - 1) >= 40;
     },
     blanks() {
-      return new Array(this.rowMaxShowNum - (this.albumList.length % this.rowMaxShowNum));
+      return this.albumList.length ?
+        new Array(this.rowMaxShowNum - (this.albumList.length % this.rowMaxShowNum)) : [];
     },
   },
   watch: {
@@ -138,7 +205,40 @@ export default {
   }
   .songs-container {
     margin-bottom: 20px;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    .img-container {
+      width: 100%;
+      height: calc(100% - 30px);
+      display: flex;
+      .album-image {
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+        margin: auto;
+      }
+    }
+    .album-info {
+      width: 100%;
+      height: 30px;
+      display: flex;
+      flex-direction: column;
+      color: rgba(255, 255, 255, 1);
+      white-space: nowrap;
+      .album-name {
+        width: 100%;
+        font-size: 10px;
+        line-height: 18px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .album-artist {
+        width: 100%;
+        font-size: 8px;
+        line-height: 12px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
   }
   .blank-space {
     visibility: hidden;
