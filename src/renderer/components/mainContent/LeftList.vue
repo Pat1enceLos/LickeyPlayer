@@ -45,6 +45,7 @@
       <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput"/>
     </div>
     <playlist-handler v-show="ifRightClick" :rePlaylist.sync="rePlaylist" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
+    <img src="../../assets/mickey.png" class="mickey">
   </div>
 </template>
 
@@ -377,6 +378,14 @@ export default {
         outline: none;
         border: none;
       }
+    }
+    .mickey {
+      width: 140px;
+      height: 80px;
+      position: absolute;
+      bottom: 74px;
+      z-index: 0;
+      left: 12.5px;
     }
   }
 </style>
