@@ -22,7 +22,11 @@ new Vue({
   store,
   template: '<App/>',
   computed: {
-    ...mapGetters([]),
+    ...mapGetters(['loginUser']),
+  },
+  watch: {
+    loginUser(val) {
+    },
   },
   mounted() {
   },

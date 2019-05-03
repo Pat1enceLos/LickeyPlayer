@@ -53,6 +53,7 @@
 import { mapGetters } from 'vuex';
 import Icon from '../BaseIconContainer';
 import PlaylistHandler from './PlaylistHandler';
+import infoDB from '../../helpers/infoDB';
 
 export default {
   name: 'leftList',
@@ -85,9 +86,19 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow']),
+    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin']),
   },
   watch: {
+    createdPlaylist: {
+      handler(val) {
+        if (this.isLogin) {
+          infoDB.get('AudioInfo', this.loginUser).then(async (data) => {
+            await infoDB.put('AudioInfo', Object.assign(data, { createdPlaylist: val }));
+          });
+        }
+      },
+      deep: true,
+    },
     rePlaylist(val) {
       this.exName = val;
       setTimeout(() => {

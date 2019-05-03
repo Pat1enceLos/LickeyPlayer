@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     handleClose() {
-      electron.remote.BrowserWindow.getFocusedWindow().close();
+      electron.remote.getCurrentWindow().close();
     },
   },
 };

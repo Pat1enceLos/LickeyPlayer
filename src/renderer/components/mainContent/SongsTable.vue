@@ -36,6 +36,7 @@ import { mapGetters } from 'vuex';
 import _ from 'lodash';
 import MusicHandler from './MusicHandler';
 import Icon from '../BaseIconContainer';
+import infoDB from '../../helpers/infoDB';
 
 export default {
   name: 'SongsTable',

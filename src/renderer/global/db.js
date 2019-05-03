@@ -1,6 +1,6 @@
 export const INFO_DB_NAME = 'Info';
 export const USER_OBJECTSTORE_NAME = 'User';
-export const PLAYLIST_OBJECTSTORE_NAME = 'Playlist';
+export const PLAYLIST_OBJECTSTORE_NAME = 'AudioInfo';
 export const INFO_DB_VERSION = 1;
 
 export const INFO_DB_SCHEMA = [
@@ -10,6 +10,7 @@ export const INFO_DB_SCHEMA = [
       {
         name: USER_OBJECTSTORE_NAME,
         options: {
+          keyPath: 'id',
           autoIncrement: true,
         },
         indexes: [
@@ -37,7 +38,24 @@ export const INFO_DB_SCHEMA = [
       },
       {
         name: PLAYLIST_OBJECTSTORE_NAME,
-        indexes: [],
+        options: {
+          keyPath: 'id',
+          autoIncrement: true,
+        },
+        indexes: [
+          {
+            playlistQueue: 'playlistQueue',
+            unique: false,
+          },
+          {
+            musicLibraryPlaylist: 'musicLibraryPlaylist',
+            unique: false,
+          },
+          {
+            createdPlaylist: 'createdPlaylist',
+            unique: false,
+          },
+        ],
       },
     ],
   },

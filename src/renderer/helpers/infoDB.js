@@ -52,19 +52,20 @@ export class InfoDB {
     return this.db;
   }
 
-  async get(objectStoreName, index, val) {
+  async get(objectStoreName, key, val) {
     const db = await this.getOwnDb();
+    console.log(key, val);
     if (val) {
       return db
         .transaction(objectStoreName)
         .objectStore(objectStoreName)
-        .index(index)
+        .index(key)
         .get(val);
     }
     return db
       .transaction(objectStoreName)
       .objectStore(objectStoreName)
-      .get(index);
+      .get(key);
   }
 
   async add(objectStoreName, data) {
@@ -76,6 +77,19 @@ export class InfoDB {
     const tx = db.transaction(objectStoreName, 'readwrite');
     try {
       const newKey = await tx.objectStore(objectStoreName).add(data);
+      await tx.complete;
+      return newKey;
+    } catch (err) { throw err; }
+  }
+  async put(objectStoreName, data) {
+    const db = await this.getOwnDb();
+    const { objectStoreNames } = db;
+    if (!objectStoreNames.contains(objectStoreName)) {
+      throw new Error(`ObjectStore ${objectStoreName} does not exist. Add them to constant.js please.`);
+    }
+    const tx = db.transaction(objectStoreName, 'readwrite');
+    try {
+      const newKey = await tx.objectStore(objectStoreName).put(data);
       await tx.complete;
       return newKey;
     } catch (err) { throw err; }

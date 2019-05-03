@@ -3,10 +3,11 @@ import path, { basename, dirname, extname, join } from 'path';
 import { remote } from 'electron';
 import { mapGetters } from 'vuex';
 import { getValidAudioRegex, getValidAudioExtensions } from '../../shared/util';
+import infoDB from './infoDB';
 
 export default {
   computed: {
-    ...mapGetters(['currentPlaylistShow', 'currentAudioInfo']),
+    ...mapGetters(['currentPlaylistShow', 'currentAudioInfo', 'loginUser', 'isLogin']),
   },
   methods: {
     timeFormatter(s) {
@@ -92,6 +93,12 @@ export default {
       const validFiles = files.filter(file => getValidAudioRegex().test(path.extname(file)));
       if (validFiles.length) {
         this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
+        if (this.isLogin) {
+          infoDB.get('AudioInfo', this.loginUser)
+            .then(async (data) => {
+              await infoDB.put('AudioInfo', Object.assign(data, { musicLibraryPlaylist: validFiles }));
+            });
+        }
         this.$store.dispatch('updateAudioInfo', validFiles);
         if (!['musicLibrary', 'playlistQueue'].includes(this.currentPlaylistShow)) {
           this.$store.dispatch('addMusicToPlaylist', validFiles.map(item => ({ src: item })));
@@ -111,6 +118,15 @@ export default {
         this.$store.dispatch('updateCurrentPlaylistShow', 'playlistQueue');
         this.$store.dispatch('updateCurrentPlaylistPlay', 'playlistQueue');
         this.$store.dispatch('updateAudioInfo', validFiles);
+        if (this.isLogin) {
+          infoDB.get('AudioInfo', this.loginUser)
+            .then(async (data) => {
+              await infoDB.put('AudioInfo', Object.assign(data, {
+                playlistQueue: validFiles,
+                musicLibraryPlaylist: validFiles,
+              }));
+            });
+        }
       } else {
         alert('暂不支持的音乐格式');
       }

@@ -1,5 +1,5 @@
 import * as mm from 'music-metadata';
-import groupBy from 'lodash/groupBy';
+import infoDB from '../../helpers/infoDB';
 
 const state = {
   src: '',
@@ -173,7 +173,6 @@ const mutations = {
     });
   },
   audioInfoUpdate(state, payload) {
-    console.log(payload);
     state.audioInfo.unshift(payload);
   },
   currentAudioInfoUpdate(state, payload) {
@@ -225,6 +224,11 @@ const mutations = {
   disXLeftUpdate(state, payload) {
     state.disXLeft = payload;
   },
+  infoDBInitial(state, payload) {
+    state.playlistQueue = payload.playlistQueue || [];
+    state.musicLibraryPlaylist = payload.musicLibraryPlaylist || [];
+    state.createdPlaylist = payload.createdPlaylist || [];
+  },
 };
 
 const actions = {
@@ -264,8 +268,19 @@ const actions = {
   updateDisplayType({ commit }) {
     commit('displayTypeUpdate');
   },
-  updateCreatedPlaylist({ commit }, delta) {
+  updateCreatedPlaylist({ commit, getters }, delta) {
     commit('createdPlaylistUpdate', delta);
+    if (getters.isLogin) {
+      infoDB.get('AudioInfo', getters.loginUser)
+        .then(async (data) => {
+          await infoDB.put('AudioInfo', Object.assign(data, {
+            createdPlaylist: {
+              name: delta,
+              src: [],
+            },
+          }));
+        });
+    }
   },
   addMusicToPlaylist({ commit }, delta) {
     commit('musicAddToPlaylist', delta);
@@ -343,6 +358,9 @@ const actions = {
   },
   updateDisXLeft({ commit }, delta) {
     commit('disXLeftUpdate', delta);
+  },
+  initialInfoDB({ commit }, delta) {
+    commit('infoDBInitial', delta);
   },
 };
 
