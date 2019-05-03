@@ -31,6 +31,10 @@ export const INFO_DB_SCHEMA = [
             unique: false,
           },
           {
+            gender: 'gender',
+            unique: false,
+          },
+          {
             description: 'description',
             unique: false,
           },

@@ -221,4 +221,14 @@ export default {
   width: 25px;
   height: 25px;
 }
+.logout {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.userEdit {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
 </style>
