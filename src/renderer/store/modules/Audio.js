@@ -229,6 +229,11 @@ const mutations = {
     state.musicLibraryPlaylist = payload.musicLibraryPlaylist || [];
     state.createdPlaylist = payload.createdPlaylist || [];
   },
+  infoDBRemove(state) {
+    state.playlistQueue = [];
+    state.musicLibraryPlaylist = [];
+    state.createdPlaylist = [];
+  },
 };
 
 const actions = {
@@ -361,6 +366,9 @@ const actions = {
   },
   initialInfoDB({ commit }, delta) {
     commit('infoDBInitial', delta);
+  },
+  removeInfoDB({ commit }) {
+    commit('infoDBRemove');
   },
 };
 

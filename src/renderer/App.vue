@@ -20,11 +20,16 @@ export default {
     isLogin(val) {
       if (val) {
         infoDB.get('AudioInfo', this.loginUser).then((data) => {
-          const createdPlaylistQueue = _.flatten(data.createdPlaylist.map(i => i.src)) || [];
+          let createdPlaylistQueue = [];
+          if (data.createdPlaylist) {
+            createdPlaylistQueue = _.flatten(data.createdPlaylist.map(i => i.src)) || [];
+          }
           this.$store.dispatch('initialInfoDB', data);
           this.$store.dispatch('updateAudioInfo', _.uniq(_.concat(data.playlistQueue || [], data.musicLibraryPlaylist || [], createdPlaylistQueue)));
         });
-      } // TODO need 注销
+      } else {
+        this.$store.dispatch('removeInfoDB');
+      }
     },
   },
   methods: {

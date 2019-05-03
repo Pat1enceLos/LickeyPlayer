@@ -3,14 +3,16 @@
     <div class="imgContainer">
       <Icon type="user" class="defaultImg"></Icon>
       <img v-show="false" class="userImg">
-      <Icon type="rightArrow" class="rightArrow" @click.native="handleClick" :style="{ transform: isLogin ? 'rotate(90deg)' : '' }"></Icon>
-      <user-details v-show="isLogin && userDetailToShow"></user-details>
+      <Icon type="rightArrow" class="rightArrow" @mousedown.native="handleMousedown" :style="{ transform: isLogin ? 'rotate(90deg)' : '' }"></Icon>
+      <user-details :userDetailToShow.sync="userDetailToShow"></user-details>
+      <user-editor v-show="userEditorToShow"></user-editor>
     </div>
   </div>
 </template>
 
 <script>
 import UserDetails from './UserDetails.vue';
+import UserEditor from './UserEdit';
 import Icon from '../BaseIconContainer.vue';
 
 export default {
@@ -18,14 +20,21 @@ export default {
   data() {
     return {
       userDetailToShow: false,
+      userEditorToShow: false,
     };
   },
   components: {
     Icon,
     'user-details': UserDetails,
+    'user-editor': UserEditor,
+  },
+  mounted() {
+    this.$bus.$on('user-editor-show', () => {
+      this.userEditorToShow = true;
+    });
   },
   methods: {
-    handleClick() {
+    handleMousedown() {
       if (!this.isLogin) {
         this.$electron.ipcRenderer.send('add-windows-login');
       } else {

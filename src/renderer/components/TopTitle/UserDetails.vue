@@ -1,9 +1,9 @@
 <template>
-  <div class="user-container">
+  <div class="user-container" ref="userContainer" tabindex="0" @blur.stop="handleUserDetailBlur" v-show="userDetailToShow && isLogin">
     <div class="imgAndName">
       <img class="user-img">
       <p class="user-name">User Name</p>
-      <Icon type="userEdit" class="user-edit-icon"></Icon>
+      <Icon type="userEdit" class="user-edit-icon" @mouseup.native="handleEditorToShow"></Icon>
     </div>
     <div class="otherInfo">
       <div class="gender"><p>性别: 男</p></div>
@@ -15,7 +15,7 @@
         <p>这个人很懒，什么也没留下.这个人很懒，什么也没留下</p>
       </div>
     </div>
-    <div class="log-out">
+    <div class="log-out" @mouseup="handleLogOut">
       <Icon type="logout" class="log-out-icon"></Icon>
       <p>退出登录</p>
     </div>
@@ -23,12 +23,43 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '../BaseIconContainer.vue';
 
 export default {
   name: 'UserDetails',
+  computed: {
+    ...mapGetters(['isLogin']),
+  },
+  watch: {
+    userDetailToShow(val) {
+      if (val) {
+        setTimeout(() => {
+          this.$refs.userContainer.focus();
+        }, 0);
+      }
+    },
+  },
+  props: {
+    userDetailToShow: {
+      type: Boolean,
+    },
+  },
   components: {
     Icon,
+  },
+  methods: {
+    handleUserDetailBlur() {
+      setTimeout(() => {
+        this.$emit('update:userDetailToShow', false);
+      }, 0);
+    },
+    handleLogOut() {
+      this.$store.dispatch('updateLoginUser', '');
+    },
+    handleEditorToShow() {
+      this.$bus.$emit('user-editor-show');
+    },
   },
 };
 </script>
@@ -45,6 +76,7 @@ export default {
   z-index: 100;
   display: flex;
   flex-direction: column;
+  outline: none;
   .imgAndName {
     width: 100%;
     height: 40px;
@@ -63,6 +95,7 @@ export default {
     }
     .user-edit-icon {
       margin: auto 15px auto auto;
+      cursor: pointer;
     }
   }
   .otherInfo {
@@ -118,6 +151,10 @@ export default {
     width: 100%;
     height: 40px;
     display: flex;
+    cursor: pointer;
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
     p {
       font-size: 13px;
       margin: auto auto auto 44px;

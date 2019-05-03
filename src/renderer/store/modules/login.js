@@ -9,7 +9,6 @@ const getters = {
 
 const mutations = {
   loginUserUpdate(state, payload) {
-    console.log(payload);
     state.loginUser = payload;
   },
 };
