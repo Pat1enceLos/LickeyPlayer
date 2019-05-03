@@ -301,6 +301,7 @@ export default {
           height: 24px;
           white-space: nowrap;
           text-overflow: ellipsis;
+          overflow: hidden;
         }
       }
       .tagsType {

@@ -3,22 +3,34 @@
     <div class="imgContainer">
       <Icon type="user" class="defaultImg"></Icon>
       <img v-show="false" class="userImg">
-      <Icon type="rightArrow" class="rightArrow" @click.native="handleClick"></Icon>
+      <Icon type="rightArrow" class="rightArrow" @click.native="handleClick" :style="{ transform: isLogin ? 'rotate(90deg)' : '' }"></Icon>
+      <user-details v-show="isLogin && userDetailToShow"></user-details>
     </div>
   </div>
 </template>
 
 <script>
-import Icon from '../BaseIconContainer';
+import UserDetails from './UserDetails.vue';
+import Icon from '../BaseIconContainer.vue';
 
 export default {
   name: 'UserInfo',
+  data() {
+    return {
+      userDetailToShow: false,
+    };
+  },
   components: {
     Icon,
+    'user-details': UserDetails,
   },
   methods: {
     handleClick() {
-      this.$electron.ipcRenderer.send('add-windows-login');
+      if (!this.isLogin) {
+        this.$electron.ipcRenderer.send('add-windows-login');
+      } else {
+        this.userDetailToShow = !this.userDetailToShow;
+      }
     },
   },
 };
@@ -34,7 +46,7 @@ export default {
     width: 55px;
     height: 50px;
     display: flex;
-    margin: auto 20px 0 auto;
+    margin: auto 10px 0 auto;
     .defaultImg {
       margin: auto;
     }
