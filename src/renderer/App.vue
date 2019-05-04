@@ -7,6 +7,7 @@
 <script>
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
+import nickname from 'nickname';
 import '@/css/style.scss';
 import drag from '@/helpers/drag';
 import infoDB from './helpers/infoDB';
@@ -26,6 +27,24 @@ export default {
           }
           this.$store.dispatch('initialInfoDB', data);
           this.$store.dispatch('updateAudioInfo', _.uniq(_.concat(data.playlistQueue || [], data.musicLibraryPlaylist || [], createdPlaylistQueue)));
+        });
+        infoDB.get('User', this.loginUser).then(async (data) => {
+          if (data.birth && data.gender && data.name && data.description) {
+            this.$store.dispatch('updateBirth', data.birth);
+            this.$store.dispatch('updateGender', data.gender);
+            this.$store.dispatch('updateName', data.name);
+            this.$store.dispatch('updateDescription', data.description);
+          } else {
+            const initialBirth = new Date();
+            const initialName = nickname.random();
+            this.$store.dispatch('updateBirth', initialBirth);
+            this.$store.dispatch('updateGender', '其他');
+            this.$store.dispatch('updateName', initialName);
+            this.$store.dispatch('updateDescription', '这个人很懒，什么都没有留下。。');
+            await infoDB.put('User', Object.assign(data, {
+              gender: '其他', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
+            }));
+          }
         });
       } else {
         this.$store.dispatch('removeInfoDB');

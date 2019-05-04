@@ -33,6 +33,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import infoDB from '../../helpers/infoDB';
 
 export default {
   name: 'UserEdit',
@@ -41,10 +42,11 @@ export default {
       value: '',
       inputName: '',
       inputDescription: '',
+      genderDB: '',
     };
   },
   computed: {
-    ...mapGetters(['birth', 'name', 'description', 'gender']),
+    ...mapGetters(['birth', 'name', 'description', 'gender', 'loginUser']),
   },
   mounted() {
     this.$bus.$on('user-editor-show', () => {
@@ -65,13 +67,17 @@ export default {
       radios.forEach((item) => {
         if (item.checked) {
           this.$store.dispatch('updateGender', item.value);
+          this.genderDB = item.value;
         }
       });
-      if (this.value) {
-        this.$store.dispatch('updateBirth', this.value);
-      }
+      this.$store.dispatch('updateBirth', this.value);
       this.$store.dispatch('updateDescription', document.querySelector('.edit-des-content').value);
       this.$store.dispatch('updateName', document.querySelector('.edit-user-name').value);
+      infoDB.get('User', this.loginUser).then(async (data) => {
+        await infoDB.put('User', Object.assign(data, {
+          gender: this.genderDB, birth: this.value, description: document.querySelector('.edit-des-content').value, name: document.querySelector('.edit-user-name').value,
+        }));
+      });
       this.$bus.$emit('edit-finished');
     },
     handleCancelEdit() {
