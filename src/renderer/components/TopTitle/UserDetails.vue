@@ -2,17 +2,17 @@
   <div class="user-container" ref="userContainer" tabindex="0" @blur.stop="handleUserDetailBlur" v-show="userDetailToShow && isLogin">
     <div class="imgAndName">
       <img class="user-img">
-      <p class="user-name">User Name</p>
+      <p class="user-name">{{ name }}</p>
       <Icon type="userEdit" class="user-edit-icon" @mouseup.native="handleEditorToShow"></Icon>
     </div>
     <div class="otherInfo">
-      <div class="gender"><p>性别: 男</p></div>
-      <div class="age"><p>生日: 1997年5月1日</p></div>
+      <div class="gender"><p>{{ `性别: ${gender}` }}</p></div>
+      <div class="age"><p>{{ `生日: ${birth.getFullYear()}年${birth.getMonth() + 1}月${birth.getDate()}日 `}}</p></div>
     </div>
     <div class="description">
       <p>简介:</p>
       <div class="des-content">
-        <p>这个人很懒，什么也没留下.这个人很懒，什么也没留下</p>
+        <p>{{ description }}</p>
       </div>
     </div>
     <div class="log-out" @mouseup="handleLogOut">
@@ -29,7 +29,7 @@ import Icon from '../BaseIconContainer.vue';
 export default {
   name: 'UserDetails',
   computed: {
-    ...mapGetters(['isLogin']),
+    ...mapGetters(['isLogin', 'birth', 'gender', 'description', 'name']),
   },
   watch: {
     userDetailToShow(val) {

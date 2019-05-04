@@ -32,6 +32,10 @@ export default {
     this.$bus.$on('user-editor-show', () => {
       this.userEditorToShow = true;
     });
+    this.$bus.$on('edit-finished', () => {
+      this.userEditorToShow = false;
+      this.userDetailToShow = true;
+    });
   },
   methods: {
     handleMousedown() {

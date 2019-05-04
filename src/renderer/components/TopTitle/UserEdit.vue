@@ -1,19 +1,19 @@
 <template>
   <div class="user-editor" ref="userEditor">
     <div class="imgAndName">
-      <img class="user-img">
-      <input class="user-name">
+      <img class="edit-user-img">
+      <input class="edit-user-name" v-model="inputName">
     </div>
     <div class="edit-description">
       <p>简介:</p>
-      <textarea></textarea>
+      <textarea class="edit-des-content" v-model="inputDescription"></textarea>
     </div>
     <div class="edit-gender">
       <p>性别:</p>
       <div class="gender-chooser">
-        <label><input name="gender" type="radio">男</label>
-        <label><input name="gender" type="radio">女</label>
-        <label><input name="gender" type="radio">其他</label>
+        <label><input name="gender" type="radio" value="男">男</label>
+        <label><input name="gender" type="radio" value="女">女</label>
+        <label><input name="gender" type="radio" value="其他">其他</label>
       </div>
     </div>
     <div class="edit-age">
@@ -25,19 +25,58 @@
       </el-date-picker>
     </div>
     <div class="edit-change">
-      <div class="edit-save"><p>保存</p></div>
-      <div class="edit-cancel"><p>取消</p></div>
+      <div class="edit-save" @mouseup="handleSaveEdit"><p>保存</p></div>
+      <div class="edit-cancel" @mouseup="handleCancelEdit"><p>取消</p></div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'UserEdit',
   data() {
     return {
       value: '',
+      inputName: '',
+      inputDescription: '',
     };
+  },
+  computed: {
+    ...mapGetters(['birth', 'name', 'description', 'gender']),
+  },
+  mounted() {
+    this.$bus.$on('user-editor-show', () => {
+      this.value = this.birth;
+      this.inputName = this.name;
+      this.inputDescription = this.description;
+      const radios = document.getElementsByName('gender');
+      radios.forEach((item) => {
+        if (item.value === this.gender) {
+          item.checked = true;
+        }
+      });
+    });
+  },
+  methods: {
+    handleSaveEdit() {
+      const radios = document.getElementsByName('gender');
+      radios.forEach((item) => {
+        if (item.checked) {
+          this.$store.dispatch('updateGender', item.value);
+        }
+      });
+      if (this.value) {
+        this.$store.dispatch('updateBirth', this.value);
+      }
+      this.$store.dispatch('updateDescription', document.querySelector('.edit-des-content').value);
+      this.$store.dispatch('updateName', document.querySelector('.edit-user-name').value);
+      this.$bus.$emit('edit-finished');
+    },
+    handleCancelEdit() {
+      this.$bus.$emit('edit-finished');
+    },
   },
 };
 </script>
@@ -59,14 +98,14 @@ export default {
     width: 100%;
     height: 40px;
     display: flex;
-    .user-img {
+    .edit-user-img {
       width: 30px;
       height: 30px;
       margin: auto 0 auto 15px;
       background: black;
       cursor: pointer;
     }
-    .user-name {
+    .edit-user-name {
       width: 140px;
       height: 22px;
       margin: auto 0 auto 10px;
