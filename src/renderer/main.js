@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
 import VueElectron from 'vue-electron';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import helpers from '@/helpers';
 import App from './App';
 import router from './router';
@@ -10,7 +12,7 @@ Vue.prototype.$bus = new Vue(); // Global event bus
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
 
 Vue.config.productionTip = false;
-
+Vue.use(ElementUI);
 Vue.use(VueElectron);
 
 Vue.mixin(helpers);
@@ -22,7 +24,9 @@ new Vue({
   store,
   template: '<App/>',
   computed: {
-    ...mapGetters([]),
+    ...mapGetters(['loginUser']),
+  },
+  watch: {
   },
   mounted() {
   },

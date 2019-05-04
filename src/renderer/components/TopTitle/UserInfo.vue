@@ -1,24 +1,67 @@
 <template>
   <div class="user">
     <div class="imgContainer">
-      <Icon type="user" class="defaultImg"></Icon>
-      <img v-show="false" class="userImg">
-      <Icon type="rightArrow" class="rightArrow" @click.native="handleClick"></Icon>
+      <div class="defaultImg">
+        <Icon :type="userFav" v-show="!imgPath"></Icon>
+        <img :src="imgPath" v-show="imgPath">
+      </div>
+      <Icon type="rightArrow" class="rightArrow" @mousedown.native="handleMousedown" :style="{ transform: isLogin ? 'rotate(90deg)' : '' }"></Icon>
+      <user-details :userDetailToShow.sync="userDetailToShow"></user-details>
+      <user-editor v-show="userEditorToShow"></user-editor>
     </div>
   </div>
 </template>
 
 <script>
-import Icon from '../BaseIconContainer';
+import { mapGetters } from 'vuex';
+import UserDetails from './UserDetails.vue';
+import UserEditor from './UserEdit';
+import Icon from '../BaseIconContainer.vue';
 
 export default {
   name: 'UserInfo',
+  data() {
+    return {
+      userDetailToShow: false,
+      userEditorToShow: false,
+    };
+  },
   components: {
     Icon,
+    'user-details': UserDetails,
+    'user-editor': UserEditor,
+  },
+  computed: {
+    ...mapGetters(['isLogin', 'userImg']),
+    userFav() {
+      if (this.isLogin) {
+        return 'userImg';
+      }
+      return 'user';
+    },
+    imgPath() {
+      if (this.userImg) {
+        return `data:image/jpeg;base64,${this.userImg}`;
+      }
+      return '';
+    },
+  },
+  mounted() {
+    this.$bus.$on('user-editor-show', () => {
+      this.userEditorToShow = true;
+    });
+    this.$bus.$on('edit-finished', () => {
+      this.userEditorToShow = false;
+      this.userDetailToShow = true;
+    });
   },
   methods: {
-    handleClick() {
-      this.$electron.ipcRenderer.send('add-windows-login');
+    handleMousedown() {
+      if (!this.isLogin) {
+        this.$electron.ipcRenderer.send('add-windows-login');
+      } else {
+        this.userDetailToShow = !this.userDetailToShow;
+      }
     },
   },
 };
@@ -31,12 +74,21 @@ export default {
   display: flex;
   flex-direction: row;
   .imgContainer {
-    width: 55px;
+    width: 60px;
     height: 50px;
     display: flex;
-    margin: auto 20px 0 auto;
+    margin: auto 10px 0 auto;
     .defaultImg {
+      width: 35px;
+      height: 35px;
+      display: flex;
       margin: auto;
+      img {
+        width: 30px;
+        height: 30px;
+        margin: auto;
+        border-radius: 50%;
+      }
     }
     .rightArrow {
       margin: auto;

@@ -1,5 +1,8 @@
 <template>
-  <div class="songTable">
+  <div class="songTable" :style="{
+    height: albumPlaylist && albumPlaylist.length ? 'auto' : '99%',
+    marginBottom: albumPlaylist && albumPlaylist.length ? '20px' : '',
+  }">
     <div class="topTitle">
       <div class="index">#</div>
       <div class="songTitle">Title</div>
@@ -33,6 +36,7 @@ import { mapGetters } from 'vuex';
 import _ from 'lodash';
 import MusicHandler from './MusicHandler';
 import Icon from '../BaseIconContainer';
+import infoDB from '../../helpers/infoDB';
 
 export default {
   name: 'SongsTable',
@@ -46,6 +50,11 @@ export default {
       isSearch: false,
       handlerClassLists: ['handlerText', 'playNow', 'addToQueue', 'addToPlaylist', 'remove', 'handlerContainer', 'audioInfo', 'playlistDetail', 'playlistContainer', 'content'],
     };
+  },
+  props: {
+    albumPlaylist: {
+      type: Array,
+    },
   },
   created() {
     window.addEventListener('mousedown', (e) => {
@@ -70,6 +79,9 @@ export default {
   computed: {
     ...mapGetters(['playlistQueue', 'src', 'musicLibraryPlaylist', 'createdPlaylist', 'audioInfo', 'currentPlaylistShow', 'currentPlaylistPlay', 'fullTitleSearcher', 'fullArtistSearcher', 'fullAlbumSearcher']),
     displayPlaylist() {
+      if (this.albumPlaylist && this.albumPlaylist.length) {
+        return this.albumPlaylist;
+      }
       if (!this.isSearch) {
         if (this.currentPlaylistShow === 'playlistQueue') {
           return this.playlistQueue;
@@ -80,7 +92,8 @@ export default {
           this.createdPlaylist.find(i => i.name === this.currentPlaylistShow).src : [];
       }
       const tmp = this.fullTitleSearcher.concat(this.fullArtistSearcher, this.fullAlbumSearcher);
-      return _.uniqWith(tmp, _.isEqual).map(i => i.src);
+      return _.uniqWith(tmp, _.isEqual)
+        .map(i => i.src);
     },
   },
   methods: {
@@ -130,7 +143,6 @@ export default {
 }
 .songTable {
   width: 98.5%;
-  height: 99%;
   margin: auto;
   overflow: hidden;
   background: #434343;

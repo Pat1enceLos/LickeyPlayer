@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import electron from 'electron';
 import md5 from 'md5';
 import infoDB from '../../helpers/infoDB';
 
@@ -21,9 +22,6 @@ export default {
     },
   },
   methods: {
-    handleBack() {
-      this.$bus.$emit('handleBack');
-    },
     turnRegister() {
       this.$emit('update:loginToShow', false);
     },
@@ -41,6 +39,8 @@ export default {
               alert('登陆成功');
               document.querySelector('#registerId').value = '';
               document.querySelector('#registerPassword').value = '';
+              electron.ipcRenderer.send('login-info', inputId);
+              electron.remote.getCurrentWindow().close();
             } else {
               alert('密码错误');
             }

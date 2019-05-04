@@ -64,6 +64,9 @@ function registerMainWindowEvent() {
     mainWindow.setSize(...args);
     event.sender.send('windowSizeChange-asyncReply', mainWindow.getSize());
   });
+  ipcMain.on('login-info', (event, id) => {
+    mainWindow.webContents.send('update-login-user', id);
+  });
 }
 ipcMain.on('add-windows-login', () => {
   const loginWindowOptions = {

@@ -42,10 +42,11 @@ export default {
               password: md5(inputPassword),
             };
             await infoDB.add('User', userInfo);
+            await infoDB.add('AudioInfo', { id: inputId });
             alert('注册成功');
             document.querySelector('#registerId').value = '';
             document.querySelector('#registerPassword').value = '';
-            this.$bus.$emit('handleBack');
+            this.$emit('update:loginToShow', true);
           }
         }
       } else if (inputId.length < 5) {

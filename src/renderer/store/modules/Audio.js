@@ -1,4 +1,5 @@
 import * as mm from 'music-metadata';
+import infoDB from '../../helpers/infoDB';
 
 const state = {
   src: '',
@@ -20,6 +21,7 @@ const state = {
   fullTitleSearcher: [],
   fullArtistSearcher: [],
   fullAlbumSearcher: [],
+  disXLeft: 165,
 };
 
 const getters = {
@@ -100,6 +102,7 @@ const getters = {
   fullTitleSearcher: state => state.fullTitleSearcher,
   fullArtistSearcher: state => state.fullArtistSearcher,
   fullAlbumSearcher: state => state.fullAlbumSearcher,
+  disXLeft: state => state.disXLeft,
 };
 const mutations = {
   durationUpdate(state, payload) {
@@ -170,7 +173,6 @@ const mutations = {
     });
   },
   audioInfoUpdate(state, payload) {
-    console.log(payload);
     state.audioInfo.unshift(payload);
   },
   currentAudioInfoUpdate(state, payload) {
@@ -219,6 +221,19 @@ const mutations = {
   fullAlbumSearchUpdate(state, payload) {
     state.fullAlbumSearcher = payload;
   },
+  disXLeftUpdate(state, payload) {
+    state.disXLeft = payload;
+  },
+  infoDBInitial(state, payload) {
+    state.playlistQueue = payload.playlistQueue || [];
+    state.musicLibraryPlaylist = payload.musicLibraryPlaylist || [];
+    state.createdPlaylist = payload.createdPlaylist || [];
+  },
+  infoDBRemove(state) {
+    state.playlistQueue = [];
+    state.musicLibraryPlaylist = [];
+    state.createdPlaylist = [];
+  },
 };
 
 const actions = {
@@ -258,8 +273,19 @@ const actions = {
   updateDisplayType({ commit }) {
     commit('displayTypeUpdate');
   },
-  updateCreatedPlaylist({ commit }, delta) {
+  updateCreatedPlaylist({ commit, getters }, delta) {
     commit('createdPlaylistUpdate', delta);
+    if (getters.isLogin) {
+      infoDB.get('AudioInfo', getters.loginUser)
+        .then(async (data) => {
+          await infoDB.put('AudioInfo', Object.assign(data, {
+            createdPlaylist: {
+              name: delta,
+              src: [],
+            },
+          }));
+        });
+    }
   },
   addMusicToPlaylist({ commit }, delta) {
     commit('musicAddToPlaylist', delta);
@@ -334,6 +360,15 @@ const actions = {
   },
   updateFullAlbumSearch({ commit }, delta) {
     commit('fullAlbumSearchUpdate', delta);
+  },
+  updateDisXLeft({ commit }, delta) {
+    commit('disXLeftUpdate', delta);
+  },
+  initialInfoDB({ commit }, delta) {
+    commit('infoDBInitial', delta);
+  },
+  removeInfoDB({ commit }) {
+    commit('infoDBRemove');
   },
 };
 
