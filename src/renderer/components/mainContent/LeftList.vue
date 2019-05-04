@@ -53,7 +53,6 @@
 import { mapGetters } from 'vuex';
 import Icon from '../BaseIconContainer';
 import PlaylistHandler from './PlaylistHandler';
-import infoDB from '../../helpers/infoDB';
 
 export default {
   name: 'leftList',
@@ -86,15 +85,29 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin']),
+    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin', 'musicLibraryPlaylist', 'playlistQueue']),
   },
   watch: {
     createdPlaylist: {
       handler(val) {
         if (this.isLogin) {
-          infoDB.get('AudioInfo', this.loginUser).then(async (data) => {
-            await infoDB.put('AudioInfo', Object.assign(data, { createdPlaylist: val }));
-          });
+          this.storeQueueHandler({ table: 'AudioInfo', data: { createdPlaylist: val } });
+        }
+      },
+      deep: true,
+    },
+    playlistQueue: {
+      handler(val) {
+        if (this.isLogin) {
+          this.storeQueueHandler({ table: 'AudioInfo', data: { playlistQueue: val } });
+        }
+      },
+      deep: true,
+    },
+    musicLibraryPlaylist: {
+      handler(val) {
+        if (this.isLogin) {
+          this.storeQueueHandler({ table: 'AudioInfo', data: { musicLibraryPlaylist: val } });
         }
       },
       deep: true,

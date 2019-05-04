@@ -47,9 +47,12 @@ export default {
             this.$store.dispatch('updateGender', '其他');
             this.$store.dispatch('updateName', initialName);
             this.$store.dispatch('updateDescription', '这个人很懒，什么都没有留下。。');
-            await infoDB.put('User', Object.assign(data, {
-              gender: '其他', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
-            }));
+            this.storeQueueHandler({
+              table: 'User',
+              data: {
+                gender: '其他', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
+              },
+            });
           }
         });
       } else {

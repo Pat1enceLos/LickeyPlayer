@@ -91,10 +91,11 @@ export default {
       }
       this.$store.dispatch('updateDescription', document.querySelector('.edit-des-content').value);
       this.$store.dispatch('updateName', document.querySelector('.edit-user-name').value);
-      infoDB.get('User', this.loginUser).then(async (data) => {
-        await infoDB.put('User', Object.assign(data, {
+      this.storeQueueHandler({
+        table: 'User',
+        data: {
           gender: this.genderDB, birth: this.value, description: document.querySelector('.edit-des-content').value, name: document.querySelector('.edit-user-name').value,
-        }));
+        },
       });
       this.$bus.$emit('edit-finished');
     },
