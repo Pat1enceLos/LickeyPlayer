@@ -231,4 +231,9 @@ export default {
   width: 18px;
   height: 18px;
 }
+.userImg {
+  display: block;
+  width: 35px;
+  height: 35px;
+}
 </style>

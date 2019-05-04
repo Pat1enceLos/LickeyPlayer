@@ -227,5 +227,32 @@ export default {
         }
       });
     },
+    changeUserImg({ defaultPath } = {}) {
+      if (this.showingPopupDialog) return;
+      this.showingPopupDialog = true;
+      const opts = ['openFile'];
+      process.env.NODE_ENV === 'testing' ? '' : remote.dialog.showOpenDialog({
+        title: 'Open Dialog',
+        defaultPath,
+        filters: [{
+          name: 'Music Cover',
+          extensions: ['jpg', 'png'],
+        }, {
+          name: 'All Files',
+          extensions: ['*'],
+        }],
+        properties: opts,
+      }, (files) => {
+        this.showingPopupDialog = false;
+        if (files) {
+          fs.readFile(files[0], (err, data) => {
+            this.$store.dispatch('updateUserImg', data.toString('base64'));
+            infoDB.get('User', this.loginUser).then(async (item) => {
+              await infoDB.put('User', Object.assign(item, { img: data.toString('base64') }));
+            });
+          });
+        }
+      });
+    },
   },
 };

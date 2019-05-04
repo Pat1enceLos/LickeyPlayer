@@ -6,6 +6,7 @@ const state = {
   birth: new Date(),
   gender: '其他',
   description: '这个人很懒，什么都没有留下。。',
+  userImg: '',
 };
 
 const getters = {
@@ -15,6 +16,7 @@ const getters = {
   gender: state => state.gender,
   description: state => state.description,
   name: state => state.name,
+  userImg: state => state.userImg,
 };
 
 const mutations = {
@@ -33,6 +35,9 @@ const mutations = {
   nameUpdate(state, payload) {
     state.name = payload;
   },
+  userImgUpdate(state, payload) {
+    state.userImg = payload;
+  },
 };
 
 const actions = {
@@ -50,6 +55,9 @@ const actions = {
   },
   updateName({ commit }, delta) {
     commit('nameUpdate', delta);
+  },
+  updateUserImg({ commit }, delta) {
+    commit('userImgUpdate', delta);
   },
 };
 

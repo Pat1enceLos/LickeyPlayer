@@ -1,7 +1,10 @@
 <template>
   <div class="user-container" ref="userContainer" tabindex="0" @blur.stop="handleUserDetailBlur" v-show="userDetailToShow && isLogin">
     <div class="imgAndName">
-      <img class="user-img">
+      <div class="user-img">
+        <Icon type="userImg" v-show="!imgPath"></Icon>
+        <img class="changedImg" :src="imgPath" v-show="imgPath">
+      </div>
       <p class="user-name">{{ name }}</p>
       <Icon type="userEdit" class="user-edit-icon" @mouseup.native="handleEditorToShow"></Icon>
     </div>
@@ -29,7 +32,14 @@ import Icon from '../BaseIconContainer.vue';
 export default {
   name: 'UserDetails',
   computed: {
-    ...mapGetters(['isLogin', 'birth', 'gender', 'description', 'name']),
+    ...mapGetters(['isLogin', 'birth', 'gender', 'description', 'name', 'userImg']),
+    imgPath() {
+      console.log(this.userImg);
+      if (this.userImg) {
+        return `data:image/jpeg;base64,${this.userImg}`;
+      }
+      return '';
+    },
   },
   watch: {
     userDetailToShow(val) {
@@ -84,10 +94,16 @@ export default {
     box-sizing: border-box;
     display: flex;
     .user-img {
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
       margin: auto 0 auto 15px;
-      background: black;
+      display: flex;
+      .changedImg {
+        margin: auto;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
     }
     .user-name {
       margin: auto 0 auto 10px;
@@ -106,18 +122,18 @@ export default {
     border-bottom: 0.3px solid rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
     .gender {
-      width: 35%;
+      width: 37%;
       height: 70%;
       display: flex;
       margin: auto;
       border-right: 0.3px solid rgba(0, 0, 0, 0.3);
       box-sizing: border-box;
       p {
-        margin: auto;
+        margin: auto auto auto 15px;
       }
     }
     .age {
-      width: 65%;
+      width: 63%;
       height: 70%;
       display: flex;
       margin: auto;

@@ -1,12 +1,15 @@
 <template>
   <div class="user-editor" ref="userEditor">
     <div class="imgAndName">
-      <img class="edit-user-img">
+      <div class="edit-user-img" @mouseup="handleChangeUserImg">
+        <Icon type="userImg" v-show="!imgPath"/>
+        <img class="edit-img" :src="imgPath" v-show="imgPath">
+      </div>
       <input class="edit-user-name" v-model="inputName">
     </div>
     <div class="edit-description">
       <p>简介:</p>
-      <textarea class="edit-des-content" v-model="inputDescription"></textarea>
+      <textarea class="edit-des-content" v-model="inputDescription" maxlength="32"></textarea>
     </div>
     <div class="edit-gender">
       <p>性别:</p>
@@ -34,6 +37,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import infoDB from '../../helpers/infoDB';
+import Icon from '../BaseIconContainer.vue';
 
 export default {
   name: 'UserEdit',
@@ -45,8 +49,17 @@ export default {
       genderDB: '',
     };
   },
+  components: {
+    Icon,
+  },
   computed: {
-    ...mapGetters(['birth', 'name', 'description', 'gender', 'loginUser']),
+    ...mapGetters(['birth', 'name', 'description', 'gender', 'loginUser', 'userImg']),
+    imgPath() {
+      if (this.userImg) {
+        return `data:image/jpeg;base64,${this.userImg}`;
+      }
+      return '';
+    },
   },
   mounted() {
     this.$bus.$on('user-editor-show', () => {
@@ -62,6 +75,9 @@ export default {
     });
   },
   methods: {
+    handleChangeUserImg() {
+      this.changeUserImg();
+    },
     handleSaveEdit() {
       const radios = document.getElementsByName('gender');
       radios.forEach((item) => {
@@ -70,7 +86,9 @@ export default {
           this.genderDB = item.value;
         }
       });
-      this.$store.dispatch('updateBirth', this.value);
+      if (this.value) {
+        this.$store.dispatch('updateBirth', this.value);
+      }
       this.$store.dispatch('updateDescription', document.querySelector('.edit-des-content').value);
       this.$store.dispatch('updateName', document.querySelector('.edit-user-name').value);
       infoDB.get('User', this.loginUser).then(async (data) => {
@@ -105,16 +123,22 @@ export default {
     height: 40px;
     display: flex;
     .edit-user-img {
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
       margin: auto 0 auto 15px;
-      background: black;
       cursor: pointer;
+      display: flex;
+      .edit-img {
+        margin: auto;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
     }
     .edit-user-name {
       width: 140px;
       height: 22px;
-      margin: auto 0 auto 10px;
+      margin: auto 0 auto 7px;
       font-size: 13px;
       outline: none;
       border: 0.5px solid rgba(0, 0, 0, 0.1);

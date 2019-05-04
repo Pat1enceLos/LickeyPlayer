@@ -29,7 +29,13 @@ export default {
           this.$store.dispatch('updateAudioInfo', _.uniq(_.concat(data.playlistQueue || [], data.musicLibraryPlaylist || [], createdPlaylistQueue)));
         });
         infoDB.get('User', this.loginUser).then(async (data) => {
-          if (data.birth && data.gender && data.name && data.description) {
+          if (data.img) {
+            this.$store.dispatch('updateUserImg', data.img);
+          }
+          if (data.birth !== undefined &&
+            data.gender !== undefined &&
+            data.name !== undefined &&
+            data.description !== undefined) {
             this.$store.dispatch('updateBirth', data.birth);
             this.$store.dispatch('updateGender', data.gender);
             this.$store.dispatch('updateName', data.name);
@@ -47,6 +53,7 @@ export default {
           }
         });
       } else {
+        this.$store.dispatch('updateUserImg', '');
         this.$store.dispatch('removeInfoDB');
       }
     },

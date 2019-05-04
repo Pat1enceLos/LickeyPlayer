@@ -143,10 +143,11 @@ export default {
     background: black;
   }
   .songTitle {
-    width: auto;
+    width: 180px;
     height: auto;
     margin: 10px auto 0 auto;
     font-size: 15px;
+    text-align: center;
   }
   .songAuthor {
     width: auto;
