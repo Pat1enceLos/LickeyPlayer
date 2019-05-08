@@ -45,7 +45,7 @@
       <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput"/>
     </div>
     <playlist-handler v-show="ifRightClick" :rePlaylist.sync="rePlaylist" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
-    <img src="../../assets/mickey.png" class="mickey">
+    <!--<img src="../../assets/mickey.png" class="mickey">-->
   </div>
 </template>
 

@@ -236,4 +236,11 @@ export default {
   width: 35px;
   height: 35px;
 }
+.closeNotification {
+  display: block;
+  width: 15px;
+  height: 15px;
+  margin: auto 10px auto auto;
+
+}
 </style>

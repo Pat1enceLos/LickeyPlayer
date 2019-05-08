@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="application">
     <router-view></router-view>
+    <Notification></Notification>
   </div>
 </template>
 
@@ -11,9 +12,13 @@ import nickname from 'nickname';
 import '@/css/style.scss';
 import drag from '@/helpers/drag';
 import infoDB from './helpers/infoDB';
+import Notification from './components/Notification.vue';
 
 export default {
   name: 'lickeymusic',
+  components: {
+    Notification,
+  },
   computed: {
     ...mapGetters(['isLogin', 'loginUser']),
   },
