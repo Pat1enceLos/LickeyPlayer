@@ -78,6 +78,9 @@ export default {
     this.$electron.ipcRenderer.on('update-login-user', (event, id) => {
       this.$store.dispatch('updateLoginUser', id);
     });
+    this.$electron.ipcRenderer.on('add-notification', (event, info) => {
+      this.$store.dispatch('addNotifications', info);
+    });
     drag(this.$el);
   },
 };

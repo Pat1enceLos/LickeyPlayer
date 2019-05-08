@@ -91,7 +91,7 @@ export default {
         this.importFiles(...AudioFiles);
       } else {
         // TODO: no AudioFiles in folders error catch
-        alert('不支持的音乐格式');
+        this.$store.dispatch('addNotifications', { content: '暂不支持的音乐格式', dismissAfter: 5000 });
       }
     },
     importFiles(...files) {
@@ -105,7 +105,7 @@ export default {
           this.$store.dispatch('updateCurrentPlaylistShow', 'musicLibrary');
         }
       } else {
-        alert('暂不支持的音乐格式');
+        this.$store.dispatch('addNotifications', { content: '暂不支持的音乐格式', dismissAfter: 5000 });
       }
     },
     openFiles(...files) {
@@ -118,7 +118,7 @@ export default {
         this.$store.dispatch('updateCurrentPlaylistPlay', 'playlistQueue');
         this.$store.dispatch('updateAudioInfo', validFiles);
       } else {
-        alert('暂不支持的音乐格式');
+        this.$store.dispatch('addNotifications', { content: '暂不支持的音乐格式', dismissAfter: 5000 });
       }
     },
     openFolders(...folders) {
@@ -144,7 +144,7 @@ export default {
         this.openFiles(...AudioFiles);
       } else {
         // TODO: no AudioFiles in folders error catch
-        alert('不支持的音乐格式');
+        this.$store.dispatch('addNotifications', { content: '暂不支持的音乐格式', dismissAfter: 5000 });
       }
     },
     filePathToUrl(filePath) {

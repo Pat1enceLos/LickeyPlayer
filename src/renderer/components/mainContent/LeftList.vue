@@ -196,7 +196,7 @@ export default {
         } else {
           document.querySelector('.nameInput').value = '';
           document.querySelector('.nameInput').focus();
-          alert('已存在该播放列表');
+          this.$store.dispatch('addNotifications', { content: '已存在该播放列表', dismissAfter: 5000 });
         }
       } else {
         document.querySelector('.nameInput').value = '';

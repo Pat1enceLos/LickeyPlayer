@@ -107,7 +107,7 @@
           .content {
             color: rgba(255, 255, 255, 0.8);
             text-align: center;
-            font-size: 15px;
+            font-size: 13px;
             line-height: 15px;
             letter-spacing: 0.4px;
           }

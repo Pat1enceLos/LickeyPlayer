@@ -32,7 +32,7 @@ const actions = {
     });
     if (dismissAfter) {
       setTimeout(() => {
-        commit('removeMessages', id);
+        commit('removeNotifications', id);
       }, dismissAfter);
     }
   },

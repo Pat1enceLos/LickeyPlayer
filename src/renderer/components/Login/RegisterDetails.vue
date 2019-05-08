@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import electron from 'electron';
 import md5 from 'md5';
 import infoDB from '../../helpers/infoDB';
 
@@ -26,7 +27,7 @@ export default {
       const reg = /^\w{5,21}$/;
       if (reg.test(inputId)) {
         if (inputPassword === '') {
-          alert('密码不能为空');
+          electron.ipcRenderer.send('notification-info', { content: '密码不能为空', dismissAfter: 3000 });
         } else {
           const existedUser = await infoDB.getAll('User');
           existedUser.forEach(({ id }) => {
@@ -35,7 +36,7 @@ export default {
             }
           });
           if (isExisted) {
-            alert('已存在该用户名');
+            electron.ipcRenderer.send('notification-info', { content: '已存在该用户名', dismissAfter: 3000 });
           } else {
             const userInfo = {
               id: inputId,
@@ -43,16 +44,16 @@ export default {
             };
             await infoDB.add('User', userInfo);
             await infoDB.add('AudioInfo', { id: inputId });
-            alert('注册成功');
+            electron.ipcRenderer.send('notification-info', { content: '注册成功', dismissAfter: 2000 });
             document.querySelector('#registerId').value = '';
             document.querySelector('#registerPassword').value = '';
             this.$emit('update:loginToShow', true);
           }
         }
       } else if (inputId.length < 5) {
-        alert('用户名长度大于五个字符');
+        electron.ipcRenderer.send('notification-info', { content: '用户名长度大于五个字符', dismissAfter: 3000 });
       } else if (inputId > 20) {
-        alert('用户名长度小于十个字符');
+        electron.ipcRenderer.send('notification-info', { content: '用户名长度小于二十个字符', dismissAfter: 3000 });
       }
     },
   },

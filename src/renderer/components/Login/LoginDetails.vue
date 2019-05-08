@@ -36,21 +36,21 @@ export default {
           if (id === inputId) {
             isExisted = true;
             if (md5(inputPassword) === password) {
-              alert('登陆成功');
+              console.log('登陆成功');
               document.querySelector('#registerId').value = '';
               document.querySelector('#registerPassword').value = '';
               electron.ipcRenderer.send('login-info', inputId);
               electron.remote.getCurrentWindow().close();
             } else {
-              alert('密码错误');
+              electron.ipcRenderer.send('notification-info', { content: '密码错误', dismissAfter: 2000 });
             }
           }
         });
         if (!isExisted) {
-          alert('不存在该用户名');
+          electron.ipcRenderer.send('notification-info', { content: '不存在该用户名', dismissAfter: 3000 });
         }
       } else {
-        alert('用户名格式不正确');
+        electron.ipcRenderer.send('notification-info', { content: '用户名格式不正确', dismissAfter: 3000 });
       }
     },
   },
