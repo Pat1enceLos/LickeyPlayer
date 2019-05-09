@@ -195,8 +195,8 @@ export default {
 
 <style scoped lang="scss">
 .songs-image {
-  width: 98.5%;
-  height: 99%;
+  width: 100%;
+  height: 100%;
   background: #434343;
   display: flex;
   margin: auto;

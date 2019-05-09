@@ -66,9 +66,9 @@ export default {
     flex-direction: row;
     .leftResizer {
       position: absolute;
-      width: 1px;
+      width: 0.7px;
       height: 560px;
-      background: black;
+      background: rgba(0, 0, 0, 0.1);
       -webkit-app-region: no-drag;
       cursor: e-resize;
     }

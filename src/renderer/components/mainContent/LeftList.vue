@@ -334,7 +334,7 @@ export default {
     .createdPlaylist {
       width: 100%;
       height: auto;
-      max-height: 300px;
+      max-height: 360px;
       .playlistContainer {
         width: 100%;
         height: 30px;

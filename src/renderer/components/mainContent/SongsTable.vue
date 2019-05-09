@@ -1,6 +1,6 @@
 <template>
   <div class="songTable" :style="{
-    height: albumPlaylist && albumPlaylist.length ? 'auto' : '99%',
+    height: albumPlaylist && albumPlaylist.length ? 'auto' : '100%',
     marginBottom: albumPlaylist && albumPlaylist.length ? '20px' : '',
   }">
     <div class="topTitle">
@@ -142,7 +142,7 @@ export default {
   border-radius: 4px;
 }
 .songTable {
-  width: 98.5%;
+  width: 100%;
   margin: auto;
   overflow: hidden;
   background: #434343;
