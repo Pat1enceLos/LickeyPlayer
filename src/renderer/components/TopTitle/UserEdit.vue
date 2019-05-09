@@ -36,7 +36,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import infoDB from '../../helpers/infoDB';
 import Icon from '../BaseIconContainer.vue';
 
 export default {

@@ -1,5 +1,4 @@
 import * as mm from 'music-metadata';
-import infoDB from '../../helpers/infoDB';
 
 const state = {
   src: '',
@@ -273,7 +272,7 @@ const actions = {
   updateDisplayType({ commit }) {
     commit('displayTypeUpdate');
   },
-  updateCreatedPlaylist({ commit, getters }, delta) {
+  updateCreatedPlaylist({ commit }, delta) {
     commit('createdPlaylistUpdate', delta);
   },
   addMusicToPlaylist({ commit }, delta) {
