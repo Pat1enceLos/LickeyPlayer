@@ -1,8 +1,6 @@
-import nickname from 'nickname';
-
 const state = {
   loginUser: '',
-  name: nickname.random(),
+  name: '',
   birth: new Date(),
   gender: '其他',
   description: '这个人很懒，什么都没有留下。。',

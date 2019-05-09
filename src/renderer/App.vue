@@ -8,7 +8,7 @@
 <script>
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
-import nickname from 'nickname';
+import nicknames from 'nicknames';
 import '@/css/style.scss';
 import drag from '@/helpers/drag';
 import infoDB from './helpers/infoDB';
@@ -47,7 +47,7 @@ export default {
             this.$store.dispatch('updateDescription', data.description);
           } else {
             const initialBirth = new Date();
-            const initialName = nickname.random();
+            const initialName = nicknames.allRandom();
             this.$store.dispatch('updateBirth', initialBirth);
             this.$store.dispatch('updateGender', '其他');
             this.$store.dispatch('updateName', initialName);
