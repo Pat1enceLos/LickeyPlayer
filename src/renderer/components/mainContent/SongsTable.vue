@@ -16,7 +16,7 @@
         @dblclick="dbClickToPlay(item)"
         @mouseup="handleMusicSettings($event, index, item)"
         :style="{
-          background: index % 2 === 0 ? '#434343' : 'rgba(0, 0, 0, 0.1)',
+          background: src === item && currentPlaylistShow === currentPlaylistPlay ? '#606060' :index % 2 === 0 ? '#434343' : 'rgba(0, 0, 0, 0.1)',
         }">
         <div class="detailIndex" v-show="src !== item || currentPlaylistShow !== currentPlaylistPlay">{{ index + 1 }}</div>
         <Icon type="playing" v-show="src === item && currentPlaylistShow === currentPlaylistPlay" class="playingIcon"></Icon>
