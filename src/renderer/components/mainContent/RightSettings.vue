@@ -1,9 +1,9 @@
 <template>
   <div class="rightSettings no-drag" ref="lyricDrop">
     <div class="infoShift">
-      <div class="songInfo" @mouseup="changeToLyric" :style="{ background: isLyricShow ? '#4B4B4B' : '#707070' }">
+      <div class="songInfo" @mouseup="changeToLyric" :style="{ background: !isLyricShow ? '#4B4B4B' : '#707070' }">
         <div class="text">LYRIC SHOW</div></div>
-      <div class="tagsEdit" @mouseup="changeToTags" :style="{ background: !isLyricShow ? '#4B4B4B' : '#707070' }">
+      <div class="tagsEdit" @mouseup="changeToTags" :style="{ background: isLyricShow ? '#4B4B4B' : '#707070' }">
         <div class="text">TAG EDIT</div></div>
     </div>
     <lyric-info v-show="isLyricShow" :lyric.sync="lyric" :lyricTexts.sync="lyricTexts"></lyric-info>
@@ -76,7 +76,7 @@ export default {
   .rightSettings {
     width: 230px;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: #707070;
     display: flex;
     flex-direction: column;
     .infoShift {
@@ -88,16 +88,20 @@ export default {
         color: rgba(255, 255, 255, 1);
         font-size: 13px;
         margin: auto;
+        font-weight: bold;
+        font-style: italic;
       }
       .songInfo {
         width: 50%;
         height: 100%;
         display: flex;
+        transition: background-color 200ms linear;
       }
       .tagsEdit {
         width: 50%;
         height: 100%;
         display: flex;
+        transition: background-color 200ms linear;
       }
     }
   }

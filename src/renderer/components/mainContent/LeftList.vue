@@ -320,6 +320,8 @@ export default {
       display: flex;
       margin-bottom: 5px;
       .seText {
+        font-style: italic;
+        font-weight: bold;
         color: rgba(255, 255, 255, 1);
         font-size: 13px;
         margin: auto 0 auto 20px;
