@@ -49,13 +49,13 @@ export default {
             const initialBirth = new Date();
             const initialName = nicknames.allRandom();
             this.$store.dispatch('updateBirth', initialBirth);
-            this.$store.dispatch('updateGender', '其他');
+            this.$store.dispatch('updateGender', '保密');
             this.$store.dispatch('updateName', initialName);
             this.$store.dispatch('updateDescription', '这个人很懒，什么都没有留下。。');
             this.storeQueueHandler({
               table: 'User',
               data: {
-                gender: '其他', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
+                gender: '保密', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
               },
             });
           }
