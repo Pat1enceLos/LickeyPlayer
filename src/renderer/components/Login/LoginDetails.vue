@@ -1,6 +1,6 @@
 <template>
   <div class="loginContent">
-    <input class="loginUser" id="loginId"placeholder="用户名"/>
+    <input class="loginUser" id="loginId"placeholder="用户名" autofocus/>
     <input class="loginPassword" id="loginPassword" placeholder="密码" type="password"/>
     <div class="loginButton" @mouseup="handleLogin">
       <div class="text">登录</div>
@@ -19,6 +19,17 @@ export default {
   props: {
     loginToShow: {
       type: Boolean,
+    },
+  },
+  watch: {
+    loginToShow(val) {
+      setTimeout(() => {
+        if (val) {
+          document.querySelector('.loginUser').focus();
+        } else {
+          document.querySelector('.registerUser').focus();
+        }
+      }, 0);
     },
   },
   methods: {
@@ -102,6 +113,10 @@ export default {
     margin: 80px auto 0 auto;
     border-radius: 5px;
     display: flex;
+    cursor: pointer;
+    &:active {
+      background: #FDDE58;
+    }
     .text {
       margin: auto;
       font-size: 18px;
@@ -112,6 +127,7 @@ export default {
     margin: 70px auto auto auto;
     font-size: 12px;
     color: rgba(255, 255, 255, 1);
+    cursor: pointer;
   }
 }
 </style>

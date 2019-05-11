@@ -1,6 +1,6 @@
 <template>
   <div class="registerContent">
-    <input class="registerUser" id="registerId" placeholder="用户名"/>
+    <input class="registerUser" id="registerId" placeholder="用户名" autofocus/>
     <input class="registerPassword" id="registerPassword" placeholder="密码" type="password"/>
     <div class="registerButton" @mouseup="handleRegister">
       <div class="text">注册</div>
@@ -105,6 +105,10 @@ export default {
     margin: 80px auto 0 auto;
     border-radius: 5px;
     display: flex;
+    cursor: pointer;
+    &:active {
+      background: #FDDE58;
+    }
     .text {
       margin: auto;
       font-size: 18px;
@@ -115,6 +119,7 @@ export default {
     margin: 70px auto auto auto;
     font-size: 12px;
     color: rgba(255, 255, 255, 1);
+    cursor: pointer;
   }
 }
 </style>

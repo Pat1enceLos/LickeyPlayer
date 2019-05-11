@@ -14,8 +14,10 @@
       @click.native="handleClose"
       type="titleBarWinClose">
     </Icon>
-    <login-details :loginToShow.sync="loginToShow" v-show="loginToShow"></login-details>
-    <register-details v-show="!loginToShow" :loginToShow.sync="loginToShow"></register-details>
+    <div class="login-register-container">
+      <login-details class="login-display" :loginToShow.sync="loginToShow" :class="loginToShow ? 'login-show-anim' : 'login-hide-anim'" @animationend.native="handleLoginAnimEnd"></login-details>
+      <register-details class="register-display" :loginToShow.sync="loginToShow" :class="loginToShow ? 'register-hide-anim' : 'register-show-anim'" @animationend.native="handleRegisterAnimEnd"></register-details>
+    </div>
   </div>
 </template>
 
@@ -45,7 +47,26 @@ export default {
       return process.platform === 'darwin';
     },
   },
+  watch: {
+    loginToShow(val) {
+      if (val) {
+        document.querySelector('.login-display').style.display = '';
+      } else {
+        document.querySelector('.register-display').style.display = '';
+      }
+    },
+  },
   methods: {
+    handleLoginAnimEnd(e) {
+      if (e.target.classList.contains('login-hide-anim')) {
+        document.querySelector('.login-display').style.display = 'none';
+      }
+    },
+    handleRegisterAnimEnd(e) {
+      if (e.target.classList.contains('register-hide-anim')) {
+        document.querySelector('.register-display').style.display = 'none';
+      }
+    },
     handleClose() {
       electron.remote.getCurrentWindow().close();
     },
@@ -55,10 +76,10 @@ export default {
 
 <style scoped lang="scss">
 .login {
-  width: 100%;
-  height: 100%;
+  width: 360px;
+  height: 478px;
   background: #505050;
-  top: 100px;
+  position: absolute;
   .mac-icons {
     position: absolute;
     top: 12px;
@@ -94,5 +115,48 @@ export default {
       background-color: rgba(221, 221, 221, 0.5);
     }
   }
+}
+.login-register-container {
+  width: 360px;
+  height: 400px;
+  overflow: hidden;
+  background: #505050;
+  top: 78px;
+  position: absolute;
+}
+.login-display, .register-display {
+  z-index: 10;
+}
+.login-show-anim {
+  animation: login-show 200ms linear;
+}
+.login-hide-anim {
+  animation: login-hide 200ms linear;
+}
+.register-show-anim {
+  animation: register-show 200ms linear;
+}
+.register-hide-anim {
+  animation: register-hide 200ms linear;
+}
+@keyframes login-show {
+  0% { opacity: 0; transform: translateX(-250px) }
+  50% { opacity: 0.5; transform: translateX(-125px) }
+  100% { opacity: 1; transform: translateX(0px) }
+}
+@keyframes login-hide {
+  0% { opacity: 1;  transform: translateX(0px) }
+  50% { opacity: 0.5;  transform: translateX(-125px) }
+  100% { opacity: 0;  transform: translateX(-250px) }
+}
+@keyframes register-show {
+  0% { opacity: 0; transform: translateX(250px) }
+  50% { opacity: 0.5; transform: translateX(125px) }
+  100% { opacity: 1; transform: translateX(0px) }
+}
+@keyframes register-hide {
+  0% { opacity: 1; transform: translateX(0px) }
+  50% { opacity: 0.5; transform: translateX(125px) }
+  100% { opacity: 0; transform: translateX(250px) }
 }
 </style>
