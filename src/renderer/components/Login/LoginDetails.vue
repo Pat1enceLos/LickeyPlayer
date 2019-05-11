@@ -1,9 +1,9 @@
 <template>
   <div class="loginContent">
-    <input class="loginUser" id="loginId"placeholder="用户名"/>
+    <input class="loginUser" id="loginId"placeholder="用户名" autofocus/>
     <input class="loginPassword" id="loginPassword" placeholder="密码" type="password"/>
     <div class="loginButton" @mouseup="handleLogin">
-      <div class="text">登陆</div>
+      <div class="text">登录</div>
     </div>
     <div class="turnToRegister" @mouseup="turnRegister">创建账号</div>
   </div>
@@ -21,6 +21,17 @@ export default {
       type: Boolean,
     },
   },
+  watch: {
+    loginToShow(val) {
+      setTimeout(() => {
+        if (val) {
+          document.querySelector('.loginUser').focus();
+        } else {
+          document.querySelector('.registerUser').focus();
+        }
+      }, 0);
+    },
+  },
   methods: {
     turnRegister() {
       this.$emit('update:loginToShow', false);
@@ -36,21 +47,21 @@ export default {
           if (id === inputId) {
             isExisted = true;
             if (md5(inputPassword) === password) {
-              alert('登陆成功');
+              console.log('登陆成功');
               document.querySelector('#registerId').value = '';
               document.querySelector('#registerPassword').value = '';
               electron.ipcRenderer.send('login-info', inputId);
               electron.remote.getCurrentWindow().close();
             } else {
-              alert('密码错误');
+              electron.ipcRenderer.send('notification-info', { content: '密码错误', dismissAfter: 2000 });
             }
           }
         });
         if (!isExisted) {
-          alert('不存在该用户名');
+          electron.ipcRenderer.send('notification-info', { content: '不存在该用户名', dismissAfter: 3000 });
         }
       } else {
-        alert('用户名格式不正确');
+        electron.ipcRenderer.send('notification-info', { content: '用户名格式不正确', dismissAfter: 3000 });
       }
     },
   },
@@ -102,6 +113,10 @@ export default {
     margin: 80px auto 0 auto;
     border-radius: 5px;
     display: flex;
+    cursor: pointer;
+    &:active {
+      background: #FDDE58;
+    }
     .text {
       margin: auto;
       font-size: 18px;
@@ -112,6 +127,7 @@ export default {
     margin: 70px auto auto auto;
     font-size: 12px;
     color: rgba(255, 255, 255, 1);
+    cursor: pointer;
   }
 }
 </style>

@@ -35,8 +35,10 @@ export default {
           this.$refs.audio.play();
         }, 0);
       } else {
-        // alert('音乐文件被移除');
-        console.log('无可播放音乐');
+        setTimeout(() => {
+          this.$store.dispatch('updatePaused', true);
+        }, 1000);
+        // this.$store.dispatch('addNotifications', { content: '无可播放的下一首音乐', dismissAfter: 5000 });
       }
     });
     this.$bus.$on('pre-audio', () => {
@@ -46,8 +48,10 @@ export default {
           this.$refs.audio.play();
         }, 0);
       } else {
-        // alert('音乐文件被移除');
-        console.log('无可播放音乐');
+        setTimeout(() => {
+          this.$store.dispatch('updatePaused', true);
+        }, 1000);
+        // this.$store.dispatch('addNotifications', { content: '无可播放的上一首音乐', dismissAfter: 5000 });
       }
     });
   },

@@ -45,7 +45,7 @@
       <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput"/>
     </div>
     <playlist-handler v-show="ifRightClick" :rePlaylist.sync="rePlaylist" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
-    <img src="../../assets/mickey.png" class="mickey">
+    <!--<img src="../../assets/mickey.png" class="mickey">-->
   </div>
 </template>
 
@@ -53,7 +53,6 @@
 import { mapGetters } from 'vuex';
 import Icon from '../BaseIconContainer';
 import PlaylistHandler from './PlaylistHandler';
-import infoDB from '../../helpers/infoDB';
 
 export default {
   name: 'leftList',
@@ -86,15 +85,29 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin']),
+    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin', 'musicLibraryPlaylist', 'playlistQueue']),
   },
   watch: {
     createdPlaylist: {
       handler(val) {
         if (this.isLogin) {
-          infoDB.get('AudioInfo', this.loginUser).then(async (data) => {
-            await infoDB.put('AudioInfo', Object.assign(data, { createdPlaylist: val }));
-          });
+          this.storeQueueHandler({ table: 'AudioInfo', data: { createdPlaylist: val } });
+        }
+      },
+      deep: true,
+    },
+    playlistQueue: {
+      handler(val) {
+        if (this.isLogin) {
+          this.storeQueueHandler({ table: 'AudioInfo', data: { playlistQueue: val } });
+        }
+      },
+      deep: true,
+    },
+    musicLibraryPlaylist: {
+      handler(val) {
+        if (this.isLogin) {
+          this.storeQueueHandler({ table: 'AudioInfo', data: { musicLibraryPlaylist: val } });
         }
       },
       deep: true,
@@ -183,7 +196,7 @@ export default {
         } else {
           document.querySelector('.nameInput').value = '';
           document.querySelector('.nameInput').focus();
-          alert('已存在该播放列表');
+          this.$store.dispatch('addNotifications', { content: '已存在该播放列表', dismissAfter: 5000 });
         }
       } else {
         document.querySelector('.nameInput').value = '';
@@ -307,6 +320,8 @@ export default {
       display: flex;
       margin-bottom: 5px;
       .seText {
+        font-style: italic;
+        font-weight: bold;
         color: rgba(255, 255, 255, 1);
         font-size: 13px;
         margin: auto 0 auto 20px;
@@ -321,7 +336,7 @@ export default {
     .createdPlaylist {
       width: 100%;
       height: auto;
-      max-height: 300px;
+      max-height: 360px;
       .playlistContainer {
         width: 100%;
         height: 30px;

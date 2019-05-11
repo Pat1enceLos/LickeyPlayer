@@ -6,6 +6,11 @@ import { getValidAudioRegex, getValidAudioExtensions } from '../../shared/util';
 import infoDB from './infoDB';
 
 export default {
+  data() {
+    return {
+      dbQueue: [],
+    };
+  },
   computed: {
     ...mapGetters(['currentPlaylistShow', 'currentAudioInfo', 'loginUser', 'isLogin']),
   },
@@ -86,19 +91,13 @@ export default {
         this.importFiles(...AudioFiles);
       } else {
         // TODO: no AudioFiles in folders error catch
-        alert('不支持的音乐格式');
+        this.$store.dispatch('addNotifications', { content: '暂不支持的音乐格式', dismissAfter: 5000 });
       }
     },
     importFiles(...files) {
       const validFiles = files.filter(file => getValidAudioRegex().test(path.extname(file)));
       if (validFiles.length) {
         this.$store.dispatch('updateMusicLibraryPlaylist', validFiles);
-        if (this.isLogin) {
-          infoDB.get('AudioInfo', this.loginUser)
-            .then(async (data) => {
-              await infoDB.put('AudioInfo', Object.assign(data, { musicLibraryPlaylist: validFiles }));
-            });
-        }
         this.$store.dispatch('updateAudioInfo', validFiles);
         if (!['musicLibrary', 'playlistQueue'].includes(this.currentPlaylistShow)) {
           this.$store.dispatch('addMusicToPlaylist', validFiles.map(item => ({ src: item })));
@@ -106,7 +105,7 @@ export default {
           this.$store.dispatch('updateCurrentPlaylistShow', 'musicLibrary');
         }
       } else {
-        alert('暂不支持的音乐格式');
+        this.$store.dispatch('addNotifications', { content: '暂不支持的音乐格式', dismissAfter: 5000 });
       }
     },
     openFiles(...files) {
@@ -118,17 +117,8 @@ export default {
         this.$store.dispatch('updateCurrentPlaylistShow', 'playlistQueue');
         this.$store.dispatch('updateCurrentPlaylistPlay', 'playlistQueue');
         this.$store.dispatch('updateAudioInfo', validFiles);
-        if (this.isLogin) {
-          infoDB.get('AudioInfo', this.loginUser)
-            .then(async (data) => {
-              await infoDB.put('AudioInfo', Object.assign(data, {
-                playlistQueue: validFiles,
-                musicLibraryPlaylist: validFiles,
-              }));
-            });
-        }
       } else {
-        alert('暂不支持的音乐格式');
+        this.$store.dispatch('addNotifications', { content: '暂不支持的音乐格式', dismissAfter: 5000 });
       }
     },
     openFolders(...folders) {
@@ -154,7 +144,7 @@ export default {
         this.openFiles(...AudioFiles);
       } else {
         // TODO: no AudioFiles in folders error catch
-        alert('不支持的音乐格式');
+        this.$store.dispatch('addNotifications', { content: '暂不支持的音乐格式', dismissAfter: 5000 });
       }
     },
     filePathToUrl(filePath) {
@@ -247,12 +237,30 @@ export default {
         if (files) {
           fs.readFile(files[0], (err, data) => {
             this.$store.dispatch('updateUserImg', data.toString('base64'));
-            infoDB.get('User', this.loginUser).then(async (item) => {
-              await infoDB.put('User', Object.assign(item, { img: data.toString('base64') }));
-            });
+            this.storeQueueHandler({ table: 'User', data: { img: data.toString('base64') } });
           });
         }
       });
+    },
+    storeDB(args, cb) {
+      infoDB.get(args.table, this.loginUser).then((item) => {
+        infoDB.put(args.table, Object.assign(item, args.data)).then(() => {
+          cb();
+        });
+      });
+    },
+    TaskCallback() {
+      const cb = () => {
+        this.dbQueue.shift();
+        if (this.dbQueue.length > 0) {
+          this.storeDB(this.dbQueue[0], cb);
+        }
+      };
+      this.storeDB(this.dbQueue[0], cb);
+    },
+    storeQueueHandler(task) {
+      this.dbQueue.push(task);
+      this.TaskCallback();
     },
   },
 };

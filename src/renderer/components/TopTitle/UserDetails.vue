@@ -34,7 +34,6 @@ export default {
   computed: {
     ...mapGetters(['isLogin', 'birth', 'gender', 'description', 'name', 'userImg']),
     imgPath() {
-      console.log(this.userImg);
       if (this.userImg) {
         return `data:image/jpeg;base64,${this.userImg}`;
       }

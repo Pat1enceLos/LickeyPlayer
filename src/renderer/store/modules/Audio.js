@@ -1,5 +1,4 @@
 import * as mm from 'music-metadata';
-import infoDB from '../../helpers/infoDB';
 
 const state = {
   src: '',
@@ -273,19 +272,8 @@ const actions = {
   updateDisplayType({ commit }) {
     commit('displayTypeUpdate');
   },
-  updateCreatedPlaylist({ commit, getters }, delta) {
+  updateCreatedPlaylist({ commit }, delta) {
     commit('createdPlaylistUpdate', delta);
-    if (getters.isLogin) {
-      infoDB.get('AudioInfo', getters.loginUser)
-        .then(async (data) => {
-          await infoDB.put('AudioInfo', Object.assign(data, {
-            createdPlaylist: {
-              name: delta,
-              src: [],
-            },
-          }));
-        });
-    }
   },
   addMusicToPlaylist({ commit }, delta) {
     commit('musicAddToPlaylist', delta);

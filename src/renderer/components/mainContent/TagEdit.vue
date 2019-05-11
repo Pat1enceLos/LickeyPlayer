@@ -254,7 +254,7 @@ export default {
           color: rgba(255, 255, 255, 1);
           display: flex;
           p {
-            margin-right: 10px;
+            margin-right: 20px;
             margin-left: 5px;
           }
           &:hover {

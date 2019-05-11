@@ -1,6 +1,6 @@
 <template>
   <div class="songTable" :style="{
-    height: albumPlaylist && albumPlaylist.length ? 'auto' : '99%',
+    height: albumPlaylist && albumPlaylist.length ? 'auto' : '100%',
     marginBottom: albumPlaylist && albumPlaylist.length ? '20px' : '',
   }">
     <div class="topTitle">
@@ -16,7 +16,7 @@
         @dblclick="dbClickToPlay(item)"
         @mouseup="handleMusicSettings($event, index, item)"
         :style="{
-          background: index % 2 === 0 ? '#434343' : 'rgba(0, 0, 0, 0.1)',
+          background: src === item && currentPlaylistShow === currentPlaylistPlay ? '#606060' :index % 2 === 0 ? '#434343' : 'rgba(0, 0, 0, 0.1)',
         }">
         <div class="detailIndex" v-show="src !== item || currentPlaylistShow !== currentPlaylistPlay">{{ index + 1 }}</div>
         <Icon type="playing" v-show="src === item && currentPlaylistShow === currentPlaylistPlay" class="playingIcon"></Icon>
@@ -36,7 +36,6 @@ import { mapGetters } from 'vuex';
 import _ from 'lodash';
 import MusicHandler from './MusicHandler';
 import Icon from '../BaseIconContainer';
-import infoDB from '../../helpers/infoDB';
 
 export default {
   name: 'SongsTable',
@@ -142,7 +141,7 @@ export default {
   border-radius: 4px;
 }
 .songTable {
-  width: 98.5%;
+  width: 100%;
   margin: auto;
   overflow: hidden;
   background: #434343;

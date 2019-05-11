@@ -67,6 +67,9 @@ function registerMainWindowEvent() {
   ipcMain.on('login-info', (event, id) => {
     mainWindow.webContents.send('update-login-user', id);
   });
+  ipcMain.on('notification-info', (event, info) => {
+    mainWindow.webContents.send('add-notification', info);
+  });
 }
 ipcMain.on('add-windows-login', () => {
   const loginWindowOptions = {

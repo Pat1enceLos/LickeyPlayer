@@ -26,6 +26,9 @@ export default {
     Icon,
   },
   watch: {
+    paused(val) {
+      console.log(val);
+    },
   },
   methods: {
     handleMouseup() {

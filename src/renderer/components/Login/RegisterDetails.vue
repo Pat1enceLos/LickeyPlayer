@@ -1,6 +1,6 @@
 <template>
   <div class="registerContent">
-    <input class="registerUser" id="registerId" placeholder="用户名"/>
+    <input class="registerUser" id="registerId" placeholder="用户名" autofocus/>
     <input class="registerPassword" id="registerPassword" placeholder="密码" type="password"/>
     <div class="registerButton" @mouseup="handleRegister">
       <div class="text">注册</div>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import electron from 'electron';
 import md5 from 'md5';
 import infoDB from '../../helpers/infoDB';
 
@@ -26,7 +27,7 @@ export default {
       const reg = /^\w{5,21}$/;
       if (reg.test(inputId)) {
         if (inputPassword === '') {
-          alert('密码不能为空');
+          electron.ipcRenderer.send('notification-info', { content: '密码不能为空', dismissAfter: 3000 });
         } else {
           const existedUser = await infoDB.getAll('User');
           existedUser.forEach(({ id }) => {
@@ -35,7 +36,7 @@ export default {
             }
           });
           if (isExisted) {
-            alert('已存在该用户名');
+            electron.ipcRenderer.send('notification-info', { content: '已存在该用户名', dismissAfter: 3000 });
           } else {
             const userInfo = {
               id: inputId,
@@ -43,16 +44,16 @@ export default {
             };
             await infoDB.add('User', userInfo);
             await infoDB.add('AudioInfo', { id: inputId });
-            alert('注册成功');
+            electron.ipcRenderer.send('notification-info', { content: '注册成功', dismissAfter: 2000 });
             document.querySelector('#registerId').value = '';
             document.querySelector('#registerPassword').value = '';
             this.$emit('update:loginToShow', true);
           }
         }
       } else if (inputId.length < 5) {
-        alert('用户名长度大于五个字符');
+        electron.ipcRenderer.send('notification-info', { content: '用户名长度大于五个字符', dismissAfter: 3000 });
       } else if (inputId > 20) {
-        alert('用户名长度小于十个字符');
+        electron.ipcRenderer.send('notification-info', { content: '用户名长度小于二十个字符', dismissAfter: 3000 });
       }
     },
   },
@@ -104,6 +105,10 @@ export default {
     margin: 80px auto 0 auto;
     border-radius: 5px;
     display: flex;
+    cursor: pointer;
+    &:active {
+      background: #FDDE58;
+    }
     .text {
       margin: auto;
       font-size: 18px;
@@ -114,6 +119,7 @@ export default {
     margin: 70px auto auto auto;
     font-size: 12px;
     color: rgba(255, 255, 255, 1);
+    cursor: pointer;
   }
 }
 </style>

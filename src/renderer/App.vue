@@ -1,19 +1,24 @@
 <template>
   <div id="app" class="application">
     <router-view></router-view>
+    <Notification></Notification>
   </div>
 </template>
 
 <script>
 import _ from 'lodash';
 import { mapGetters } from 'vuex';
-import nickname from 'nickname';
+import nicknames from 'nicknames';
 import '@/css/style.scss';
 import drag from '@/helpers/drag';
 import infoDB from './helpers/infoDB';
+import Notification from './components/Notification.vue';
 
 export default {
   name: 'lickeymusic',
+  components: {
+    Notification,
+  },
   computed: {
     ...mapGetters(['isLogin', 'loginUser']),
   },
@@ -42,14 +47,17 @@ export default {
             this.$store.dispatch('updateDescription', data.description);
           } else {
             const initialBirth = new Date();
-            const initialName = nickname.random();
+            const initialName = nicknames.allRandom();
             this.$store.dispatch('updateBirth', initialBirth);
             this.$store.dispatch('updateGender', '其他');
             this.$store.dispatch('updateName', initialName);
             this.$store.dispatch('updateDescription', '这个人很懒，什么都没有留下。。');
-            await infoDB.put('User', Object.assign(data, {
-              gender: '其他', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
-            }));
+            this.storeQueueHandler({
+              table: 'User',
+              data: {
+                gender: '其他', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
+              },
+            });
           }
         });
       } else {
@@ -69,6 +77,9 @@ export default {
     });
     this.$electron.ipcRenderer.on('update-login-user', (event, id) => {
       this.$store.dispatch('updateLoginUser', id);
+    });
+    this.$electron.ipcRenderer.on('add-notification', (event, info) => {
+      this.$store.dispatch('addNotifications', info);
     });
     drag(this.$el);
   },
