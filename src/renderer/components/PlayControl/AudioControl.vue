@@ -1,5 +1,5 @@
 <template>
-  <div class="audioControl">
+  <div class="audioControl no-drag">
     <div class="playbutton">
       <Icon type="pre" class="pre" @mouseup.native="handlePreAudio"></Icon>
       <Icon type="play" class="play" @mouseup.native="handleMouseup" v-show="paused"></Icon>

@@ -1,5 +1,5 @@
 <template>
-  <div class="theProgressBar" :data-component-name="$options.name">
+  <div class="theProgressBar no-drag" :data-component-name="$options.name">
     <div class="content">
       <div class="playTime">{{ timeFormatter(currentTime) }}</div>
       <div class="processControl"

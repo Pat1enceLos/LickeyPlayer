@@ -1,5 +1,5 @@
 <template>
-  <div class="rightButtons">
+  <div class="rightButtons no-drag">
     <div class="content">
       <div class="button">
         <Icon :type="cycleType === 'single' ? 'singleCycle' : 'playlistCycle'" class="circle" @mouseup.native="handleCyclePlay" :style="{ opacity: cycleType !== '' ? '1' : '0.35' }"></Icon>
