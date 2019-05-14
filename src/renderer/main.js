@@ -7,6 +7,7 @@ import helpers from '@/helpers';
 import App from './App';
 import router from './router';
 import store from './store';
+import ADB from '../../scripts/adb';
 
 Vue.prototype.$bus = new Vue(); // Global event bus
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
@@ -29,5 +30,6 @@ new Vue({
   watch: {
   },
   mounted() {
+    console.log(new ADB());
   },
 }).$mount('#app');

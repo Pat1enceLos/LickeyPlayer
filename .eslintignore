@@ -2,3 +2,4 @@ test/unit/coverage/**
 test/unit/*.js
 test/e2e/*.js
 scripts/adb.js
+scripts/monitor.js
