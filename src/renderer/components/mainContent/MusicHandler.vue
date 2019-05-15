@@ -10,6 +10,9 @@
       <div class="handlerText">Add To Playlist</div>
       <Icon type="moreInfo" :style="{ margin: 'auto 10px auto auto' }"></Icon>
     </div>
+    <div class="exportMusic" @mouseup="handleExportMusic">
+      <div class="handlerText">Export Music</div>
+    </div>
     <div class="reveal" @mouseup="openFileInFile">
       <div class="handlerText">Reveal In Finder</div>
     </div>
@@ -28,6 +31,7 @@
 </template>
 
 <script>
+import adb from 'adbkit';
 import { mapGetters } from 'vuex';
 import path from 'path';
 import Icon from '../BaseIconContainer';
@@ -55,6 +59,15 @@ export default {
     ...mapGetters(['src', 'currentPlaylistShow', 'createdPlaylist']),
   },
   methods: {
+    handleExportMusic(item) {
+      const client = adb.createClient();
+      client.listDevices()
+        .then((devices) => {
+          console.log(devices);
+        });
+      console.log(item);
+      this.$emit('update:ifRightClick', false);
+    },
     handleAddMusicToPlaylist(item) {
       this.$store.dispatch('addMusicToPlaylist', [{ name: item, src: this.musicSrc }]);
       this.$emit('update:ifRightClick', false);
@@ -108,7 +121,7 @@ export default {
   border: 0.5px solid rgb(75, 75, 75);
   display: flex;
   flex-direction: column;
-  .playNow, .addToQueue, .addToPlaylist, .remove, .reveal {
+  .playNow, .addToQueue, .addToPlaylist, .remove, .reveal, .exportMusic {
     width: 100%;
     height: 30px;
     color: rgba(255, 255, 255, 1);
