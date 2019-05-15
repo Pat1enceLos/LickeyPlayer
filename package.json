@@ -86,7 +86,8 @@
     }
   },
   "dependencies": {
-    "android": "0.0.8",
+    "adbkit": "^2.11.1",
+    "bluebird": "^3.5.4",
     "chardet": "^0.7.0",
     "element-ui": "^2.8.2",
     "iconv-lite": "^0.4.24",

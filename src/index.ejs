@@ -18,7 +18,6 @@
         if (process.env.NODE_ENV !== 'development') window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
         document.body.classList.add(`platform-${process.platform}`);
       </script>
-      <script src="../scripts/adb.js"></script>
     <% } %>
 
     <!-- webpack builds are automatically injected -->

@@ -7,7 +7,6 @@ import helpers from '@/helpers';
 import App from './App';
 import router from './router';
 import store from './store';
-import ADB from '../../scripts/adb';
 
 Vue.prototype.$bus = new Vue(); // Global event bus
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
@@ -30,6 +29,18 @@ new Vue({
   watch: {
   },
   mounted() {
-    console.log(new ADB());
+    const Promise = require('bluebird');
+    const adb = require('adbkit');
+    const client = adb.createClient();
+
+    client.listDevices()
+      .then(devices => Promise.filter(devices, device => client.getFeatures(device.id)
+        .then(features => features['android.hardware.nfc'])))
+      .then((supportedDevices) => {
+        console.log('The following devices support NFC:', supportedDevices);
+      })
+      .catch((err) => {
+        console.error('Something went wrong:', err.stack);
+      });
   },
 }).$mount('#app');
