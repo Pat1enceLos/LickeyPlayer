@@ -85,7 +85,7 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin', 'musicLibraryPlaylist', 'playlistQueue']),
+    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin', 'musicLibraryPlaylist', 'playlistQueue', 'audioInfo']),
   },
   watch: {
     createdPlaylist: {
@@ -108,6 +108,14 @@ export default {
       handler(val) {
         if (this.isLogin) {
           this.storeQueueHandler({ table: 'AudioInfo', data: { musicLibraryPlaylist: val } });
+        }
+      },
+      deep: true,
+    },
+    audioInfo: {
+      handler(val) {
+        if (this.isLogin) {
+          this.storeQueueHandler({ table: 'AudioInfo', data: { audioInfo: val } });
         }
       },
       deep: true,

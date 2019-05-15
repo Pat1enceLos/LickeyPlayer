@@ -51,6 +51,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import toBuffer from 'typedarray-to-buffer';
 import _ from 'lodash';
 import isEmpty from 'lodash/isEmpty';
 import songsTable from './SongsTable.vue';
@@ -115,7 +116,7 @@ export default {
         let pic = '';
         this.audioInfoSortByAlbum[item].forEach((i) => {
           if (i.picture && !isEmpty(i.picture[0].data)) {
-            pic = i.picture[0].data;
+            pic = toBuffer(i.picture[0].data);
           }
         });
         tmp.push({

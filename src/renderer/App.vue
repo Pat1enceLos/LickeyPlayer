@@ -31,7 +31,13 @@ export default {
             createdPlaylistQueue = _.flatten(data.createdPlaylist.map(i => i.src)) || [];
           }
           this.$store.dispatch('initialInfoDB', data);
-          this.$store.dispatch('updateAudioInfo', _.uniq(_.concat(data.playlistQueue || [], data.musicLibraryPlaylist || [], createdPlaylistQueue)));
+          if (data.audioInfo) {
+            data.audioInfo.forEach((item) => {
+              this.$store.dispatch('updateAudioInfoDirectly', item);
+            });
+          } else {
+            this.$store.dispatch('updateAudioInfo', _.uniq(_.concat(data.playlistQueue || [], data.musicLibraryPlaylist || [], createdPlaylistQueue)));
+          }
         });
         infoDB.get('User', this.loginUser).then(async (data) => {
           if (data.img) {

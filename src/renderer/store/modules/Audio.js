@@ -232,6 +232,7 @@ const mutations = {
     state.playlistQueue = [];
     state.musicLibraryPlaylist = [];
     state.createdPlaylist = [];
+    state.audioInfo = [];
   },
 };
 
@@ -312,6 +313,9 @@ const actions = {
         picture: metadata.common.picture,
       });
     });
+  },
+  updateAudioInfoDirectly({ commit }, delta) {
+    commit('audioInfoUpdate', delta);
   },
   updateCurrentAudioInfo({ commit }, delta) {
     commit('currentAudioInfoUpdate', delta);
