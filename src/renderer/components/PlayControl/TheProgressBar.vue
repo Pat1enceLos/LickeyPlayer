@@ -39,16 +39,20 @@ export default {
   computed: {
     ...mapGetters(['duration', 'currentTime', 'volume']),
     playedPercent() {
-      return (this.currentTime / this.duration) * 100;
+      if (this.currentTime && this.duration) {
+        return (this.currentTime / this.duration) * 100;
+      }
+      return 0;
     },
     hoveredPercent() {
-      return (this.hoveredCurrentTime / this.duration) * 100;
+      if (this.duration && this.hoveredCurrentTime) {
+        return (this.hoveredCurrentTime / this.duration) * 100;
+      }
+      return 0;
     },
     manuControl() {
       return this.hoveredPercent !== 0;
     },
-  },
-  watch: {
   },
   mounted() {
     window.addEventListener('mouseup', () => {

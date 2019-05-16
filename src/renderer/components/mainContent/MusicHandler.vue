@@ -64,34 +64,34 @@ export default {
       const Promise = require('bluebird');
       const client = adb.createClient();
       client.listDevices()
-        .then((devices) => { //eslint-disable-line
+        .then((devices) => { // eslint-disable-line
           if (!devices.length) {
             this.$store.dispatch('addNotifications', { content: '暂未找到可连接的设备', dismissAfter: 3000 });
           } else {
-            return Promise.map(devices, (device) => { //eslint-disable-line
+            return Promise.map(devices, (device) => {  // eslint-disable-line
               if (device) {
                 try {
                   return client.push(device.id, this.musicSrc, `/sdcard/Music/${iconv.encode(path.basename(this.musicSrc), 'utf8')}`)
-                    .then((transfer) => { //eslint-disable-line
-                      return new Promise((resolve, reject) => {
-                        transfer.on('progress', (stats) => {
-                          this.$store.dispatch('addNotifications', { content: '文件正在导出到Music中' });
-                          console.log('so far', device.id, stats.bytesTransferred);
-                        });
-                        transfer.on('end', () => {
-                          this.$store.dispatch('addNotifications', { content: '文件导出成功', dismissAfter: 3000 });
-                          this.$store.dispatch('removeExportNotification');
-                          console.log('Push complete', device.id);
-                          resolve();
-                        });
-                        transfer.on('error', () => {
-                          this.$store.dispatch('addNotifications', { content: '文件导出失败', dismissAfter: 3000 });
-                          this.$store.dispatch('removeExportNotification');
-                          reject();
-                        });
+                    .then(transfer => new Promise((resolve, reject) => {
+                      transfer.on('progress', (stats) => {
+                        this.$store.dispatch('addNotifications', { content: '文件正在导出到Music中' });
+                        console.log('so far', device.id, stats.bytesTransferred);
                       });
-                    });
+                      transfer.on('end', () => {
+                        this.$store.dispatch('addNotifications', { content: '文件导出成功', dismissAfter: 3000 });
+                        this.$store.dispatch('removeExportNotification');
+                        console.log('Push complete', device.id);
+                        resolve();
+                      });
+                      transfer.on('error', () => {
+                        this.$store.dispatch('addNotifications', { content: '文件导出失败', dismissAfter: 3000 });
+                        this.$store.dispatch('removeExportNotification');
+                        reject();
+                      });
+                    }));
                 } catch (e) {
+                  this.$store.dispatch('addNotifications', { content: '文件导出失败', dismissAfter: 3000 });
+                  this.$store.dispatch('removeExportNotification');
                   throw e;
                 }
               }
@@ -102,6 +102,8 @@ export default {
           console.log('Done pushing  to all connected devices');
         })
         .catch((err) => {
+          this.$store.dispatch('addNotifications', { content: '文件导出失败', dismissAfter: 3000 });
+          this.$store.dispatch('removeExportNotification');
           console.error('Something went wrong:', err.stack);
         });
       this.$emit('update:ifRightClick', false);
@@ -143,6 +145,11 @@ export default {
         this.$store.dispatch('removeMusicFromLibrary', this.musicSrc);
       }
       this.$store.dispatch('removeMusicFromPlaylist', { name: this.currentPlaylistShow, src: this.musicSrc });
+      if (this.musicSrc === this.src) {
+        this.$store.dispatch('updateSrc', '');
+        this.$store.dispatch('updateDuration', 0);
+        this.$bus.$emit('remove-music');
+      }
       this.$emit('update:ifRightClick', false);
     },
   },
