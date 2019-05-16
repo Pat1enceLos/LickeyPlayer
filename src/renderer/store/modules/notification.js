@@ -8,19 +8,30 @@ const getters = {
 
 const mutations = {
   addNotifications(state, payload) {
-    if (state.notifications.length === 3) {
-      state.notifications.splice(0, 1);
+    if (payload.content !== '文件正在导出到Music中' || state.notifications.findIndex(i => i.content === '文件正在导出到Music中') === -1) {
+      if (state.notifications.length === 3) {
+        state.notifications.splice(0, 1);
+      }
+      state.notifications.push(payload);
     }
-    state.notifications.push(payload);
   },
   removeNotifications(state, id) {
     state.notifications = state.notifications.filter(m => m.id !== id);
+  },
+  exportNotificationRemove(state, id) {
+    const index = state.notifications.findIndex(i => i.content === '文件正在导出到Music中');
+    if (index !== -1) {
+      state.notifications.splice(index, 1);
+    }
   },
 };
 let i = 0;
 const actions = {
   removeNotifications({ commit }, id) {
     commit('removeNotifications', id);
+  },
+  removeExportNotification({ commit }) {
+    commit('exportNotificationRemove');
   },
   addNotifications({ commit }, {
     content, dismissAfter,
