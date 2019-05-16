@@ -3,12 +3,12 @@
     <div class="playNow" @mouseup="handlePlayNow" :style="{ marginTop: '5px' }">
       <div class="handlerText">Play Now</div>
     </div>
-    <div class="addToQueue" v-show="currentPlaylistShow !== 'playlistQueue'" @mouseup="addMusciToPlaylistQueue">
-      <div class="handlerText">Add To Queue</div>
-    </div>
-    <div class="addToPlaylist" @mouseover="handlePlaylistOver" @mouseleave="handlePlaylistLeave">
+    <div class="addToPlaylist" @mouseover="handlePlaylistOver" @mouseleave="handlePlaylistLeave" :style="{ background: playlistHovered || playlistDetailHovered ? '#434343' : '' }">
       <div class="handlerText">Add To Playlist</div>
       <Icon type="moreInfo" :style="{ margin: 'auto 10px auto auto' }"></Icon>
+    </div>
+    <div class="addToQueue" v-show="currentPlaylistShow !== 'playlistQueue'" @mouseup="addMusciToPlaylistQueue">
+      <div class="handlerText">Add To Queue</div>
     </div>
     <div class="exportMusic" @mouseup="handleExportMusic">
       <div class="handlerText">Export Music</div>
@@ -20,7 +20,7 @@
       <div class="handlerText">Remove</div>
     </div>
     <div class="playlistDetail" v-show="playlistHovered || playlistDetailHovered" @mouseover="handlePlaylistDetailOver" @mouseleave="handlePlaylistDetailLeave">
-      <div class="playlistContent">
+      <div class="playlistContent" :style="{ overflowY: createdPlaylist.length > 5 ? 'scroll' : 'hidden' }">
         <div class="playlistContainer" v-for="(item, index) in createdPlaylist.map(i => i.name)"
           @mouseup="handleAddMusicToPlaylist(item)">
           <div class="content">{{ item }}</div>
@@ -150,6 +150,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
 .handlerContainer {
   position: absolute;
   width: 180px;
@@ -159,6 +166,7 @@ export default {
   border: 0.5px solid rgb(75, 75, 75);
   display: flex;
   flex-direction: column;
+  z-index: 100;
   .playNow, .addToQueue, .addToPlaylist, .remove, .reveal, .exportMusic {
     width: 100%;
     height: 30px;
@@ -177,16 +185,15 @@ export default {
     width: auto;
     height: auto;
     left: 180px;
-    top: 65px;
+    top: 35px;
     background: #707070;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
     border: 0.3px solid rgb(75, 75, 75);
     display: flex;
     flex-direction: column;
     max-height: 160px;
     .playlistContent {
       max-height: 150px;
-      overflow: scroll;
       height: auto;
       margin: 5px 0 5px 0;
     }
