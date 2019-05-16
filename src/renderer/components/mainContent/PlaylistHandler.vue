@@ -85,6 +85,7 @@ export default {
   display: flex;
   flex-direction: column;
   z-index: 10;
+  border: 0.5px solid rgb(75, 75, 75);
   .playlistPlayNow, .playlistAddToQueue, .addMusic, .playlistExport, .rename, .playlistRemove {
     width: 100%;
     height: 30px;

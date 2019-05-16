@@ -138,7 +138,7 @@ export default {
       this.$store.dispatch('updateCurrentPlaylistShow', item.name);
       if (e.button === 2) {
         this.handlerPosX = e.clientX;
-        this.handlerPosY = e.clientY;
+        this.handlerPosY = e.clientY + 191 > 720 ? 720 - 191 : e.clientY;
         this.handlerIndex = index;
         this.ifRightClick = true;
         this.handlerPlaylistName = item.name;
