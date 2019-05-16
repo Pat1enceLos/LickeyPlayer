@@ -5,7 +5,7 @@
         <Icon type="userImg" v-show="!imgPath"/>
         <img class="edit-img" :src="imgPath" v-show="imgPath">
       </div>
-      <input class="edit-user-name" v-model="inputName">
+      <input class="edit-user-name" v-model="inputName" maxlength="16">
     </div>
     <div class="edit-description">
       <p>简介:</p>
