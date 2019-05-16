@@ -2,7 +2,7 @@ const state = {
   loginUser: '',
   name: '',
   birth: new Date(),
-  gender: '其他',
+  gender: '保密',
   description: '这个人很懒，什么都没有留下。。',
   userImg: '',
 };

@@ -29,6 +29,7 @@
 
 <script>
 import lrcParser from 'lrc-parser';
+import toBuffer from 'typedarray-to-buffer';
 import iconv from 'iconv-lite';
 import fs from 'fs';
 import { mapGetters } from 'vuex';
@@ -58,13 +59,13 @@ export default {
   computed: {
     ...mapGetters(['currentAudioInfo', 'src', 'currentTime', 'duration']),
     title() {
-      return this.currentAudioInfo ? this.currentAudioInfo.title : '暂无歌曲信息';
+      return this.currentAudioInfo ? this.currentAudioInfo.title : 'No Music Info';
     },
     artist() {
-      return this.currentAudioInfo ? this.currentAudioInfo.artists : '暂无歌手信息';
+      return this.currentAudioInfo ? this.currentAudioInfo.artists : 'No Artist Info';
     },
     picture() {
-      return this.currentAudioInfo && this.currentAudioInfo.picture && !isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
+      return this.currentAudioInfo && this.currentAudioInfo.picture && !isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${toBuffer(this.currentAudioInfo.picture[0].data).toString('base64')}` : '';
     },
   },
   mounted() {
@@ -148,12 +149,14 @@ export default {
     margin: 10px auto 0 auto;
     font-size: 15px;
     text-align: center;
+    color: rgba(255, 255, 255, 1);
   }
   .songAuthor {
     width: auto;
     height: auto;
     margin: 6px auto 0 auto;
     font-size: 12px;
+    color: rgba(255, 255, 255, 1);
   }
   .lyric {
     width: 200px;

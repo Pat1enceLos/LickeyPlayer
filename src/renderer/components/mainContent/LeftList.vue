@@ -85,7 +85,7 @@ export default {
     'playlist-handler': PlaylistHandler,
   },
   computed: {
-    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin', 'musicLibraryPlaylist', 'playlistQueue']),
+    ...mapGetters(['createdPlaylist', 'createdPlaylist', 'currentPlaylistPlay', 'currentPlaylistShow', 'loginUser', 'isLogin', 'musicLibraryPlaylist', 'playlistQueue', 'audioInfo']),
   },
   watch: {
     createdPlaylist: {
@@ -112,6 +112,14 @@ export default {
       },
       deep: true,
     },
+    audioInfo: {
+      handler(val) {
+        if (this.isLogin) {
+          this.storeQueueHandler({ table: 'AudioInfo', data: { audioInfo: val } });
+        }
+      },
+      deep: true,
+    },
     rePlaylist(val) {
       this.exName = val;
       setTimeout(() => {
@@ -130,7 +138,7 @@ export default {
       this.$store.dispatch('updateCurrentPlaylistShow', item.name);
       if (e.button === 2) {
         this.handlerPosX = e.clientX;
-        this.handlerPosY = e.clientY;
+        this.handlerPosY = e.clientY + 191 > 720 ? 720 - 191 : e.clientY;
         this.handlerIndex = index;
         this.ifRightClick = true;
         this.handlerPlaylistName = item.name;

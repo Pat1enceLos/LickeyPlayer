@@ -59,6 +59,10 @@ export const INFO_DB_SCHEMA = [
             createdPlaylist: 'createdPlaylist',
             unique: false,
           },
+          {
+            audioInfo: '',
+            unique: false,
+          },
         ],
       },
     ],

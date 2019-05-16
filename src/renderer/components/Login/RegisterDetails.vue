@@ -51,9 +51,9 @@ export default {
           }
         }
       } else if (inputId.length < 5) {
-        electron.ipcRenderer.send('notification-info', { content: '用户名长度大于五个字符', dismissAfter: 3000 });
+        electron.ipcRenderer.send('notification-info', { content: '用户名长度小于五个字符', dismissAfter: 3000 });
       } else if (inputId > 20) {
-        electron.ipcRenderer.send('notification-info', { content: '用户名长度小于二十个字符', dismissAfter: 3000 });
+        electron.ipcRenderer.send('notification-info', { content: '用户名长度大于二十个字符', dismissAfter: 3000 });
       }
     },
   },

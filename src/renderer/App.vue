@@ -31,7 +31,13 @@ export default {
             createdPlaylistQueue = _.flatten(data.createdPlaylist.map(i => i.src)) || [];
           }
           this.$store.dispatch('initialInfoDB', data);
-          this.$store.dispatch('updateAudioInfo', _.uniq(_.concat(data.playlistQueue || [], data.musicLibraryPlaylist || [], createdPlaylistQueue)));
+          if (data.audioInfo) {
+            data.audioInfo.forEach((item) => {
+              this.$store.dispatch('updateAudioInfoDirectly', item);
+            });
+          } else {
+            this.$store.dispatch('updateAudioInfo', _.uniq(_.concat(data.playlistQueue || [], data.musicLibraryPlaylist || [], createdPlaylistQueue)));
+          }
         });
         infoDB.get('User', this.loginUser).then(async (data) => {
           if (data.img) {
@@ -49,13 +55,13 @@ export default {
             const initialBirth = new Date();
             const initialName = nicknames.allRandom();
             this.$store.dispatch('updateBirth', initialBirth);
-            this.$store.dispatch('updateGender', '其他');
+            this.$store.dispatch('updateGender', '保密');
             this.$store.dispatch('updateName', initialName);
             this.$store.dispatch('updateDescription', '这个人很懒，什么都没有留下。。');
             this.storeQueueHandler({
               table: 'User',
               data: {
-                gender: '其他', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
+                gender: '保密', birth: initialBirth, description: '这个人很懒，什么都没有留下。。', name: initialName,
               },
             });
           }
@@ -63,6 +69,10 @@ export default {
       } else {
         this.$store.dispatch('updateUserImg', '');
         this.$store.dispatch('removeInfoDB');
+        this.$store.dispatch('updateSrc', '');
+        this.$store.dispatch('updateDuration', '');
+        this.$store.dispatch('updateAudioInfoDirectly', []);
+        this.$bus.$emit('back-to-lyric');
       }
     },
   },

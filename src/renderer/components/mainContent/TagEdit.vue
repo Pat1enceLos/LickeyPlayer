@@ -37,6 +37,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import toBuffer from 'typedarray-to-buffer';
 import _ from 'lodash';
 import Icon from '../BaseIconContainer';
 
@@ -109,7 +110,7 @@ export default {
   computed: {
     ...mapGetters(['currentAudioInfo', 'src', 'enabledEditType']),
     picture() {
-      return this.currentAudioInfo && this.currentAudioInfo.picture.length && !_.isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${this.currentAudioInfo.picture[0].data.toString('base64')}` : '';
+      return this.currentAudioInfo && this.currentAudioInfo.picture.length && !_.isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${toBuffer(this.currentAudioInfo.picture[0].data).toString('base64')}` : '';
     },
   },
   watch: {
@@ -294,6 +295,7 @@ export default {
           text-indent: 4px;
           border-radius: 3px;
           border: none;
+          color: #FFCF2E
         }
         .normalShow {
           font-size: 13px;

@@ -103,8 +103,10 @@ export default {
     },
     handleMusicSettings(e, index, src) {
       if (e.button === 2) {
+        const handlerHeight = this.currentPlaylistShow === 'playlistQueue' ? 167 : 197;
+        console.log(handlerHeight);
         this.handlerPosX = e.clientX;
-        this.handlerPosY = e.clientY;
+        this.handlerPosY = e.clientY + handlerHeight > 720 ? 720 - handlerHeight : e.clientY;
         this.handlerIndex = index;
         this.ifRightClick = true;
         this.handlerSrc = src;

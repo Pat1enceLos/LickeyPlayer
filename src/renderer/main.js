@@ -29,5 +29,18 @@ new Vue({
   watch: {
   },
   mounted() {
+    const Promise = require('bluebird');
+    const adb = require('adbkit');
+    const client = adb.createClient();
+
+    client.listDevices()
+      .then(devices => Promise.filter(devices, device => client.getFeatures(device.id)
+        .then(features => features['android.hardware.nfc'])))
+      .then((supportedDevices) => {
+        console.log('The following devices support NFC:', supportedDevices);
+      })
+      .catch((err) => {
+        console.error('Something went wrong:', err.stack);
+      });
   },
 }).$mount('#app');

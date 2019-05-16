@@ -80,7 +80,7 @@ export default {
   right: 30px;
   width: 210px;
   height: 180px;
-  background: white;
+  background: #808080;
   border-radius: 5px;
   z-index: 100;
   display: flex;
@@ -89,9 +89,10 @@ export default {
   .imgAndName {
     width: 100%;
     height: 40px;
-    border-bottom: 0.3px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 0.3px solid rgba(255, 255, 255, 0.8);
     box-sizing: border-box;
     display: flex;
+    color: white;
     .user-img {
       width: 35px;
       height: 35px;
@@ -118,14 +119,15 @@ export default {
     height: 40px;
     display: flex;
     font-size: 12px;
-    border-bottom: 0.3px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 0.3px solid rgba(255, 255, 255, 0.8);
     box-sizing: border-box;
+    color: white;
     .gender {
       width: 37%;
       height: 70%;
       display: flex;
       margin: auto;
-      border-right: 0.3px solid rgba(0, 0, 0, 0.3);
+      border-right: 0.3px solid rgba(255, 255, 255, 0.8);
       box-sizing: border-box;
       p {
         margin: auto auto auto 15px;
@@ -147,8 +149,9 @@ export default {
     display: flex;
     font-size: 12px;
     flex-direction: column;
-    border-bottom: 0.3px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 0.3px solid rgba(255, 255, 255, 0.8);
     box-sizing: border-box;
+    color: white;
     p {
       margin: 4px auto 0 15px;
     }
@@ -167,6 +170,7 @@ export default {
     height: 40px;
     display: flex;
     cursor: pointer;
+    color: white;
     &:hover {
       background: rgba(0, 0, 0, 0.1);
     }
@@ -181,7 +185,7 @@ export default {
 }
 .user-container:before {
   content: "";
-  border: 10px solid white;
+  border: 10px solid #808080;
   border-left-color: transparent;
   border-right-color: transparent;
   border-top-color: transparent;
