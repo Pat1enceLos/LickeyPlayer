@@ -295,6 +295,7 @@ export default {
           text-indent: 4px;
           border-radius: 3px;
           border: none;
+          color: #FFCF2E
         }
         .normalShow {
           font-size: 13px;

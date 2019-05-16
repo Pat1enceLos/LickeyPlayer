@@ -38,6 +38,9 @@ export default {
     ...mapGetters(['src']),
   },
   mounted() {
+    this.$bus.$on('back-to-lyric', () => {
+      this.isLyricShow = true;
+    });
     this.$refs.lyricDrop.addEventListener('dragover', (e) => {
       e.preventDefault();
     });

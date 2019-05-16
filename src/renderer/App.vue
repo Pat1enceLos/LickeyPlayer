@@ -69,6 +69,10 @@ export default {
       } else {
         this.$store.dispatch('updateUserImg', '');
         this.$store.dispatch('removeInfoDB');
+        this.$store.dispatch('updateSrc', '');
+        this.$store.dispatch('updateDuration', '');
+        this.$store.dispatch('updateAudioInfoDirectly', []);
+        this.$bus.$emit('back-to-lyric');
       }
     },
   },
