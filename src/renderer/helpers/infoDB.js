@@ -54,7 +54,6 @@ export class InfoDB {
 
   async get(objectStoreName, key, val) {
     const db = await this.getOwnDb();
-    console.log(key, val);
     if (val) {
       return db
         .transaction(objectStoreName)

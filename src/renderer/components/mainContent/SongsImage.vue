@@ -96,7 +96,6 @@ export default {
         (imageLine * this.imageHeight) + ((imageLine - 1) * 20) :
         (imageLine * this.imageHeight) + ((imageLine - 1) * 20) +
         (this.selectedAlbumPlaylist.length * 35) + 60;
-      console.log(allHeight);
       return allHeight > 560 * 0.99;
     },
     selectedAlbumPlaylist() {
@@ -105,7 +104,6 @@ export default {
     },
     audioInfoSortByAlbum() {
       const currentPlaylistAlbum = this.audioInfo.filter(i => this.displayPlaylist.includes(i.src));
-      console.log(currentPlaylistAlbum);
       return _.groupBy(currentPlaylistAlbum, 'album');
     },
     albumList() {
@@ -168,11 +166,6 @@ export default {
           [] : new Array(this.rowMaxShowNum - (this.albumList.length % this.rowMaxShowNum));
       }
       return [];
-    },
-  },
-  watch: {
-    rowMaxShowNum(val) {
-      console.log(val);
     },
   },
   methods: {

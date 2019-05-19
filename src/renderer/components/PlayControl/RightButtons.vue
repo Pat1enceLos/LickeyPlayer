@@ -93,11 +93,9 @@ export default {
     handleCyclePlay() {
       const typeArr = ['', 'single', 'playlist'];
       const index = typeArr.indexOf(this.cycleType);
-      console.log(typeArr[index + 1] ? typeArr[index + 1] : typeArr[0]);
       this.$store.dispatch('updateCycleType', typeArr[index + 1] ? typeArr[index + 1] : typeArr[0]);
     },
     handleRandomPlay() {
-      console.log(!this.randomPlay);
       this.randomPlay = !this.randomPlay;
     },
     handleMute() {
