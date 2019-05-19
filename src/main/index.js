@@ -14,7 +14,7 @@ let loginWindow = null;
 const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080'
   : `file://${__dirname}/index.html`;
-const aboutURL = process.env.NODE_ENV === 'development'
+const loginURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080/login.html'
   : `file://${__dirname}/login.html`;
 
@@ -58,12 +58,6 @@ function registerMainWindowEvent() {
       console.error('callMainWindowMethod', ex, method, JSON.stringify(args));
     }
   });
-  /* eslint-disable no-unused-vars */
-  ipcMain.on('windowSizeChange', (event, args) => {
-    if (!mainWindow || event.sender.isDestroyed()) return;
-    mainWindow.setSize(...args);
-    event.sender.send('windowSizeChange-asyncReply', mainWindow.getSize());
-  });
   ipcMain.on('login-info', (event, id) => {
     mainWindow.webContents.send('update-login-user', id);
   });
@@ -93,7 +87,7 @@ ipcMain.on('add-windows-login', () => {
   };
   if (!loginWindow) {
     loginWindow = new BrowserWindow(loginWindowOptions);
-    loginWindow.loadURL(`${aboutURL}`);
+    loginWindow.loadURL(`${loginURL}`);
     loginWindow.on('closed', () => {
       loginWindow = null;
     });
@@ -148,23 +142,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-/**
- * Auto Updater
- *
- * Uncomment the following code below and install `electron-updater` to
- * support auto updating. Code Signing with a valid certificate is required.
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
- */
-
-/*
-import { autoUpdater } from 'electron-updater'
-
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-})
- */

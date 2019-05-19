@@ -109,7 +109,6 @@ export default {
       return _.groupBy(currentPlaylistAlbum, 'album');
     },
     albumList() {
-      console.log(this.displayPlaylist);
       const keys = Object.keys(this.audioInfoSortByAlbum);
       const tmp = [];
       keys.forEach((item) => {
