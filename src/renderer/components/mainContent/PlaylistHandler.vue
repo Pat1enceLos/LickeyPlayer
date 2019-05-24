@@ -9,9 +9,9 @@
     <div class="addMusic" @mouseup="importMusicToPlaylist">
       <div class="handlerText">Import Music</div>
     </div>
-    <div class="playlistExport">
-      <div class="handlerText">Export List</div>
-    </div>
+    <!--<div class="playlistExport">-->
+      <!--<div class="handlerText">Export List</div>-->
+    <!--</div>-->
     <div class="rename" @mouseup="playlistRename">
       <div class="handlerText">Rename</div>
     </div>

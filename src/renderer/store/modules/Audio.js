@@ -180,7 +180,6 @@ const mutations = {
         state.audioInfo.splice(index, 1, payload);
       }
     });
-    console.log(payload);
   },
   cycleTypeUpdate(state, payload) {
     state.cycleType = payload;

@@ -33,8 +33,8 @@
         @dblclick="handleCreatedPlaylistPlay(item)"
         :style="{ background: item.name === currentPlaylistShow ? 'rgb(67, 67, 67)' : ''}">
         <div class="selectedMark" v-show="item.name === currentPlaylistPlay"></div>
+        <Icon type="queue" class="playlistIcon"></Icon>
         <div class="content">
-          <Icon type="queue" class="playlistIcon"></Icon>
           <div class="playlistText" v-show="item.name !== rePlaylist">{{ item.name }}</div>
           <input class="nameReset" v-show="item.name === rePlaylist" v-model="exName" autofocus="autofocus" @blur="handleRename" @keypress="handleKeyRename">
         </div>
@@ -42,7 +42,7 @@
     </div>
     <div class="playlistInput" v-show="inputToShow">
       <Icon type="queue" class="playlistIcon"></Icon>
-      <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput"/>
+      <input class="nameInput" @blur="handleInput" @keypress="handleKeyInput" maxlength="19"/>
     </div>
     <playlist-handler v-show="ifRightClick" :rePlaylist.sync="rePlaylist" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="playlistHandler" :name="handlerPlaylistName"></playlist-handler>
     <!--<img src="../../assets/mickey.png" class="mickey">-->
@@ -355,32 +355,33 @@ export default {
           background: #FFCF2E;
           margin: auto -3px auto 0;
         }
+        .playlistIcon {
+          width: 15px;
+          height: 15px;
+          display: flex;
+          margin: auto 0 auto 17px;
+        }
         .content {
-          margin: auto 10px auto 17px;
+          margin: auto 10px auto 10px;
+          width: calc(100% - 52px);
           display: flex;
           flex-direction: row;
           overflow: hidden;
-          .playlistIcon {
-            width: 15px;
-            height: 15px;
-            display: flex;
-            margin: auto 0 auto 0;
-          }
+          text-overflow: ellipsis;
           .playlistText {
             width: auto;
-            text-align: center;
+            height: 18px;
             font-size: 13px;
             color: rgba(255, 255, 255, 1);
-            margin: auto auto auto 10px;
             cursor: pointer;
             overflow: hidden;
+            white-space: nowrap;
             text-overflow: ellipsis;
           }
           .nameReset {
-            width: 60%;
+            width: 100%;
             height: 20px;
             font-size: 13px;
-            margin: auto auto auto 10px;
             background: rgba(255, 255, 255, 1);
             border-radius: 3px;
             text-indent: 3px;
@@ -399,13 +400,13 @@ export default {
         width: 15px;
         height: 15px;
         display: flex;
-        margin: auto 10px auto 17px;
+        margin: auto 0 auto 17px;
       }
       .nameInput {
-        width: 60%;
+        width: calc(100% - 52px);
         height: 20px;
         font-size: 13px;
-        margin: auto auto auto 0;
+        margin: auto auto auto auto;
         background: rgba(255, 255, 255, 1);
         border-radius: 3px;
         text-indent: 3px;

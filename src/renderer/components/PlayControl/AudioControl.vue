@@ -25,11 +25,6 @@ export default {
   components: {
     Icon,
   },
-  watch: {
-    paused(val) {
-      console.log(val);
-    },
-  },
   methods: {
     handleMouseup() {
       if (this.src) {

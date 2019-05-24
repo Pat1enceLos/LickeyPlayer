@@ -60,7 +60,7 @@ export const INFO_DB_SCHEMA = [
             unique: false,
           },
           {
-            audioInfo: '',
+            audioInfo: 'audioInfo',
             unique: false,
           },
         ],

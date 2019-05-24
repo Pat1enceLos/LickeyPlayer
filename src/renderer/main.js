@@ -14,6 +14,12 @@ if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueElectron);
+Vue.config.warnHandler = (warn) => {
+  console.log(warn);
+};
+Vue.config.errorHandler = (err) => {
+  throw err;
+};
 
 Vue.mixin(helpers);
 

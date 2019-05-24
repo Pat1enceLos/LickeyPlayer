@@ -15,8 +15,8 @@
       type="titleBarWinClose">
     </Icon>
     <div class="login-register-container">
-      <login-details class="login-display" :loginToShow.sync="loginToShow" :class="loginToShow ? 'login-show-anim' : 'login-hide-anim'" @animationend.native="handleLoginAnimEnd"></login-details>
-      <register-details class="register-display" :loginToShow.sync="loginToShow" :class="loginToShow ? 'register-hide-anim' : 'register-show-anim'" @animationend.native="handleRegisterAnimEnd"></register-details>
+      <login-details class="login-display" :loginToShow.sync="loginToShow" :class="loginToShow && !initial ? 'login-show-anim' : 'login-hide-anim'" @animationend.native="handleLoginAnimEnd"></login-details>
+      <register-details class="register-display" :loginToShow.sync="loginToShow" :class="loginToShow && !initial ? 'register-hide-anim' : 'register-show-anim'" @animationend.native="handleRegisterAnimEnd"></register-details>
     </div>
   </div>
 </template>
@@ -38,9 +38,11 @@ export default {
     return {
       state: 'default',
       loginToShow: true,
+      initial: true,
     };
   },
   mounted() {
+    this.initial = false;
   },
   computed: {
     isDarwin() {

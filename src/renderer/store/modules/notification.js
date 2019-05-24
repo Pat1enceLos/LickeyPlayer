@@ -18,7 +18,7 @@ const mutations = {
   removeNotifications(state, id) {
     state.notifications = state.notifications.filter(m => m.id !== id);
   },
-  exportNotificationRemove(state, id) {
+  exportNotificationRemove(state) {
     const index = state.notifications.findIndex(i => i.content === '文件正在导出到Music中');
     if (index !== -1) {
       state.notifications.splice(index, 1);
