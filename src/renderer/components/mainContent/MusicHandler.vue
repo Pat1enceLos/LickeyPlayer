@@ -148,8 +148,8 @@ export default {
       if (this.musicSrc === this.src) {
         this.$store.dispatch('updateSrc', '');
         this.$store.dispatch('updateDuration', 0);
-        this.$bus.$emit('remove-music');
       }
+      this.$store.dispatch('removeAudioInfoBySrc', this.musicSrc);
       this.$emit('update:ifRightClick', false);
     },
   },

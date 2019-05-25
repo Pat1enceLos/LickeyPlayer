@@ -228,6 +228,7 @@ const mutations = {
     state.disXLeft = payload;
   },
   infoDBInitial(state, payload) {
+    state.src = '';
     state.playlistQueue = payload.playlistQueue || [];
     state.musicLibraryPlaylist = payload.musicLibraryPlaylist || [];
     state.createdPlaylist = payload.createdPlaylist || [];
@@ -237,6 +238,18 @@ const mutations = {
     state.musicLibraryPlaylist = [];
     state.createdPlaylist = [];
     state.audioInfo = [];
+  },
+  audioInfoBySrcRemove(state, payload) {
+    if (state.audioInfo.findIndex(i => i.src === payload) !== -1) {
+      state.audioInfo.splice(state.audioInfo.findIndex(i => i.src === payload), 1);
+    }
+  },
+  musicFromAllRemove(state, payload) {
+    state.musicLibraryPlaylist = state.musicLibraryPlaylist.filter(i => i !== payload);
+    state.playlistQueue = state.playlistQueue.filter(i => i !== payload);
+    state.createdPlaylist.forEach((item) => {
+      item.src = item.src.filter(i => i !== payload);
+    });
   },
 };
 
@@ -365,6 +378,12 @@ const actions = {
   },
   removeInfoDB({ commit }) {
     commit('infoDBRemove');
+  },
+  removeAudioInfoBySrc({ commit }, delta) {
+    commit('audioInfoBySrcRemove', delta);
+  },
+  removeMusicFromAll({ commit }, delta) {
+    commit('musicFromAllRemove', delta);
   },
 };
 

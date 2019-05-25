@@ -11,7 +11,7 @@
         order: '0',
     }">
       <div class="img-container">
-        <img :src='pictureImage(item.picture)' class="album-image" :style="{
+        <img :src='pictureImage(item.picture)' v-show="pictureImage(item.picture)" class="album-image" :style="{
          border: showAlbumPlaylist === item.name ? '1px solid #FFCF2E' : '',
         }">
       </div>
@@ -212,6 +212,7 @@ export default {
       width: 100%;
       height: calc(100% - 30px);
       display: flex;
+      background: black;
       .album-image {
         width: calc(100% - 2px);
         height: calc(100% - 2px);

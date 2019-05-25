@@ -21,7 +21,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentTime', 'duration', 'displayType', 'currentPlaylistShow']),
+    ...mapGetters(['currentTime', 'duration', 'displayType', 'currentPlaylistShow', 'nextAudio']),
   },
   components: {
     'base-audio-player': BaseAudioPlayer,
@@ -58,7 +58,7 @@ export default {
   },
   watch: {
     currentTime(val) {
-      if (val + 1 >= this.duration) {
+      if (val + 1 >= this.duration && this.nextAudio) {
         this.$bus.$emit('next-audio');
       }
     },

@@ -20,7 +20,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['paused', 'src']),
+    ...mapGetters(['paused', 'src', 'nextAudio']),
   },
   components: {
     Icon,
@@ -32,7 +32,9 @@ export default {
       }
     },
     handleNextAudio() {
-      this.$bus.$emit('next-audio');
+      if (this.nextAudio) {
+        this.$bus.$emit('next-audio');
+      }
     },
     handlePreAudio() {
       this.$bus.$emit('pre-audio');
