@@ -49,8 +49,11 @@ const getters = {
     }
     const index = list.findIndex(value => value === getters.src);
     if (getters.randomPlay) {
-      list.splice(index, 1);
-      return list[Math.floor(Math.random() * Math.floor(list.length))];
+      if (list.length > 1) {
+        list.splice(index, 1);
+        return list[Math.floor(Math.random() * Math.floor(list.length))];
+      }
+      return list[0];
     }
     if (getters.cycleType === '') {
       if (index !== -1 && index + 1 < list.length) {
