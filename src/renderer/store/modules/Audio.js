@@ -206,7 +206,12 @@ const mutations = {
   musicCoverUpdate(state, payload) {
     state.audioInfo.forEach((item) => {
       if (item.src === state.src) {
-        item.picture.splice(0, 1, payload);
+        if (item.picture && item.picture.length) {
+          console.log(payload);
+          item.picture.splice(0, 1, payload);
+        } else {
+          item.picture = [payload];
+        }
       }
     });
   },

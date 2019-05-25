@@ -110,7 +110,7 @@ export default {
   computed: {
     ...mapGetters(['currentAudioInfo', 'src', 'enabledEditType']),
     picture() {
-      return this.currentAudioInfo && this.currentAudioInfo.picture.length && !_.isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${toBuffer(this.currentAudioInfo.picture[0].data).toString('base64')}` : '';
+      return this.currentAudioInfo && this.currentAudioInfo.picture && this.currentAudioInfo.picture.length && !_.isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${toBuffer(this.currentAudioInfo.picture[0].data).toString('base64')}` : '';
     },
   },
   watch: {
