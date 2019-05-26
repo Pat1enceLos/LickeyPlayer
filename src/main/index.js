@@ -105,6 +105,8 @@ function createWindow() {
     useContentSize: true,
     width: 1080,
     height: 720,
+    maxWidth: 1080,
+    maxHeight: 720,
     titleBarStyle: 'none',
     frame: false,
     transparent: false, // set to false to solve the backdrop-filter bug
