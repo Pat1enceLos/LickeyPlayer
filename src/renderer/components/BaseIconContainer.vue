@@ -123,14 +123,40 @@ export default {
   }
 }
 .play, .pause {
-  display: block;
   width: 30px;
   height: 30px;
+  .default {
+    display: block;
+  }
+  .active {
+    display: none;
+  }
+  &:active {
+    .default {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+  }
 }
 .pre, .next {
-  display: block;
   width: 25px;
   height: 25px;
+  .default {
+    display: block;
+  }
+  .active {
+    display: none;
+  }
+  &:active {
+    .default {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+  }
 }
 .singleCycle, .playlistCycle, .random, .volume, .mute {
   display: block;
