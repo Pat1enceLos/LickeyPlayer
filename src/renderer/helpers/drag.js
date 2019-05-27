@@ -44,7 +44,7 @@ export default function drag(element) {
       offset = [e.clientX, e.clientY];
     }
     if (getRatio() !== 1) {
-      windowSize = remote.getCurrentWindow().getSize();
+      windowSize = [1080, 720];
     }
   };
 
