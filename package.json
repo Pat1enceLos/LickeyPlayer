@@ -1,6 +1,6 @@
 {
-  "name": "lickeyplayer",
-  "version": "0.0.1",
+  "name": "Lighty",
+  "version": "1.0.0",
   "author": "Tan Yang <1029862865@qq.com>",
   "description": "An electron-vue project",
   "license": null,
@@ -24,7 +24,7 @@
     "postinstall": "node ./scripts/postinstall.js"
   },
   "build": {
-    "productName": "lickeyplayer",
+    "productName": "Lighty",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"
