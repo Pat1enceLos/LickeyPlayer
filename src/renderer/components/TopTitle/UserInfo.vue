@@ -6,8 +6,10 @@
         <img :src="imgPath" v-show="imgPath">
       </div>
       <Icon type="rightArrow" class="rightArrow" @mousedown.native="handleMousedown" :style="{ transform: isLogin ? 'rotate(90deg)' : '' }"></Icon>
-      <user-details :userDetailToShow.sync="userDetailToShow"></user-details>
-      <user-editor v-show="userEditorToShow"></user-editor>
+      <user-details class="user-detail" :userDetailToShow.sync="userDetailToShow" @animationend.native="handleAnim" v-show="!userEditorToShow" :class="userEditorToShow ? '' : userDetailToShow && isLogin ? 'user-show-anim' : 'user-hide-anim'"></user-details>
+      <transition name="edit-anim">
+        <user-editor v-show="userEditorToShow"></user-editor>
+      </transition>
     </div>
   </div>
 </template>
@@ -49,6 +51,7 @@ export default {
   mounted() {
     this.$bus.$on('user-editor-show', () => {
       this.userEditorToShow = true;
+      this.userDetailToShow = false;
     });
     this.$bus.$on('edit-finished', () => {
       this.userEditorToShow = false;
@@ -56,10 +59,18 @@ export default {
     });
   },
   methods: {
+    handleAnim(e) {
+      for (let i = 0; i < e.target.classList.length; i += 1) {
+        if (e.target.classList[i] === 'user-hide-anim') {
+          document.querySelector('.user-detail').style.display = 'none';
+        }
+      }
+    },
     handleMousedown() {
       if (!this.isLogin) {
         this.$electron.ipcRenderer.send('add-windows-login');
       } else {
+        document.querySelector('.user-detail').style.display = 'flex';
         this.userDetailToShow = !this.userDetailToShow;
       }
     },
@@ -94,5 +105,28 @@ export default {
       margin: auto;
     }
   }
+}
+.user-show-anim {
+  animation: user-show 200ms linear;
+}
+.user-hide-anim {
+  animation: user-hide 200ms linear;
+}
+@keyframes user-show {
+  0% { opacity: 0; transform: translateY(-30px) }
+  50% { opacity: 0.5; transform: translateY(-15px) }
+  100% { opacity: 1; transform: translateY(0px) }
+}
+@keyframes user-hide {
+  0% { opacity: 1; transform: translateY(0px) }
+  50% { opacity: 0.5; transform: translateY(-15px) }
+  100% { opacity: 0; transform: translateY(-30px) }
+}
+
+.edit-anim-enter-active, .edit-anim-leave-active {
+  transition: opacity .3s linear;
+}
+.edit-anim-enter, .edit-anim-leave-to {
+  opacity: 0;
 }
 </style>
