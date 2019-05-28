@@ -143,12 +143,12 @@ export default {
         this.$store.dispatch('removeMusicFromQueue', this.musicSrc);
       } else if (this.currentPlaylistShow === 'musicLibrary') {
         this.$store.dispatch('removeMusicFromLibrary', this.musicSrc);
+        this.$store.dispatch('removeAudioInfoBySrc', this.musicSrc);
       }
       this.$store.dispatch('removeMusicFromPlaylist', { name: this.currentPlaylistShow, src: this.musicSrc });
       if (this.musicSrc === this.src) {
         this.$store.dispatch('updateSrc', '');
         this.$store.dispatch('updateDuration', 0);
-        this.$bus.$emit('remove-music');
       }
       this.$emit('update:ifRightClick', false);
     },

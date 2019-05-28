@@ -20,11 +20,11 @@
         }">
         <div class="detailIndex" v-show="src !== item || currentPlaylistShow !== currentPlaylistPlay">{{ index + 1 }}</div>
         <Icon type="playing" v-show="src === item && currentPlaylistShow === currentPlaylistPlay" class="playingIcon"></Icon>
-        <div class="detailSongTitle">{{ title(item) }}</div>
-        <div class="detailArtists">{{ artist(item) }}</div>
-        <div class="detailAlbum">{{ album(item) }}</div>
-        <div class="detailTime">{{ timeFormatter(duration(item)) }}</div>
-        <div class="detailFileType">{{ fileType(item) }}</div>
+        <div class="detailSongTitle" :title="computedTextWidth(title(item), 'detailSongTitle')">{{ title(item) }}</div>
+        <div class="detailArtists" :title="computedTextWidth(artist(item), 'detailArtists')">{{ artist(item) }}</div>
+        <div class="detailAlbum" :title="computedTextWidth(album(item), 'detailAlbum')">{{ album(item) }}</div>
+        <div class="detailTime" :title="computedTextWidth(timeFormatter(duration(item)), 'detailTime')">{{ timeFormatter(duration(item)) }}</div>
+        <div class="detailFileType" :title="computedTextWidth(fileType(item), 'detailFileType')">{{ fileType(item) }}</div>
       </div>
     </div>
     <music-handler v-show="ifRightClick" :ifRightClick.sync="ifRightClick" :style="{ left: `${handlerPosX}px`, top: `${handlerPosY}px` }" ref="handler" :musicSrc="handlerSrc"></music-handler>
@@ -96,6 +96,12 @@ export default {
     },
   },
   methods: {
+    computedTextWidth(text, tag) {
+      if (document.querySelector(`.${tag}`) && this.getTextWidth('12px', 'PingFang SC', text) > parseFloat(getComputedStyle(document.querySelector(`.${tag}`)).width)) {
+        return text;
+      }
+      return '';
+    },
     dbClickToPlay(src) {
       this.$store.dispatch('updateSrc', src);
       this.$store.dispatch('updateCurrentPlaylistPlay', this.currentPlaylistShow);

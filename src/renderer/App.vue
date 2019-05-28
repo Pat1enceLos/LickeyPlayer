@@ -20,9 +20,14 @@ export default {
     Notification,
   },
   computed: {
-    ...mapGetters(['isLogin', 'loginUser']),
+    ...mapGetters(['isLogin', 'loginUser', 'src']),
   },
   watch: {
+    src(val) {
+      if (!val) {
+        this.$store.dispatch('updateCurrentPlaylistPlay', '');
+      }
+    },
     isLogin(val) {
       if (val) {
         infoDB.get('AudioInfo', this.loginUser).then((data) => {

@@ -8,7 +8,7 @@ const getters = {
 
 const mutations = {
   addNotifications(state, payload) {
-    if (payload.content !== '文件正在导出到Music中' || state.notifications.findIndex(i => i.content === '文件正在导出到Music中') === -1) {
+    if (!['音乐文件已被销毁或移至别处', '文件正在导出到Music中'].includes(payload.content) || state.notifications.findIndex(i => ['音乐文件已被销毁或移至别处', '文件正在导出到Music中'].includes(i.content)) === -1) {
       if (state.notifications.length === 3) {
         state.notifications.splice(0, 1);
       }
@@ -19,7 +19,7 @@ const mutations = {
     state.notifications = state.notifications.filter(m => m.id !== id);
   },
   exportNotificationRemove(state) {
-    const index = state.notifications.findIndex(i => i.content === '文件正在导出到Music中');
+    const index = state.notifications.findIndex(i => ['音乐文件已被销毁或移至别处', '文件正在导出到Music中'].includes(i.content));
     if (index !== -1) {
       state.notifications.splice(index, 1);
     }

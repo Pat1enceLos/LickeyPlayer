@@ -25,7 +25,7 @@
         <div class="edit" v-for="(item) in enabledEditType">
           <div class="tagsType">{{ item }}</div>
           <div class="editContent">
-            <div v-show="tagsToShow" class="normalShow">{{ types[item] }}</div>
+            <p v-show="tagsToShow" class="normalShow" :title="types[item]">{{ types[item] }}</p>
             <input v-show="!tagsToShow" class="typeEditInput" :class="`${item}EditInput`" v-model="types[item]" @input="handleTypeInput(item)"/>
             <Icon v-show="modifyToShow[item] && !tagsToShow" type="save" class="tagsChanged" @mouseup.native="saveEdit(item)"></Icon>
           </div>
@@ -110,7 +110,7 @@ export default {
   computed: {
     ...mapGetters(['currentAudioInfo', 'src', 'enabledEditType']),
     picture() {
-      return this.currentAudioInfo && this.currentAudioInfo.picture.length && !_.isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${toBuffer(this.currentAudioInfo.picture[0].data).toString('base64')}` : '';
+      return this.currentAudioInfo && this.currentAudioInfo.picture && this.currentAudioInfo.picture.length && !_.isEmpty(this.currentAudioInfo.picture[0].data) ? `data:image/jpeg;base64,${toBuffer(this.currentAudioInfo.picture[0].data).toString('base64')}` : '';
     },
   },
   watch: {
@@ -297,7 +297,7 @@ export default {
           border: none;
           color: #FFCF2E
         }
-        .normalShow {
+        p {
           font-size: 13px;
           color: rgba(255, 255, 255, 1);
           height: 24px;

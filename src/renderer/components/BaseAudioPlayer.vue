@@ -25,7 +25,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['paused', 'volume', 'src', 'playlistQueue', 'duration', 'nextAudio', 'preAudio']),
+    ...mapGetters(['paused', 'volume', 'src', 'playlistQueue', 'duration', 'nextAudio', 'preAudio', 'audioInfo']),
   },
   created() {
     this.$bus.$on('next-audio', () => {
@@ -38,7 +38,9 @@ export default {
         setTimeout(() => {
           this.$store.dispatch('updatePaused', true);
         }, 1000);
-        // this.$store.dispatch('addNotifications', { content: '无可播放的下一首音乐', dismissAfter: 5000 });
+        this.$store.dispatch('addNotifications', { content: '音乐文件已被销毁或移至别处', dismissAfter: 5000 });
+        this.$store.dispatch('removeAudioInfoBySrc', this.nextAudio);
+        this.$store.dispatch('removeMusicFromAll', this.nextAudio);
       }
     });
     this.$bus.$on('pre-audio', () => {
@@ -51,7 +53,9 @@ export default {
         setTimeout(() => {
           this.$store.dispatch('updatePaused', true);
         }, 1000);
-        // this.$store.dispatch('addNotifications', { content: '无可播放的上一首音乐', dismissAfter: 5000 });
+        this.$store.dispatch('addNotifications', { content: '音乐文件已被销毁或移至别处', dismissAfter: 5000 });
+        this.$store.dispatch('removeAudioInfoBySrc', this.preAudio);
+        this.$store.dispatch('removeMusicFromAll', this.preAudio);
       }
     });
   },

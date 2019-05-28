@@ -1,5 +1,5 @@
 <template>
-  <div class="user-container" ref="userContainer" tabindex="0" @blur.stop="handleUserDetailBlur" v-show="userDetailToShow && isLogin">
+  <div class="user-container" ref="userContainer" tabindex="0" @blur.stop="handleUserDetailBlur">
     <div class="imgAndName">
       <div class="user-img">
         <Icon type="userImg" v-show="!imgPath"></Icon>

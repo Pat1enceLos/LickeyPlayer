@@ -118,6 +118,7 @@ export default {
   display: flex;
   flex-direction: column;
   outline: none;
+  transition: opacity 200ms linear;
   .imgAndName {
     width: 100%;
     height: 40px;

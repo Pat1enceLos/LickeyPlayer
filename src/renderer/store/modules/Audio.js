@@ -49,8 +49,11 @@ const getters = {
     }
     const index = list.findIndex(value => value === getters.src);
     if (getters.randomPlay) {
-      list.splice(index, 1);
-      return list[Math.floor(Math.random() * Math.floor(list.length))];
+      if (list.length > 1) {
+        list.splice(index, 1);
+        return list[Math.floor(Math.random() * Math.floor(list.length))];
+      }
+      return list[0];
     }
     if (getters.cycleType === '') {
       if (index !== -1 && index + 1 < list.length) {
@@ -206,7 +209,12 @@ const mutations = {
   musicCoverUpdate(state, payload) {
     state.audioInfo.forEach((item) => {
       if (item.src === state.src) {
-        item.picture.splice(0, 1, payload);
+        if (item.picture && item.picture.length) {
+          console.log(payload);
+          item.picture.splice(0, 1, payload);
+        } else {
+          item.picture = [payload];
+        }
       }
     });
   },
@@ -223,6 +231,7 @@ const mutations = {
     state.disXLeft = payload;
   },
   infoDBInitial(state, payload) {
+    state.src = '';
     state.playlistQueue = payload.playlistQueue || [];
     state.musicLibraryPlaylist = payload.musicLibraryPlaylist || [];
     state.createdPlaylist = payload.createdPlaylist || [];
@@ -232,6 +241,18 @@ const mutations = {
     state.musicLibraryPlaylist = [];
     state.createdPlaylist = [];
     state.audioInfo = [];
+  },
+  audioInfoBySrcRemove(state, payload) {
+    if (state.audioInfo.findIndex(i => i.src === payload) !== -1) {
+      state.audioInfo.splice(state.audioInfo.findIndex(i => i.src === payload), 1);
+    }
+  },
+  musicFromAllRemove(state, payload) {
+    state.musicLibraryPlaylist = state.musicLibraryPlaylist.filter(i => i !== payload);
+    state.playlistQueue = state.playlistQueue.filter(i => i !== payload);
+    state.createdPlaylist.forEach((item) => {
+      item.src = item.src.filter(i => i !== payload);
+    });
   },
 };
 
@@ -360,6 +381,12 @@ const actions = {
   },
   removeInfoDB({ commit }) {
     commit('infoDBRemove');
+  },
+  removeAudioInfoBySrc({ commit }, delta) {
+    commit('audioInfoBySrcRemove', delta);
+  },
+  removeMusicFromAll({ commit }, delta) {
+    commit('musicFromAllRemove', delta);
   },
 };
 
