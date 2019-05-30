@@ -3,6 +3,7 @@
     <div class="logoEdit">
       <div class="mask" v-show="!tagsToShow"></div>
       <img :src='picture' :style="{ width: '180px', height: '180px', position: 'absolute' }" v-show="picture">
+      <Icon type="musicBack" v-show="!picture && tagsToShow" :style="{ margin: 'auto' }"></Icon>
       <Icon type="coverDelete" @mouseup.native="deleteCover" v-show="!tagsToShow && picture" :style="{ width: 'auto', height: 'auto', margin: 'auto 0 5px 5px', zIndex: '6', cursor: 'pointer' }"></Icon>
       <Icon type="coverEdit" @mouseup.native="editCover" v-show="!tagsToShow" :style="{ width: 'auto', height: 'auto', margin: picture ? 'auto auto auto 60px' : 'auto auto auto 80px', zIndex: '6', cursor: 'pointer' }"></Icon>
     </div>
@@ -217,7 +218,7 @@ export default {
     width: 180px;
     height: 180px;
     margin: 15px auto 0 auto;
-    background: black;
+    background: rgb(75, 75, 75);
     display: flex;
     .mask {
       position: absolute;
