@@ -1,4 +1,4 @@
-# lickeyplayer
+# LightyMusic
 
 > An electron-vue project
 
