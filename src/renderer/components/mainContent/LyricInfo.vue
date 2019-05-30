@@ -87,7 +87,12 @@ export default {
     },
   },
   watch: {
-    lyric() {
+    lyric(val) {
+      if (!isEmpty(val)) {
+        const cues = val.scripts
+          .filter(lyric => lyric.start <= this.currentTime && lyric.end >= this.currentTime && lyric.text !== '');
+        this.currentLyric = cues;
+      }
       this.transFlag = false;
       setTimeout(() => {
         this.transFlag = true;
