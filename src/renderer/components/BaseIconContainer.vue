@@ -189,11 +189,24 @@ export default {
   margin: auto;
 }
 .addPlaylist {
-  display: block;
   width: 30px;
   height: 30px;
   margin: auto auto auto 10px;
   cursor: pointer;
+  .default {
+    display: block;
+  }
+  .active {
+    display: none;
+  }
+  &:active {
+    .default {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+  }
 }
 .playing {
   display: block;
@@ -267,6 +280,10 @@ export default {
   width: 12px;
   height: 12px;
   margin: auto 10px auto auto;
-
+}
+.musicBack {
+  display: block;
+  width: 60px;
+  height: 60px;
 }
 </style>

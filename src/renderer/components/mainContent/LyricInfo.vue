@@ -1,12 +1,13 @@
 <template>
   <div class="lyricInfo">
     <div class="lyricLogo">
-      <img :src='picture' :style="{ width: '100%', height: '100%' }" v-show="picture">
+      <img :src="picture" :style="{ width: '100%', height: '100%' }" v-show="picture">
+      <Icon type="musicBack" v-show="!picture" :style="{ margin: 'auto' }"></Icon>
     </div>
-    <div class="songTitle">
+    <div class="songTitle" v-show="src">
       {{ title }}
     </div>
-    <div class="songAuthor">
+    <div class="songAuthor" v-show="src">
       {{ artist }}
     </div>
     <div class="lyric" ref="lyricScroll">
@@ -36,6 +37,7 @@ import { mapGetters } from 'vuex';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import chardet from 'chardet';
+import Icon from '../BaseIconContainer';
 
 export default {
   name: 'LyricInfo',
@@ -47,6 +49,9 @@ export default {
       cueIndex: 0,
       lastCueIndex: 0,
     };
+  },
+  components: {
+    Icon,
   },
   props: {
     lyric: {
@@ -141,7 +146,8 @@ export default {
     width: 180px;
     height: 180px;
     margin: 15px auto 0 auto;
-    background: black;
+    background: rgb(75, 75, 75);
+    display: flex;
   }
   .songTitle {
     width: 180px;

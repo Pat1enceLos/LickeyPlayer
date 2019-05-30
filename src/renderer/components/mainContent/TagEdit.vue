@@ -244,6 +244,7 @@ export default {
       top: 200px;
       outline: none;
       z-index: 8;
+      border-radius: 3px;
       .tagsMargin {
         margin: 5px 0 5px 0;
         width: auto;
