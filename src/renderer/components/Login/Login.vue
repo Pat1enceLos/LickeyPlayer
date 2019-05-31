@@ -15,8 +15,8 @@
       type="titleBarWinClose">
     </Icon>
     <div class="login-register-container">
-      <login-details class="login-display" :loginToShow.sync="loginToShow" :class="loginToShow && !initial ? 'login-show-anim' : 'login-hide-anim'" @animationend.native="handleLoginAnimEnd"></login-details>
-      <register-details class="register-display" :loginToShow.sync="loginToShow" :class="loginToShow && !initial ? 'register-hide-anim' : 'register-show-anim'" @animationend.native="handleRegisterAnimEnd"></register-details>
+      <login-details class="login-display" :loginToShow.sync="loginToShow" @animationend.native="handleLoginAnimEnd"></login-details>
+      <register-details class="register-display" :loginToShow.sync="loginToShow" @animationend.native="handleRegisterAnimEnd"></register-details>
     </div>
   </div>
 </template>
@@ -38,22 +38,29 @@ export default {
     return {
       state: 'default',
       loginToShow: true,
-      initial: true,
     };
-  },
-  mounted() {
-    this.initial = false;
   },
   computed: {
     isDarwin() {
       return process.platform === 'darwin';
     },
   },
+  mounted() {
+    document.querySelector('.register-display').style.display = 'none';
+  },
   watch: {
     loginToShow(val) {
       if (val) {
         document.querySelector('.login-display').style.display = '';
+        document.querySelector('.login-display').classList.add('login-show-anim');
+        document.querySelector('.login-display').classList.remove('login-hide-anim');
+        document.querySelector('.register-display').classList.add('register-hide-anim');
+        document.querySelector('.register-display').classList.remove('register-show-anim');
       } else {
+        document.querySelector('.login-display').classList.add('login-hide-anim');
+        document.querySelector('.login-display').classList.remove('login-show-anim');
+        document.querySelector('.register-display').classList.add('register-show-anim');
+        document.querySelector('.register-display').classList.remove('register-hide-anim');
         document.querySelector('.register-display').style.display = '';
       }
     },
