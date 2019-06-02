@@ -6,7 +6,7 @@
         <img :src="imgPath" v-show="imgPath">
       </div>
       <Icon type="rightArrow" class="rightArrow" @mousedown.native="handleMousedown" :style="{ transform: isLogin ? 'rotate(90deg)' : '' }"></Icon>
-      <user-details class="user-detail" :userDetailToShow.sync="userDetailToShow" @animationend.native="handleAnim" v-show="!userEditorToShow" :class="userEditorToShow ? '' : userDetailToShow && isLogin ? 'user-show-anim' : 'user-hide-anim'"></user-details>
+      <user-details class="user-detail" :userDetailToShow.sync="userDetailToShow" @animationend.native="handleAnim"></user-details>
       <transition name="edit-anim">
         <user-editor v-show="userEditorToShow"></user-editor>
       </transition>
@@ -27,6 +27,18 @@ export default {
       userDetailToShow: false,
       userEditorToShow: false,
     };
+  },
+  watch: {
+    userDetailToShow(val) {
+      if (!val) {
+        document.querySelector('.user-detail').classList.add('user-hide-anim');
+        document.querySelector('.user-detail').classList.remove('user-show-anim');
+      } else {
+        document.querySelector('.user-detail').style.display = 'flex';
+        document.querySelector('.user-detail').classList.add('user-show-anim');
+        document.querySelector('.user-detail').classList.remove('user-hide-anim');
+      }
+    },
   },
   components: {
     Icon,
@@ -103,6 +115,9 @@ export default {
     }
     .rightArrow {
       margin: auto;
+    }
+    .user-detail {
+      display: none;
     }
   }
 }

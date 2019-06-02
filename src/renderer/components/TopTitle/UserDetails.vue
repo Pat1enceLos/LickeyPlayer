@@ -65,6 +65,7 @@ export default {
     },
     handleLogOut() {
       this.$store.dispatch('updateLoginUser', '');
+      this.$emit('update:userDetailToShow', false);
     },
     handleEditorToShow() {
       this.$bus.$emit('user-editor-show');
