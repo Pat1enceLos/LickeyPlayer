@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron';
 import { throttle } from 'lodash';
 
 /**
@@ -131,7 +131,12 @@ function createWindow() {
   registerMainWindowEvent();
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  globalShortcut.register('CmdOrCtrl+Shift+I+O+P', () => {
+    mainWindow.openDevTools({ mode: 'detach' });
+  });
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

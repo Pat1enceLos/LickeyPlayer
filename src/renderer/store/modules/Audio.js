@@ -129,14 +129,14 @@ const mutations = {
   playlistQueueUpdate(state, payload) {
     payload.forEach((item) => {
       if (!state.playlistQueue.includes(item)) {
-        state.playlistQueue.unshift(item);
+        state.playlistQueue.push(item);
       }
     });
   },
   musicLibraryPlaylistUpdate(state, payload) {
     payload.forEach((item) => {
       if (!state.musicLibraryPlaylist.includes(item)) {
-        state.musicLibraryPlaylist.unshift(item);
+        state.musicLibraryPlaylist.push(item);
       }
     });
   },
@@ -168,7 +168,7 @@ const mutations = {
       if (item.name === playlistName) {
         payload.forEach((i) => {
           if (!item.src.includes(i.src)) {
-            item.src.unshift(i.src);
+            item.src.push(i.src);
           }
         });
       }
