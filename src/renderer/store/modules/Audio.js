@@ -1,4 +1,5 @@
 import * as mm from 'music-metadata';
+import path from 'path';
 
 const state = {
   src: '',
@@ -301,37 +302,71 @@ const actions = {
   },
   updateAudioInfo({ commit }, delta) {
     delta.forEach(async (item) => {
-      const metadata = await mm.parseFile(item);
-      commit('audioInfoUpdate', {
-        src: item,
-        title: metadata.common.title,
-        artists: metadata.common.artists.join(','),
-        album: metadata.common.album,
-        trackNo: metadata.common.track.no,
-        totalTracks: '',
-        diskNo: metadata.common.disk.no,
-        totalDisk: '',
-        year: metadata.common.year || '',
-        BPM: '',
-        genre: metadata.common.genre ? metadata.common.genre.join(',') : '',
-        albumArtist: '',
-        composer: '',
-        performer: '',
-        publisher: '',
-        description: '',
-        comment: metadata.common.comment,
-        rating: metadata.common.rating ? metadata.common.rating[0].rating : '',
-        duration: metadata.format.duration,
-        sampleRate: metadata.format.sampleRate,
-        channels: '',
-        bits: '',
-        bitrate: metadata.format.bitrate,
-        codec: metadata.format.codecProfile,
-        encoding: metadata.format.encoder,
-        fileSize: '',
-        fileType: metadata.format.dataformat,
-        picture: metadata.common.picture,
-      });
+      if (['.ac3', '.amr'].includes(path.extname(item))) {
+        const basename = path.basename(item);
+        commit('audioInfoUpdate', {
+          src: item,
+          title: basename.slice(0, basename.lastIndexOf('.')),
+          artists: '',
+          album: '',
+          trackNo: '',
+          totalTracks: '',
+          diskNo: '',
+          totalDisk: '',
+          year: '',
+          BPM: '',
+          genre: '',
+          albumArtist: '',
+          composer: '',
+          performer: '',
+          publisher: '',
+          description: '',
+          comment: '',
+          rating: '',
+          duration: '',
+          sampleRate: '',
+          channels: '',
+          bits: '',
+          bitrate: '',
+          codec: '',
+          encoding: '',
+          fileSize: '',
+          fileType: '',
+          picture: '',
+        });
+      } else {
+        const metadata = await mm.parseFile(item);
+        commit('audioInfoUpdate', {
+          src: item,
+          title: metadata.common.title ? metadata.common.title : path.basename(item).slice(0, path.basename(item).lastIndexOf('.')),
+          artists: metadata.common.artists ? metadata.common.artists.join(',') : '',
+          album: metadata.common.album,
+          trackNo: metadata.common.track.no,
+          totalTracks: '',
+          diskNo: metadata.common.disk.no,
+          totalDisk: '',
+          year: metadata.common.year || '',
+          BPM: '',
+          genre: metadata.common.genre ? metadata.common.genre.join(',') : '',
+          albumArtist: '',
+          composer: '',
+          performer: '',
+          publisher: '',
+          description: '',
+          comment: metadata.common.comment,
+          rating: metadata.common.rating ? metadata.common.rating[0].rating : '',
+          duration: metadata.format.duration,
+          sampleRate: metadata.format.sampleRate,
+          channels: '',
+          bits: '',
+          bitrate: metadata.format.bitrate,
+          codec: metadata.format.codecProfile,
+          encoding: metadata.format.encoder,
+          fileSize: '',
+          fileType: metadata.format.dataformat,
+          picture: metadata.common.picture,
+        });
+      }
     });
   },
   updateAudioInfoDirectly({ commit }, delta) {
