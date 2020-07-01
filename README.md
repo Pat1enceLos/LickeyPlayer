@@ -1,4 +1,5 @@
 # LightyMusic
+[![Build Status](https://travis-ci.org/Pat1enceLos/LightyMusic.svg?branch=master)](https://travis-ci.org/Pat1enceLos/LightyMusic)
 
 > An electron-vue project
 
