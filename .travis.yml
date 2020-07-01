@@ -1,43 +1,53 @@
-# Commented sections below can be used to run tests on the CI server
-# https://simulatedgreg.gitbooks.io/electron-vue/content/en/testing.html#on-the-subject-of-ci-testing
-osx_image: xcode8.3
 sudo: required
+os:
+- osx
 dist: trusty
-language: c
+language: node_js
+node_js:
+- "12"
 matrix:
-  include:
-  - os: osx
-  - os: linux
-    env: CC=clang CXX=clang++ npm_config_clang=1
-    compiler: clang
+  allow_failures:
 cache:
-  directories:
+- apt: true
+- directories:
   - node_modules
   - "$HOME/.electron"
-  - "$HOME/.cache"
-addons:
-  apt:
-    packages:
-    - libgnome-keyring-dev
-    - icnsutils
-    #- xvfb
-before_install:
-- mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v1.2.1/git-lfs-$([
-  "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-1.2.1.tar.gz
-  | tar -xz -C /tmp/git-lfs --strip-components 1 && /tmp/git-lfs/git-lfs pull
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install --no-install-recommends -y icnsutils graphicsmagick xz-utils; fi
 install:
-#- export DISPLAY=':99.0'
-#- Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-- nvm install 7
-- curl -o- -L https://yarnpkg.com/install.sh | bash
-- source ~/.bashrc
-- npm install -g xvfb-maybe
-- npm i
+- npm install -g codecov
+- npm install -g electron-mocha
+- npm install
+- npm update
+before_script:
+- export DISPLAY=:99.0
+- if [ $TRAVIS_OS_NAME == "linux" ]; then sh -e /etc/init.d/xvfb start; sleep 3; fi
 script:
-#- xvfb-maybe node_modules/.bin/karma start test/unit/karma.conf.js
-#- yarn run pack && xvfb-maybe node_modules/.bin/mocha test/e2e
 - npm run build
-branches:
-  only:
-  - master
+# deploy:
+#   provider: releases
+#   name: "$TRAVIS_TAG"
+#   api_key:
+#     secure: PAPFtI8FpGjP2RvXKfUUNr8dBpAoLFukGtM+kxvBAzAyXIEH1IkINrDAPm4+TuyuareuG6xPvkpdktxhoDfbO62aAUs0/KioQxQfgmIv6xzvhuv/wfBpKezL/AffAoclMWwIl1JiqZwD6SKAVBU8A2teTskQrWnKIyRXkdxrEaBrmdZWuimc5H7Lb4MaMTO6Nmmm9eU2R2Gg2bOYhgAHBxUwGvxEacunl/VdJCFQdb70lQeREHqkPJ4SiXRWolCaEF33Y9UHpOAVUeup6ERzWri2LHn5cBVWFZ3DeEJr4MN+c7GpEFRWj3C1JsZ/e5mTNmvefldrFP386JW5zeyFGWjBiWgbV5au3hRVA/y76b+t39Xor39pBLz8RJhJs9TEwaBelminirFU/bk67CQ32KmxBHJNH8MgxGmgMBB8X/JgGOLpIrMgMTeErQY8XRMFBhzma4cbJ3DAl3JBV43759AZPL7h9+4NqCqBPPOrOehDNIe//bMVRi5Rd3tDtK3eC1F+NKobTq3xYYsKqktzzSkxJ/KC4oVL58ILnCND6EQ/MZtFphfvqnVTxS+Q2Mk2dMNjv0ZakrvDi/quGlgfionCPhgRbUiiYDnxEsVNJhkVfFiv2qk0clKJhQ10OarinTedLiqf7c2qT5Kj5shJXzSYyB+1eIC4KUttQgXZNLI=
+#   file_glob: true
+#   overwrite: true
+#   file:
+#   - build/*.dmg
+#   - build/*.deb
+#   - build/*.rpm
+#   - build/latest-mac.yml
+#   - build/*.blockmap
+#   - build/*.zip
+#   skip_cleanup: true
+#   on:
+#     tags: true
+# after_success:
+# - codecov
+# - bash scripts/trigermasdev.sh
+# addons:
+#   apt:
+#     packages:
+#     - xvfb
+# branches:
+# env:
+#   global:
+#   - WINEDLLOVERRIDES="mscoree,mshtml="
+#   - WINEDEBUG="-all"
